@@ -423,7 +423,7 @@ function Write-OsdCheatMenuClasses {
 .end method
 
 .method private static getPatchFile(Lxyz/aethersx2/android/EmulationActivity;)Ljava/io/File;
-    .locals 1
+    .locals 7
 
     invoke-static {}, Lxyz/aethersx2/android/NativeLibrary;->getGameInfo()Ll6/l4;
 
@@ -433,15 +433,87 @@ function Write-OsdCheatMenuClasses {
 
     invoke-virtual {v0}, Ll6/l4;->a()Ljava/nio/file/Path;
 
-    move-result-object v0
+    move-result-object v1
 
-    if-eqz v0, :cond_no_path
+    if-eqz v1, :cond_external
 
-    invoke-interface {v0}, Ljava/nio/file/Path;->toFile()Ljava/io/File;
+    invoke-interface {v1}, Ljava/nio/file/Path;->toFile()Ljava/io/File;
 
-    move-result-object v0
+    move-result-object v1
 
-    return-object v0
+    invoke-virtual {v1}, Ljava/io/File;->isFile()Z
+
+    move-result v2
+
+    if-eqz v2, :cond_external
+
+    return-object v1
+
+    :cond_external
+    iget v1, v0, Ll6/l4;->e:I
+
+    if-eqz v1, :cond_no_path
+
+    const/4 v2, 0x0
+
+    invoke-virtual {p0, v2}, Landroid/content/Context;->getExternalFilesDir(Ljava/lang/String;)Ljava/io/File;
+
+    move-result-object p0
+
+    if-eqz p0, :cond_no_path
+
+    new-instance v2, Ljava/io/File;
+
+    const-string v3, "cheats"
+
+    invoke-direct {v2, p0, v3}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
+
+    const-string p0, "%08X.pnach"
+
+    const/4 v3, 0x1
+
+    new-array v4, v3, [Ljava/lang/Object;
+
+    invoke-static {v1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v1
+
+    const/4 v5, 0x0
+
+    aput-object v1, v4, v5
+
+    invoke-static {p0, v4}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object p0
+
+    new-instance v1, Ljava/io/File;
+
+    invoke-direct {v1, v2, p0}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
+
+    invoke-virtual {v1}, Ljava/io/File;->isFile()Z
+
+    move-result v4
+
+    if-eqz v4, :cond_lowercase
+
+    return-object v1
+
+    :cond_lowercase
+    invoke-virtual {p0}, Ljava/lang/String;->toLowerCase()Ljava/lang/String;
+
+    move-result-object p0
+
+    new-instance v1, Ljava/io/File;
+
+    invoke-direct {v1, v2, p0}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
+
+    invoke-virtual {v1}, Ljava/io/File;->isFile()Z
+
+    move-result p0
+
+    if-eqz p0, :cond_no_path
+
+    return-object v1
 
     :cond_no_path
     const/4 v0, 0x0
