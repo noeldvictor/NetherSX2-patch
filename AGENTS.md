@@ -121,6 +121,27 @@ Use `-CommunityOnly` to refresh imported community PNACHs on a device without ov
 
 Same-serial or fan-translation candidates live under `cheats/candidates`; install them only with `-IncludeCandidates` while actively testing in-game.
 
+## Wizardry Encounter Research Notes
+
+For `Wizardry - Tale of the Forsaken Land (USA)`, the Thor inventory reports serial `SLUS-20259` and CRC `DD11BEF7`. The tracked exact PNACH is `cheats/exact/DD11BEF7.pnach`; it currently has money, stats, shop, and spell-count blocks, but no known encounter-rate or no-random-encounter block.
+
+Search notes from 2026-05-09:
+
+- Japanese `BUSIN Wizardry Alternative` codes at `https://mutuki1406.moraimon.com/code/busin.html` cover `SLPM_620.98` and include money, shop, EXP/gold multipliers, spell-use, trust, HP/MP, job-change, and status-recovery codes. No clear `encounter`, `no encounter`, or lower encounter-rate code was found there.
+- NTSC-U CodeBreaker codes at `https://www.almarsguides.com/retro/walkthroughs/ps2/games/wizardrytaleoftheforsakenland/codebreaker/` include the same general money, character, and shop families. No encounter code was found.
+- GameHacking entry `https://gamehacking.org/?format=ar1&game=103061&hacker=all` did not expose an encounter code in the checked listing.
+
+Plain ADB RAM inspection is blocked on the current Thor setup. `ro.debuggable` is `0`, `run-as xyz.aethersx2.android` fails because the APK is not debuggable, and no `su` binary is available to the shell user. Do not plan on reading `/proc/<pid>/mem` over plain ADB unless the APK is rebuilt debuggable, the device is rooted, or an app-side/native helper is deliberately added.
+
+The practical no-root route is savestate RAM diffing. NetherSX2 `.p2s` files are zip archives containing `eeMemory.bin`, so two or three Wizardry states can be pulled and diffed offline:
+
+```powershell
+adb pull "/sdcard/Android/data/xyz.aethersx2.android/files/sstates/SLUS-20259 (DD11BEF7).00.p2s" tmp\wizardry_low.p2s
+adb pull "/sdcard/Android/data/xyz.aethersx2.android/files/sstates/SLUS-20259 (DD11BEF7).01.p2s" tmp\wizardry_high.p2s
+```
+
+Ask the user to create slot 0 right after a battle or while encounter pressure feels low, then create slot 1 after walking until the next random battle feels close. A third state immediately after the encounter triggers or after the battle resets is useful for rejecting false positives. Extract `eeMemory.bin` with a normal zip reader, compare 8/16/32-bit little-endian values that change monotonically while walking and reset around battle entry, then test only the smallest plausible freeze or clamp in `cheats/exact/DD11BEF7.pnach` as default-off `// patch=1,...` lines. Promote the block only after it is verified in-game through the OSD toggle UI.
+
 ## Cover Installer Notes
 
 Use `tools\InstallCoversToDevice.ps1` to download covers for the games in `game_crc_index.tsv` and push them into the visible external app `files/covers` folder. It defaults to xlenore's documented 2D cover URL:
