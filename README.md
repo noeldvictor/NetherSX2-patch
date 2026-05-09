@@ -17,7 +17,8 @@ They aim to do the following:
 * Add an in-game OSD Patch Codes dialog that toggles individual `.pnach` cheat-code blocks, including a Deselect All action
 * Mark games with visible external `.pnach` files containing real `patch=` cheat-code lines with a CHEATS badge
 * Add an in-app FAQ link to a searchable list of games with bundled widescreen and no-interlacing patches
-* Include an exact-CRC PNACH cheat pack and ADB install helper for the visible Android app cheats folder
+* Bundle an exact-CRC PNACH cheat pack inside the APK and seed missing files into the visible Android app cheats folder
+* Include an ADB install helper for refreshing the visible Android app cheats folder from the tracked repo cheat pack
 * Add an ADB cover installer that defaults to xlenore's PS2 cover repository and supports custom cover URL templates
 * Update the GameDB, Controller Support, and the Widescreen and No-Interlace Patches
 * Add additional AetherSX2/NetherSX2 spesific fixes to the GameDB
@@ -30,6 +31,8 @@ Install the tracked exact-CRC cheat pack to an attached Android device:
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File tools\InstallCheatsToDevice.ps1
 ```
+
+The patched APK also bundles the exact-CRC cheat pack as `assets/cheats_exact` and copies missing `.pnach` files into the external `files/cheats` folder on app startup. Existing files are left alone so user toggles are not overwritten.
 
 Install covers for the games listed in `game_crc_index.tsv` using xlenore's default 2D cover URL:
 

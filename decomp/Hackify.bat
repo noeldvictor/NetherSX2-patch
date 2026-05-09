@@ -29,6 +29,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0ApplyCheatBadgePatch.p
 if errorlevel 1 exit /b %errorlevel%
 powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0ApplyOsdCheatTogglePatch.ps1" -ProjectPath "%apkdir%"
 if errorlevel 1 exit /b %errorlevel%
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0ApplyBundledCheatsPatch.ps1" -ProjectPath "%apkdir%" -RepoRoot "%~dp0.."
+if errorlevel 1 exit /b %errorlevel%
 :: --End Cheats UI Cleanup--
 
 :: --Bundled Asset Updates--
