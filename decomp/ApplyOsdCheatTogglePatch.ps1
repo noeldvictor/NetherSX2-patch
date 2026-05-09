@@ -949,13 +949,11 @@ function Write-OsdCheatMenuClasses {
 
     iget-object v0, v5, Landroidx/appcompat/app/d$a;->a:Landroidx/appcompat/app/AlertController$b;
 
-    const-string v1, "Edit .pnach"
+    const-string v1, "Deselect All"
 
     iput-object v1, v0, Landroidx/appcompat/app/AlertController$b;->k:Ljava/lang/CharSequence;
 
-    new-instance v1, Lxyz/aethersx2/android/OsdCheatMenu$EditListener;
-
-    invoke-direct {v1, p0}, Lxyz/aethersx2/android/OsdCheatMenu$EditListener;-><init>(Lxyz/aethersx2/android/EmulationActivity;)V
+    const/4 v1, 0x0
 
     iput-object v1, v0, Landroidx/appcompat/app/AlertController$b;->l:Landroid/content/DialogInterface$OnClickListener;
 
@@ -970,6 +968,24 @@ function Write-OsdCheatMenuClasses {
     move-result-object p0
 
     invoke-virtual {p0}, Landroid/app/Dialog;->show()V
+
+    iget-object v0, p0, Landroidx/appcompat/app/d;->k:Landroidx/appcompat/app/AlertController;
+
+    iget-object v1, v0, Landroidx/appcompat/app/AlertController;->s:Landroid/widget/Button;
+
+    if-eqz v1, :cond_return
+
+    iget-object v0, v0, Landroidx/appcompat/app/AlertController;->g:Landroidx/appcompat/app/AlertController$RecycleListView;
+
+    if-eqz v0, :cond_return
+
+    new-instance v2, Lxyz/aethersx2/android/OsdCheatMenu$DeselectAllListener;
+
+    invoke-direct {v2, v0, v4}, Lxyz/aethersx2/android/OsdCheatMenu$DeselectAllListener;-><init>(Landroid/widget/AbsListView;[Z)V
+
+    invoke-virtual {v1, v2}, Landroid/view/View;->setOnClickListener(Landroid/view/View$OnClickListener;)V
+
+    :cond_return
 
     return-void
 .end method
@@ -1205,6 +1221,80 @@ function Write-OsdCheatMenuClasses {
     iput p3, p0, Lxyz/aethersx2/android/OsdCheatMenu$Code;->c:I
 
     iput-boolean p4, p0, Lxyz/aethersx2/android/OsdCheatMenu$Code;->d:Z
+
+    return-void
+.end method
+'@
+
+    Write-SmaliFile -Path (Join-Path $targetDir "OsdCheatMenu`$DeselectAllListener.smali") -Text @'
+.class public final Lxyz/aethersx2/android/OsdCheatMenu$DeselectAllListener;
+.super Ljava/lang/Object;
+.source "OsdCheatMenu.java"
+
+# interfaces
+.implements Landroid/view/View$OnClickListener;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Lxyz/aethersx2/android/OsdCheatMenu;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = "DeselectAllListener"
+.end annotation
+
+
+# instance fields
+.field public final a:Landroid/widget/AbsListView;
+
+.field public final b:[Z
+
+
+# direct methods
+.method public constructor <init>(Landroid/widget/AbsListView;[Z)V
+    .locals 0
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, p0, Lxyz/aethersx2/android/OsdCheatMenu$DeselectAllListener;->a:Landroid/widget/AbsListView;
+
+    iput-object p2, p0, Lxyz/aethersx2/android/OsdCheatMenu$DeselectAllListener;->b:[Z
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final onClick(Landroid/view/View;)V
+    .locals 4
+
+    const/4 p1, 0x0
+
+    :goto_loop
+    iget-object v0, p0, Lxyz/aethersx2/android/OsdCheatMenu$DeselectAllListener;->b:[Z
+
+    array-length v1, v0
+
+    if-ge p1, v1, :cond_done
+
+    const/4 v1, 0x0
+
+    aput-boolean v1, v0, p1
+
+    iget-object v0, p0, Lxyz/aethersx2/android/OsdCheatMenu$DeselectAllListener;->a:Landroid/widget/AbsListView;
+
+    invoke-virtual {v0, p1, v1}, Landroid/widget/AbsListView;->setItemChecked(IZ)V
+
+    add-int/lit8 p1, p1, 0x1
+
+    goto :goto_loop
+
+    :cond_done
+    iget-object p1, p0, Lxyz/aethersx2/android/OsdCheatMenu$DeselectAllListener;->a:Landroid/widget/AbsListView;
+
+    invoke-virtual {p1}, Landroid/widget/AbsListView;->invalidateViews()V
 
     return-void
 .end method

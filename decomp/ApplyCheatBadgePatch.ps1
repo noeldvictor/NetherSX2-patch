@@ -370,7 +370,7 @@ function Write-CheatSupportClass {
 .end method
 
 .method public static hasCheats(Landroid/content/Context;I)Z
-    .locals 5
+    .locals 4
 
     const/4 v0, 0x0
 
@@ -395,21 +395,6 @@ function Write-CheatSupportClass {
     const/4 v1, 0x0
 
     invoke-virtual {p0, v1}, Landroid/content/Context;->getExternalFilesDir(Ljava/lang/String;)Ljava/io/File;
-
-    move-result-object v2
-
-    invoke-static {v2, p1}, Lxyz/aethersx2/android/CheatSupport;->hasCheatFileInRoot(Ljava/io/File;Ljava/lang/String;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_check_internal
-
-    const/4 p0, 0x1
-
-    return p0
-
-    :cond_check_internal
-    invoke-virtual {p0}, Landroid/content/Context;->getFilesDir()Ljava/io/File;
 
     move-result-object p0
 

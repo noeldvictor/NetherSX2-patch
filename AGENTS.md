@@ -8,8 +8,8 @@ This repository is an APK patching workspace for NetherSX2, not a normal Gradle 
 
 - The in-app cheat controls are grouped by `decomp/ApplyCheatUiPatch.ps1`.
 - The game list CHEATS badges are applied by `decomp/ApplyCheatBadgePatch.ps1`.
-- The badge script generates `smali/xyz/aethersx2/android/CheatSupport.smali`, then patches the grid and list adapters to show a `cheat_badge` view only when a matching `.pnach` file in the app's `cheats` folder contains a real `patch=` code line. Do not use `assets/cheats_ws.zip` or `assets/cheats_ni.zip` for the CHEATS badge; those are bundled widescreen/no-interlacing patch archives, not real cheat availability.
-- The OSD Patch Codes menu is patched by `decomp/ApplyOsdCheatTogglePatch.ps1`; its `Toggle Cheat Codes` row opens a multi-choice dialog for the current game's `.pnach` and toggles each named cheat block individually by commenting/uncommenting its `patch=` lines. It also leaves an `Edit .pnach` fallback button for raw text edits.
+- The badge script generates `smali/xyz/aethersx2/android/CheatSupport.smali`, then patches the grid and list adapters to show a `cheat_badge` view only when a matching `.pnach` file in the visible external app `files/cheats` folder contains a real `patch=` code line. Do not use private internal app files, `assets/cheats_ws.zip`, or `assets/cheats_ni.zip` for the CHEATS badge; those are not user-visible real cheat availability.
+- The OSD Patch Codes menu is patched by `decomp/ApplyOsdCheatTogglePatch.ps1`; its `Toggle Cheat Codes` row opens a multi-choice dialog for the current game's `.pnach` and toggles each named cheat block individually by commenting/uncommenting its `patch=` lines. It includes a non-closing `Deselect All` button and leaves an `Edit .pnach` fallback only when no cheat blocks can be parsed.
 - The OSD per-code cheat dialog must not toggle `EmuCore/EnableCheats`; that is a global app setting, not the per-cheat control.
 - It keeps the existing emulator config keys:
   - `EmuCore/EnableCheats`
