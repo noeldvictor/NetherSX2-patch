@@ -18,8 +18,8 @@ lib\xml ed -L -d "manifest/application/provider[@android:name='com.google.androi
 lib\xml ed -L -d "manifest/application/activity/@android:preferMinimalPostProcessing" "%apkdir%\AndroidManifest.xml"
 lib\xml ed -L -d "manifest/application/@android:extractNativeLibs" "%apkdir%\AndroidManifest.xml"
 
-lib\xml ed -L -u "manifest/application/@android:label" -v "NetherSX2" "%apkdir%\AndroidManifest.xml"
-lib\xml ed -L -u "manifest/application/activity[@android:label='AetherSX2']/@android:label" -v "NetherSX2" "%apkdir%\AndroidManifest.xml"
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0ApplyBrandingPatch.ps1" -ProjectPath "%apkdir%" -RepoRoot "%~dp0.."
+if errorlevel 1 exit /b %errorlevel%
 :: --End Manifest Cleanup--
 
 :: --Cheats UI Cleanup--

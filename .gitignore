@@ -2,6 +2,7 @@
 dist/
 *.apk
 *.idsig
+__pycache__/
 game_crc_index.tsv
 decomp/NetherSX2-build/
 decomp/NetherSX2-v*-4248/

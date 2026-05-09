@@ -1,11 +1,15 @@
 <p align="center">
-  <img width="312" height="312" src="/.github/assets/logo_light.png">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="/.github/assets/wordmark_dark.png">
+    <img width="640" src="/.github/assets/wordmark_light.png" alt="NetherSX2 Patch Cheat Helper">
+  </picture>
 </p>
 
-# NetherSX2-patch
+# NetherSX2 Patch Cheat Helper
 This is a continuation of NetherSX2 to build on the amazing work already done by Anon and EZOnTheEyes
 
 They aim to do the following:
+* Brand the APK as NetherSX2 Cheat Helper with a custom Android launcher icon and setup-wizard logo
 * Remove the unnecessary ad services bloat left in the apk
 * Fix the RetroAchievements Notifications
 * Expose more Global settings in the App Settings to the user

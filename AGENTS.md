@@ -42,6 +42,16 @@ adb devices -l
 
 Keep generated APKs, downloaded base APKs, portable JREs, and decoded APK folders out of commits. Commit source assets and patch scripts only.
 
+## Branding Notes
+
+The APK is branded as `NetherSX2 Cheat Helper`. Regenerate the launcher icons, setup-wizard logo, and README wordmarks with:
+
+```powershell
+python tools\generate_brand_assets.py
+```
+
+The generated Android resources live under `branding/android/res`, and `decomp/ApplyBrandingPatch.ps1` copies them into the decoded APK while updating the manifest labels and key English strings. `decomp/Hackify.bat` runs the branding patch before the cheat UI patches.
+
 For the decompiled patch flow, run `decomp\Hackify.bat` after decoding the APK folder as either `4248` or `NetherSX2`; the script accepts both names. It applies the Cheats and Patches settings cleanup, game-list CHEATS badges, and OSD per-code cheat toggles. Rebuild and sign the APK after patching.
 
 Before signing an APK for Android 11+ devices, run `zipalign -p -f 4` on the unsigned APK, then sign the aligned APK with `apksigner`. Otherwise Android can reject the install because `resources.arsc` is not 4-byte aligned.
