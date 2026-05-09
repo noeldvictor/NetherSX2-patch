@@ -10,8 +10,8 @@ They aim to do the following:
 * Fix the RetroAchievements Notifications
 * Expose more Global settings in the App Settings to the user
 * Group cheat, widescreen, and no-interlacing toggles in a clearer in-app Cheats and Patches section
-* Mark games with bundled cheat patches in the game list with a visible CHEATS badge
-* Add an in-app FAQ link to a searchable list of games with bundled cheat patches
+* Mark games with real `.pnach` cheat files in the game list with a visible CHEATS badge
+* Add an in-app FAQ link to a searchable list of games with bundled widescreen and no-interlacing patches
 * Update the GameDB, Controller Support, and the Widescreen and No-Interlace Patches
 * Add additional AetherSX2/NetherSX2 spesific fixes to the GameDB
 * Resign the APK to Remove the Play Protect Warning

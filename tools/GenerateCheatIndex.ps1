@@ -87,7 +87,7 @@ $html = @"
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cheat-supported games</title>
+  <title>Bundled patch-supported games</title>
   <style>
     body { font-family: sans-serif; line-height: 1.45; margin: 16px; }
     h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
@@ -100,8 +100,8 @@ $html = @"
   </style>
 </head>
 <body>
-  <h1>Cheat-supported games</h1>
-  <p>Generated from the bundled patch archives. Unique games: $($sortedGames.Count). Widescreen: $widescreenCount. No-interlacing: $noInterlacingCount.</p>
+  <h1>Bundled patch-supported games</h1>
+  <p>Generated from the bundled widescreen and no-interlacing patch archives. Unique games: $($sortedGames.Count). Widescreen: $widescreenCount. No-interlacing: $noInterlacingCount.</p>
   <input id="filter" type="search" placeholder="Search title, CRC, or patch type" oninput="filterRows()">
   <table>
     <thead>
@@ -126,4 +126,4 @@ $($rows -join "`n")
 
 $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 [System.IO.File]::WriteAllText((Join-Path (Get-Location) $OutputPath), $html, $utf8NoBom)
-Write-Host "Wrote $OutputPath with $($sortedGames.Count) unique cheat-supported games."
+Write-Host "Wrote $OutputPath with $($sortedGames.Count) unique patch-supported games."

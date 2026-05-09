@@ -8,7 +8,7 @@ This repository is an APK patching workspace for NetherSX2, not a normal Gradle 
 
 - The in-app cheat controls are grouped by `decomp/ApplyCheatUiPatch.ps1`.
 - The game list CHEATS badges are applied by `decomp/ApplyCheatBadgePatch.ps1`.
-- The badge script generates `smali/xyz/aethersx2/android/CheatSupport.smali` from CRCs in `assets/cheats_ws.zip` and `assets/cheats_ni.zip`, then patches the grid and list adapters to show a `cheat_badge` view on supported games.
+- The badge script generates `smali/xyz/aethersx2/android/CheatSupport.smali`, then patches the grid and list adapters to show a `cheat_badge` view only when a matching real `.pnach` file exists in the app's `cheats` folder. Do not use `assets/cheats_ws.zip` or `assets/cheats_ni.zip` for the CHEATS badge; those are bundled patch archives, not real cheat availability.
 - It keeps the existing emulator config keys:
   - `EmuCore/EnableCheats`
   - `EmuCore/EnableWideScreenPatches`

@@ -166,109 +166,124 @@ function Update-ListLayout {
     Save-XmlDocument -Document $doc -Path $path
 }
 
-function Get-BundledCheatCrcs {
-    $crcSet = New-Object "System.Collections.Generic.HashSet[string]" ([System.StringComparer]::OrdinalIgnoreCase)
-    $zipPaths = @(
-        Join-Path $RepoRoot "assets\cheats_ws.zip"
-        Join-Path $RepoRoot "assets\cheats_ni.zip"
-    )
-
-    foreach ($zipPath in $zipPaths) {
-        if (-not (Test-Path -LiteralPath $zipPath)) {
-            Write-Warning "Missing cheat zip: $zipPath"
-            continue
-        }
-
-        $archive = [System.IO.Compression.ZipFile]::OpenRead($zipPath)
-        try {
-            foreach ($entry in $archive.Entries) {
-                $name = [System.IO.Path]::GetFileNameWithoutExtension($entry.FullName)
-                if ($name -match '^[0-9A-Fa-f]{8}$') {
-                    [void]$crcSet.Add($name.ToUpperInvariant())
-                }
-            }
-        } finally {
-            $archive.Dispose()
-        }
-    }
-
-    return @($crcSet)
-}
-
-function Convert-CrcToSignedInt64 {
-    param([string]$Hex)
-
-    $unsigned = [UInt32]::Parse($Hex, [System.Globalization.NumberStyles]::HexNumber)
-    if ($unsigned -gt [UInt32]0x7fffffff) {
-        return ([Int64]$unsigned - 0x100000000)
-    }
-
-    return [Int64]$unsigned
-}
-
 function Write-CheatSupportClass {
-    param([string[]]$Crcs)
-
-    if ($Crcs.Count -eq 0) {
-        throw "No cheat CRCs found in bundled cheat zips."
-    }
-
-    $entries = foreach ($crc in $Crcs) {
-        [pscustomobject]@{
-            Crc = $crc
-            Signed = Convert-CrcToSignedInt64 -Hex $crc
-        }
-    }
-
-    $entries = @($entries | Sort-Object -Property Signed)
     $targetDir = Join-Path $ProjectPath "smali\xyz\aethersx2\android"
     if (-not (Test-Path -LiteralPath $targetDir)) {
         throw "Missing smali package folder: $targetDir"
     }
 
     $targetPath = Join-Path $targetDir "CheatSupport.smali"
-    $lines = New-Object System.Collections.Generic.List[string]
-    [void]$lines.Add(".class public final Lxyz/aethersx2/android/CheatSupport;")
-    [void]$lines.Add(".super Ljava/lang/Object;")
-    [void]$lines.Add('.source "CheatSupport.java"')
-    [void]$lines.Add("")
-    [void]$lines.Add("# direct methods")
-    [void]$lines.Add(".method private constructor <init>()V")
-    [void]$lines.Add("    .locals 0")
-    [void]$lines.Add("")
-    [void]$lines.Add("    invoke-direct {p0}, Ljava/lang/Object;-><init>()V")
-    [void]$lines.Add("")
-    [void]$lines.Add("    return-void")
-    [void]$lines.Add(".end method")
-    [void]$lines.Add("")
-    [void]$lines.Add("")
-    [void]$lines.Add("# virtual methods")
-    [void]$lines.Add(".method public static hasCheats(I)Z")
-    [void]$lines.Add("    .locals 1")
-    [void]$lines.Add("")
-    [void]$lines.Add("    sparse-switch p0, :sswitch_data_0")
-    [void]$lines.Add("")
-    [void]$lines.Add("    const/4 v0, 0x0")
-    [void]$lines.Add("")
-    [void]$lines.Add("    return v0")
-    [void]$lines.Add("")
-    [void]$lines.Add("    :sswitch_has_cheats")
-    [void]$lines.Add("    const/4 v0, 0x1")
-    [void]$lines.Add("")
-    [void]$lines.Add("    return v0")
-    [void]$lines.Add("")
-    [void]$lines.Add("    :sswitch_data_0")
-    [void]$lines.Add("    .sparse-switch")
+    $content = @'
+.class public final Lxyz/aethersx2/android/CheatSupport;
+.super Ljava/lang/Object;
+.source "CheatSupport.java"
 
-    foreach ($entry in $entries) {
-        [void]$lines.Add(("        {0} -> :sswitch_has_cheats" -f $entry.Signed))
-    }
 
-    [void]$lines.Add("    .end sparse-switch")
-    [void]$lines.Add(".end method")
+# direct methods
+.method private constructor <init>()V
+    .locals 0
 
-    [System.IO.File]::WriteAllLines($targetPath, $lines, (New-Object System.Text.UTF8Encoding($false)))
-    Write-Host ("Generated CheatSupport.smali with {0} bundled cheat CRCs" -f $entries.Count)
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+.method private static hasCheatFileInRoot(Ljava/io/File;Ljava/lang/String;)Z
+    .locals 3
+
+    const/4 v0, 0x0
+
+    if-eqz p0, :cond_return
+
+    new-instance v1, Ljava/io/File;
+
+    const-string v2, "cheats"
+
+    invoke-direct {v1, p0, v2}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
+
+    new-instance v2, Ljava/io/File;
+
+    invoke-direct {v2, v1, p1}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
+
+    invoke-virtual {v2}, Ljava/io/File;->isFile()Z
+
+    move-result v0
+
+    if-nez v0, :cond_return
+
+    invoke-virtual {p1}, Ljava/lang/String;->toLowerCase()Ljava/lang/String;
+
+    move-result-object p1
+
+    new-instance v2, Ljava/io/File;
+
+    invoke-direct {v2, v1, p1}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
+
+    invoke-virtual {v2}, Ljava/io/File;->isFile()Z
+
+    move-result v0
+
+    :cond_return
+    return v0
+.end method
+
+.method public static hasCheats(Landroid/content/Context;I)Z
+    .locals 5
+
+    const/4 v0, 0x0
+
+    if-eqz p0, :cond_return_false
+
+    const-string v1, "%08X.pnach"
+
+    const/4 v2, 0x1
+
+    new-array v2, v2, [Ljava/lang/Object;
+
+    invoke-static {p1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object p1
+
+    aput-object p1, v2, v0
+
+    invoke-static {v1, v2}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object p1
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p0, v1}, Landroid/content/Context;->getExternalFilesDir(Ljava/lang/String;)Ljava/io/File;
+
+    move-result-object v2
+
+    invoke-static {v2, p1}, Lxyz/aethersx2/android/CheatSupport;->hasCheatFileInRoot(Ljava/io/File;Ljava/lang/String;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_check_internal
+
+    const/4 p0, 0x1
+
+    return p0
+
+    :cond_check_internal
+    invoke-virtual {p0}, Landroid/content/Context;->getFilesDir()Ljava/io/File;
+
+    move-result-object p0
+
+    invoke-static {p0, p1}, Lxyz/aethersx2/android/CheatSupport;->hasCheatFileInRoot(Ljava/io/File;Ljava/lang/String;)Z
+
+    move-result p0
+
+    return p0
+
+    :cond_return_false
+    return v0
+.end method
+'@
+
+    [System.IO.File]::WriteAllText($targetPath, (ConvertTo-Lf -Text $content), (New-Object System.Text.UTF8Encoding($false)))
+    Write-Host "Generated CheatSupport.smali for runtime .pnach file checks"
 }
 
 function ConvertTo-Lf {
@@ -394,13 +409,43 @@ function Patch-GridAdapter {
     $path = Join-Path $ProjectPath "smali\xyz\aethersx2\android\c`$a.smali"
     $text = Read-Smali -Path $path
 
-    if (-not $text.Contains("Lxyz/aethersx2/android/CheatSupport;->hasCheats(I)Z")) {
+    if ($text.Contains("Lxyz/aethersx2/android/CheatSupport;->hasCheats(I)Z")) {
+        $text = Replace-Required -Text $text -Description "grid adapter runtime cheat lookup locals" -Old @'
+.method public final h(Landroidx/recyclerview/widget/RecyclerView$b0;I)V
+    .locals 3
+'@ -New @'
+.method public final h(Landroidx/recyclerview/widget/RecyclerView$b0;I)V
+    .locals 4
+'@
+
+        $text = Replace-Required -Text $text -Description "grid adapter runtime cheat lookup" -Old @'
+    invoke-virtual {p2}, Lxyz/aethersx2/android/GameListEntry;->getCRC()I
+
+    move-result v2
+
+    invoke-static {v2}, Lxyz/aethersx2/android/CheatSupport;->hasCheats(I)Z
+
+    move-result v2
+'@ -New @'
+    invoke-virtual {p2}, Lxyz/aethersx2/android/GameListEntry;->getCRC()I
+
+    move-result v2
+
+    invoke-virtual {v1}, Landroid/view/View;->getContext()Landroid/content/Context;
+
+    move-result-object v3
+
+    invoke-static {v3, v2}, Lxyz/aethersx2/android/CheatSupport;->hasCheats(Landroid/content/Context;I)Z
+
+    move-result v2
+'@
+    } elseif (-not $text.Contains("Lxyz/aethersx2/android/CheatSupport;->hasCheats(Landroid/content/Context;I)Z")) {
         $text = Replace-Required -Text $text -Description "grid adapter locals" -Old @'
 .method public final h(Landroidx/recyclerview/widget/RecyclerView$b0;I)V
     .locals 2
 '@ -New @'
 .method public final h(Landroidx/recyclerview/widget/RecyclerView$b0;I)V
-    .locals 3
+    .locals 4
 '@
 
         $text = Replace-Required -Text $text -Description "grid adapter badge binding" -Old @'
@@ -423,7 +468,11 @@ function Patch-GridAdapter {
 
     move-result v2
 
-    invoke-static {v2}, Lxyz/aethersx2/android/CheatSupport;->hasCheats(I)Z
+    invoke-virtual {v1}, Landroid/view/View;->getContext()Landroid/content/Context;
+
+    move-result-object v3
+
+    invoke-static {v3, v2}, Lxyz/aethersx2/android/CheatSupport;->hasCheats(Landroid/content/Context;I)Z
 
     move-result v2
 
@@ -452,7 +501,29 @@ function Patch-ListAdapter {
     $path = Join-Path $ProjectPath "smali\xyz\aethersx2\android\e`$a.smali"
     $text = Read-Smali -Path $path
 
-    if (-not $text.Contains("Lxyz/aethersx2/android/CheatSupport;->hasCheats(I)Z")) {
+    if ($text.Contains("Lxyz/aethersx2/android/CheatSupport;->hasCheats(I)Z")) {
+        $text = Replace-Required -Text $text -Description "list adapter runtime cheat lookup" -Old @'
+    invoke-virtual {p2}, Lxyz/aethersx2/android/GameListEntry;->getCRC()I
+
+    move-result v2
+
+    invoke-static {v2}, Lxyz/aethersx2/android/CheatSupport;->hasCheats(I)Z
+
+    move-result v2
+'@ -New @'
+    invoke-virtual {p2}, Lxyz/aethersx2/android/GameListEntry;->getCRC()I
+
+    move-result v2
+
+    invoke-virtual {v1}, Landroid/view/View;->getContext()Landroid/content/Context;
+
+    move-result-object v3
+
+    invoke-static {v3, v2}, Lxyz/aethersx2/android/CheatSupport;->hasCheats(Landroid/content/Context;I)Z
+
+    move-result v2
+'@
+    } elseif (-not $text.Contains("Lxyz/aethersx2/android/CheatSupport;->hasCheats(Landroid/content/Context;I)Z")) {
         $text = Replace-Required -Text $text -Description "list adapter badge binding" -Old @'
     .line 4
     :goto_0
@@ -473,7 +544,11 @@ function Patch-ListAdapter {
 
     move-result v2
 
-    invoke-static {v2}, Lxyz/aethersx2/android/CheatSupport;->hasCheats(I)Z
+    invoke-virtual {v1}, Landroid/view/View;->getContext()Landroid/content/Context;
+
+    move-result-object v3
+
+    invoke-static {v3, v2}, Lxyz/aethersx2/android/CheatSupport;->hasCheats(Landroid/content/Context;I)Z
 
     move-result v2
 
@@ -500,7 +575,7 @@ function Patch-ListAdapter {
 
 Update-GridLayout
 Update-ListLayout
-Write-CheatSupportClass -Crcs (Get-BundledCheatCrcs)
+Write-CheatSupportClass
 Patch-GridViewHolder
 Patch-ListViewHolder
 Patch-GridAdapter
