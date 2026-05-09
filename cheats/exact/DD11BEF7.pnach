@@ -95,6 +95,5 @@
 // patch=1,EE,09090909,extended,00000000
 // patch=1,EE,00445B88,extended,00000009
 
-[Cheats/No Random Encounters (Ghidra Test)]
-// Ghidra trace: NOPs the state-0x11 encounter-success branch into battle state 0x12. Original instruction at 0011E41C is 14400045.
-// patch=1,EE,2011E41C,extended,00000000
+[Cheats/No Enemy Encounters (Skip Visible Monster Contact Test)]
+// patch=1,EE,201B9468,extended,00000000

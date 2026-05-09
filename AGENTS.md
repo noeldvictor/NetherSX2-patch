@@ -34,6 +34,7 @@ The FAQ links to `assets/cheats_index.html`, which gives the app an on-device li
 - `patch=0,` is not disabled. In PCSX2 PNACH syntax it means apply only once at game startup, so many gameplay cheats will appear broken until a console reset, and even then only if the target value is not overwritten later by the game.
 - `patch=1,` applies every frame and is the default for normal gameplay cheats such as health, money, VFX, inventory counts, and timers.
 - Default-off tracked cheats should be stored as commented lines: `// patch=1,...`. The OSD toggle UI enables them by removing the comment and disables them by adding it back.
+- Do not put explanatory `//` comments between a `[Cheats/... ]` header and its `patch=` lines; the OSD parser can display that comment as the toggle label. Keep PNACH research notes in `AGENTS.md` instead.
 - Boot/unlock/event-style cheats may still need a game reset, area transition, save reload, or menu refresh even when the line is `patch=1,`; live stat cheats should not.
 - The Viewtiful Joe 2 issue on Thor was caused by imported `patch=0,` lines. The fix was to convert repo cheats to `// patch=1,...`, normalize existing Thor files from `patch=0,` to `patch=1,`, and make `ApplyOsdCheatTogglePatch.ps1` normalize old enabled lines automatically.
 - Do not reinstall the exact cheat pack just to fix timing on a user's device unless you intend to reset all per-cheat selections. `tools\InstallCheatsToDevice.ps1` pushes the repo baseline files, which are default-off, and can overwrite the user's current toggles.
@@ -168,7 +169,7 @@ Same-serial or fan-translation candidates live under `cheats/candidates`; instal
 
 ## Wizardry Encounter Research Notes
 
-For `Wizardry - Tale of the Forsaken Land (USA)`, the Thor inventory reports serial `SLUS-20259` and CRC `DD11BEF7`. The tracked exact PNACH is `cheats/exact/DD11BEF7.pnach`; it currently has money, stats, shop, and spell-count blocks, but no known encounter-rate or no-random-encounter block.
+For `Wizardry - Tale of the Forsaken Land (USA)`, the Thor inventory reports serial `SLUS-20259` and CRC `DD11BEF7`. The tracked exact PNACH is `cheats/exact/DD11BEF7.pnach`; it currently has money, stats, shop, spell-count, and experimental encounter blocks.
 
 Search notes from 2026-05-09:
 
@@ -198,15 +199,48 @@ Ghidra/static notes from the same session:
 - Extracted `SLUS_202.59` from the user's CHD and imported it into Ghidra using local Ghidra 12.0.4 and JDK 17. The main load segment maps file offset `0x1000` to EE address `0x00100000`, so runtime address = file offset + `0xFF000`.
 - The global state byte at `005C1692` (`gp - 0x6B5E`) was `12` in Thor savestate slot 9 (red monster warning/imminent encounter) and `11` in slot 10 (post-battle/calm corridor). This is a better encounter-state signal than the rejected camera-adjacent `004896xx` values.
 - Function `0011E318` handles the state-`11` encounter progression. After calls through `001BB570`, `0011DE70`, and `0017AA08`, instruction `0011E41C` branches to `0011E534`, which stores state `12` and begins the battle/warning setup. Original instruction word at `0011E41C` is `14400045` (`bnez v0,0011E534`).
-- The tracked PNACH has a default-off test block named `No Random Encounters (Ghidra Test)`:
+- Rejected: NOPing only `0011E41C` stopped the battle transition after the encounter routine had already put the game into its pre-battle stop state. Do not use `patch=1,EE,2011E41C,extended,00000000` as the final no-encounter patch.
+- Rejected: Replacing `0011E414` (`jal 0017AA08`) with `addiu v0,zero,0` prevented the battle handoff but still left the game on the black transition screen with white sparks, so the transition setup already happened before that point. Do not use `patch=1,EE,2011E414,extended,24020000` as the final no-encounter patch.
+- Rejected: Replacing `0011E3EC` (`jal 0017AA38`) with `addiu v0,zero,0` removed the white sparks but still faded to a black screen after enemy contact. Do not use `patch=1,EE,2011E3EC,extended,24020000` as the final no-encounter patch.
+- Rejected: Replacing `0011E3E4` (`jal 00100E90`) with an unconditional branch to the normal return still allowed enemy contact to begin a slow fade to black. Do not use `patch=1,EE,2011E3E4,extended,100000F9` as the final no-encounter patch.
 
-```ini
-// patch=1,EE,2011E41C,extended,00000000
+- Rejected: Replacing `0011E5E4` (`jal 001E9150`) with `addiu v0,zero,0` did not stop battle start. Slot 8/9/10 savestate comparison explained why: `005C2B5E` is already `01` in slot 9 (red enemy/imminent) and slot 8 (in battle), and the original `001E9150` returns zero when that byte is `01`. Do not use `patch=1,EE,2011E5E4,extended,24020000` as the final no-encounter patch.
+
+- Slot 8 was captured in battle after the failed contact-gate test. The key state comparison is:
+
+```text
+slot 10 post-battle/calm: 005C1692=11, 005C16A4=00000000, 005C2B5E=00
+slot 9 red/imminent:      005C1692=12, 005C16A4=00006000, 005C2B5E=01
+slot 8 in battle:         005C1692=12, 005C16A4=00002000, 005C2B5E=01
 ```
 
-It NOPs only that encounter-success branch instead of freezing camera state. If it blocks scripted fights or does not affect an already-JIT-compiled in-game session, disable it and test again after a console reset or fresh area load before promoting it as a plain `No Random Encounters` block.
+This means slot 9 is already past the initial trigger point. Tests that are meant to prevent the encounter must be loaded from slot 10 or a fresh calm dungeon state, not from slot 9 after `state=12`/`flags=0x6000` have already been set.
 
-Do not re-add the rejected candidates to `cheats/exact/DD11BEF7.pnach`. The next useful scan needs tighter control states, ideally same camera position and party state with only encounter pressure changed, plus an after-battle/reset state to identify values that reset cleanly without moving camera data.
+- The earlier trigger gate is at `0011E3B4`, which calls `001A9BA0`. In `0011E318`, if that call returns nonzero, the game sets bit `0x2000` in `005C16A4` and calls `00100E80`; later frames enter the state-`11`/state-`12` fade setup. `001A9BA0` has many callers, so patch only the `0011E3B4` callsite. Original instruction word at `0011E3B4` is `0C06A6E8`.
+
+- Superseded test: the tracked PNACH previously had a default-off block named `No Random Encounters (Trigger Gate Test)`:
+
+```ini
+// patch=1,EE,2011E3B4,extended,24020000
+```
+
+It replaces the `0011E3B4` call with `addiu v0,zero,0`, leaving the delay-slot `nop` intact so the existing `beqz v0,0011E6F4` skips setting the `0x2000` encounter flag. This is a prevention patch, not a recovery patch; it will not unwind a state that already has `005C1692=12` or `005C16A4` bits `0x2000/0x4000` set.
+
+- Deeper slot 10 -> slot 9 -> slot 8 static trace:
+  - `001A9BA0` is the encounter predicate used by `0011E318`; it reads `004896CC`. Slot 10 has `004896CC=06000060`, while slots 9 and 8 have `004896CC=0E000000`. The raised bit is `0x08000000`.
+  - `001A91E0` ORs `0x0C000000` into `004896CC` and then jumps to `001A9080`. That exactly explains slot 10 becoming slot 9 once low transient bits clear.
+  - The only direct caller of `001A91E0` is `001BC3D8`, inside function `001BC280`. That function computes distance/angle against the current visible enemy struct at `*(gp - 0x6578)`, then calls `001A91E0`, `001E9180`, `00120108`, and `001097F8` to request the enemy encounter/warning flow.
+  - The only direct caller of `001BC280` is `001B9468`, inside the 64-entry visible enemy update loop. The caller already skips `001BC280` when `004896CC & 0x08800000` is nonzero, which confirms this path is upstream of the visible-enemy encounter trigger rather than a late battle transition.
+  - The current tracked candidate is therefore default-off:
+
+```ini
+[Cheats/No Enemy Encounters (Skip Visible Monster Contact Test)]
+// patch=1,EE,201B9468,extended,00000000
+```
+
+This NOPs the `jal 001BC280` call before it can raise `004896CC |= 0x0C000000`, call `001E9180`, or enter the later state-`11`/state-`12` transition code. Test it from slot 10 or a fresh calm dungeon state. If a state already has `005C1692=12`, `005C16A4=0x2000/0x4000/0x6000`, or `004896CC & 0x08000000`, reload a pre-contact state; this patch prevents a new encounter request but does not unwind one that is already latched.
+
+Do not re-add the rejected candidates to `cheats/exact/DD11BEF7.pnach`. If the `001B9468` contact-skip test fails, the next useful scan is a tighter caller trace around `001BC280`/`001E9180` and the visible enemy loop, not another blind clamp in the `004896xx` camera/control cluster.
 
 ## Cover Installer Notes
 
