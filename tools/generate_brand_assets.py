@@ -88,12 +88,15 @@ def background(size: int = WORK, rounded: bool = True) -> Image.Image:
 
     overlay = Image.new("RGBA", (size, size), (0, 0, 0, 0))
     od = ImageDraw.Draw(overlay, "RGBA")
-    od.ellipse((-size * 0.18, -size * 0.16, size * 0.88, size * 0.90), fill=(31, 210, 198, 26))
-    od.ellipse((size * 0.34, size * 0.44, size * 1.24, size * 1.22), fill=(190, 245, 82, 22))
     od.polygon(
-        [(size * 0.72, 0), (size, 0), (size, size * 0.18), (size * 0.44, size)],
-        fill=(255, 184, 76, 12),
+        [(size * 0.64, 0), (size, 0), (size, size), (size * 0.34, size)],
+        fill=(31, 210, 198, 20),
     )
+    od.polygon(
+        [(0, size * 0.72), (size * 0.42, size), (0, size)],
+        fill=(190, 245, 82, 16),
+    )
+    od.line((size * 0.18, size * 0.80, size * 0.86, size * 0.18), fill=(244, 250, 248, 18), width=max(1, size // 42))
 
     panel = Image.alpha_composite(gradient, overlay)
 
@@ -121,40 +124,29 @@ def draw_foreground(size: int = WORK) -> Image.Image:
 
     glow = Image.new("RGBA", (size, size), (0, 0, 0, 0))
     gd = ImageDraw.Draw(glow, "RGBA")
-    gd.rounded_rectangle(xy((408, 344, 1640, 1704)), radius=int(280 * s), fill=(31, 210, 198, 56))
-    gd.ellipse(xy((1030, 1180, 1690, 1770)), fill=(190, 245, 82, 62))
-    img.alpha_composite(glow.filter(ImageFilter.GaussianBlur(max(1, int(48 * s)))))
+    gd.ellipse(xy((438, 350, 1610, 1402)), fill=(31, 210, 198, 62))
+    gd.rounded_rectangle(xy((548, 1322, 1500, 1588)), radius=int(132 * s), fill=(190, 245, 82, 68))
+    img.alpha_composite(glow.filter(ImageFilter.GaussianBlur(max(1, int(52 * s)))))
+
+    n_font = font(int(1040 * s), bold=True)
+    two_font = font(int(470 * s), bold=True)
+
+    d.text(xy((880, 846)), "N", font=n_font, fill=shadow, anchor="mm")
+    d.text(xy((850, 800)), "N", font=n_font, fill=white, anchor="mm")
+    d.text(xy((1316, 1020)), "2", font=two_font, fill=shadow, anchor="mm")
+    d.text(xy((1292, 980)), "2", font=two_font, fill=cyan, anchor="mm")
 
     d.rounded_rectangle(
-        xy((440, 354, 1608, 1674)),
-        radius=int(250 * s),
-        fill=(*COLORS["panel"], 246),
-        outline=(31, 210, 198, 210),
-        width=max(3, int(20 * s)),
-    )
-    d.rounded_rectangle(
-        xy((520, 434, 1528, 1594)),
-        radius=int(192 * s),
-        outline=(244, 250, 248, 32),
-        width=max(2, int(7 * s)),
-    )
-
-    n_font = font(int(900 * s), bold=True)
-    d.text(xy((1024, 880)), "N", font=n_font, fill=shadow, anchor="mm")
-    d.text(xy((1002, 846)), "N", font=n_font, fill=white, anchor="mm")
-
-    d.rounded_rectangle(
-        xy((1104, 1230, 1532, 1468)),
-        radius=int(119 * s),
+        xy((560, 1350, 1492, 1534)),
+        radius=int(92 * s),
         fill=green,
-        outline=(244, 250, 248, 130),
-        width=max(3, int(12 * s)),
+        outline=(244, 250, 248, 150),
+        width=max(3, int(14 * s)),
     )
-    d.ellipse(xy((1316, 1268, 1494, 1446)), fill=ink)
-    d.rounded_rectangle(xy((1172, 1318, 1286, 1374)), radius=int(28 * s), fill=(5, 18, 21, 145))
-
-    d.line(xy((1234, 1548, 1376, 1548)), fill=cyan, width=max(8, int(30 * s)))
-    d.line(xy((1376, 1548, 1496, 1548)), fill=(255, 184, 76, 255), width=max(8, int(30 * s)))
+    d.rounded_rectangle(xy((668, 1410, 1016, 1474)), radius=int(32 * s), fill=(5, 18, 21, 170))
+    d.ellipse(xy((1172, 1376, 1444, 1502)), fill=ink)
+    d.line(xy((620, 1618, 1096, 1618)), fill=cyan, width=max(8, int(34 * s)))
+    d.line(xy((1136, 1618, 1458, 1618)), fill=(255, 184, 76, 255), width=max(8, int(34 * s)))
     return img
 
 
@@ -189,7 +181,7 @@ def wordmark(dark: bool) -> Image.Image:
 
 def write_text_assets() -> None:
     (ANDROID_RES_DIR / "drawable" / "ic_launcher_background.xml").write_text(
-        """<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<vector xmlns:android=\"http://schemas.android.com/apk/res/android\" android:width=\"108dp\" android:height=\"108dp\" android:viewportWidth=\"108\" android:viewportHeight=\"108\">\n    <path android:fillColor=\"#0B141C\" android:pathData=\"M0,0h108v108h-108z\" />\n    <path android:fillColor=\"#172D31\" android:pathData=\"M0,82 C24,60 45,52 70,56 C88,59 100,70 108,80 L108,108 L0,108 Z\" />\n    <path android:fillColor=\"#14292C\" android:pathData=\"M0,0 L108,0 L108,24 C78,21 54,30 34,48 C20,61 10,72 0,76 Z\" />\n</vector>\n""",
+        """<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<vector xmlns:android=\"http://schemas.android.com/apk/res/android\" android:width=\"108dp\" android:height=\"108dp\" android:viewportWidth=\"108\" android:viewportHeight=\"108\">\n    <path android:fillColor=\"#0B141C\" android:pathData=\"M0,0h108v108h-108z\" />\n    <path android:fillColor=\"#143135\" android:pathData=\"M69,0h39v108h-72z\" />\n    <path android:fillColor=\"#173024\" android:pathData=\"M0,78l43,30h-43z\" />\n    <path android:fillColor=\"#1FD2C6\" android:fillAlpha=\"0.16\" android:pathData=\"M18,87 L88,20 L93,25 L23,92 Z\" />\n</vector>\n""",
         encoding="utf-8",
     )
     for name in ("ic_launcher", "ic_launcher_round"):
