@@ -77,7 +77,22 @@ For the decompiled patch flow, run `decomp\Hackify.bat` after decoding the APK f
 
 `decomp\ApplyCustomGpuDriverPatch.ps1` adds a `Custom GPU Driver` row directly under `Settings > Graphics > GPU Renderer`. The row opens `xyz.aethersx2.android.GpuDriverManagerActivity`, which is compiled from `android-src/xyz/aethersx2/android/GpuDriverManagerActivity.java` into `classes2.dex` during patching.
 
-The manager downloads a Turnip/AdrenoTools driver zip, extracts the Vulkan `.so`, renames it to `libvulkan_freedreno.so`, stores it under private app storage at `files/gpu_drivers/current`, writes an `enabled` marker, and sets `EmuCore/GS/Renderer = 14` for Vulkan. The default download URL is K11MCH1's `Turnip_v26.0.0_R8.zip`, and the UI also allows a custom URL override.
+The manager downloads a Turnip/AdrenoTools driver zip, extracts the Vulkan `.so`, renames it to `libvulkan_freedreno.so`, stores it under private app storage at `files/gpu_drivers/current`, writes an `enabled` marker, and sets `EmuCore/GS/Renderer = 14` for Vulkan. The pinned known-good download URL is K11MCH1's `Turnip_v26.0.0_R8.zip`, and the UI also allows a custom URL override.
+
+The `Browse Turnip drivers` button fetches release assets directly from GitHub at runtime. Current curated sources are:
+
+- `K11MCH1/AdrenoToolsDrivers`
+- `StevenMXZ/Adreno-Tools-Drivers`
+- `The412Banner/Banners-Turnip`
+- `v3kt0r-87/Mesa-Turnip-Builder`
+
+The catalog filters for Turnip/Mesa `.zip` or `.adpkg` packages and skips obvious Magisk/KSU modules, Android-version-incompatible releases, plus A8xx/Gen8/A710/A720-only packages for the Thor's Android 13 / Adreno 740 setup. Each source is capped so one repo cannot crowd out the others. Keep the custom URL path available because driver recommendations move quickly and users may need a specific build before the curated list changes.
+
+New installs also write an ADB-readable breadcrumb at:
+
+```powershell
+adb shell cat /sdcard/Android/data/xyz.aethersx2.android/files/gpu_driver_current.txt
+```
 
 The native side is built by `tools\BuildGpuDriverShim.ps1`, which clones pinned `bylaws/libadrenotools` into ignored `.tools/libadrenotools`, builds arm64 libraries with the Android NDK, and copies these generated files into the decoded APK:
 

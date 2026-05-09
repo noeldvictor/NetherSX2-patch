@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,18 +19,32 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public final class GpuDriverManagerActivity extends Activity {
     private static final String DEFAULT_DRIVER_NAME = "Turnip v26.0.0 R8";
     private static final String DEFAULT_DRIVER_URL = "https://github.com/K11MCH1/AdrenoToolsDrivers/releases/download/v26.0.0-rc08/Turnip_v26.0.0_R8.zip";
     private static final String PREFS_NAME = "xyz.aethersx2.android_preferences";
+    private static final int MAX_DRIVER_OPTIONS = 80;
+    private static final int MAX_DRIVER_OPTIONS_PER_SOURCE = 24;
+    private static final DriverSource[] DRIVER_SOURCES = new DriverSource[] {
+            new DriverSource("K11MCH1", "https://api.github.com/repos/K11MCH1/AdrenoToolsDrivers/releases?per_page=30"),
+            new DriverSource("StevenMXZ", "https://api.github.com/repos/StevenMXZ/Adreno-Tools-Drivers/releases?per_page=20"),
+            new DriverSource("Banners", "https://api.github.com/repos/The412Banner/Banners-Turnip/releases?per_page=20"),
+            new DriverSource("v3kt0r", "https://api.github.com/repos/v3kt0r-87/Mesa-Turnip-Builder/releases?per_page=20")
+    };
 
     private TextView statusView;
-    private Button downloadButton;
+    private Button catalogButton;
+    private Button recommendedButton;
     private Button customButton;
     private Button systemButton;
     private SharedPreferences prefs;
@@ -57,7 +72,7 @@ public final class GpuDriverManagerActivity extends Activity {
         root.addView(title);
 
         TextView body = new TextView(this);
-        body.setText("Downloads a Turnip driver package, installs its Vulkan driver into private app storage, and enables it for the Vulkan renderer after a full emulator restart.");
+        body.setText("Install an AdrenoTools-compatible Turnip Vulkan driver. Changes apply after a full emulator restart.");
         body.setTextSize(15.0f);
         body.setPadding(0, 0, 0, dp(14));
         root.addView(body);
@@ -67,8 +82,11 @@ public final class GpuDriverManagerActivity extends Activity {
         statusView.setPadding(0, 0, 0, dp(14));
         root.addView(statusView);
 
-        downloadButton = addButton(root, "Download recommended Turnip");
-        downloadButton.setOnClickListener(v -> download(DEFAULT_DRIVER_URL, DEFAULT_DRIVER_NAME));
+        catalogButton = addButton(root, "Browse Turnip drivers");
+        catalogButton.setOnClickListener(v -> fetchDriverCatalog());
+
+        recommendedButton = addButton(root, "Download known-good Turnip v26 R8");
+        recommendedButton.setOnClickListener(v -> download(DEFAULT_DRIVER_URL, DEFAULT_DRIVER_NAME));
 
         customButton = addButton(root, "Download from custom URL");
         customButton.setOnClickListener(v -> showCustomUrlDialog());
@@ -106,6 +124,11 @@ public final class GpuDriverManagerActivity extends Activity {
         return new File(driverDir(), "enabled");
     }
 
+    private File externalInfoFile() {
+        File root = getExternalFilesDir(null);
+        return root == null ? null : new File(root, "gpu_driver_current.txt");
+    }
+
     private void refreshStatus() {
         File driver = driverFile();
         boolean installed = driver.isFile();
@@ -122,13 +145,18 @@ public final class GpuDriverManagerActivity extends Activity {
         sb.append("Installed at: ").append(date).append('\n');
         sb.append("Driver file: ").append(driver.getAbsolutePath()).append('\n');
         sb.append("Source: ").append(url).append('\n');
+        File externalInfo = externalInfoFile();
+        if (externalInfo != null) {
+            sb.append("ADB info: ").append(externalInfo.getAbsolutePath()).append('\n');
+        }
         sb.append("Log: /sdcard/Android/data/xyz.aethersx2.android/files/gpu_driver_shim.log");
         statusView.setText(sb.toString());
         setBusy(false);
     }
 
     private void setBusy(boolean busy) {
-        downloadButton.setEnabled(!busy);
+        catalogButton.setEnabled(!busy);
+        recommendedButton.setEnabled(!busy);
         customButton.setEnabled(!busy);
         systemButton.setEnabled(!busy);
     }
@@ -143,6 +171,7 @@ public final class GpuDriverManagerActivity extends Activity {
         if (marker.isFile()) {
             marker.delete();
         }
+        writeExternalDriverInfo("System GPU driver", "", "", false);
         prefs.edit().putBoolean("GPUDriver/Enabled", false).apply();
         refreshStatus();
     }
@@ -160,6 +189,135 @@ public final class GpuDriverManagerActivity extends Activity {
                     if (!url.isEmpty()) {
                         download(url, "Custom Turnip package");
                     }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    private void fetchDriverCatalog() {
+        setMessage("Fetching Turnip driver catalog...", true);
+        new Thread(() -> {
+            try {
+                ArrayList<DriverOption> options = new ArrayList<>();
+                HashSet<String> seenUrls = new HashSet<>();
+                addDriverOption(options, seenUrls, new DriverOption(
+                        "Known-good - " + DEFAULT_DRIVER_NAME,
+                        DEFAULT_DRIVER_URL,
+                        DEFAULT_DRIVER_NAME,
+                        "bundled default"));
+
+                for (DriverSource source : DRIVER_SOURCES) {
+                    fetchSourceCatalog(source, options, seenUrls);
+                    if (options.size() >= MAX_DRIVER_OPTIONS) {
+                        break;
+                    }
+                }
+
+                if (options.isEmpty()) {
+                    throw new IllegalStateException("No compatible driver ZIPs were found.");
+                }
+
+                runOnUiThread(() -> showDriverPicker(options));
+            } catch (Exception e) {
+                runOnUiThread(() -> setMessage("Could not fetch driver catalog:\n" + e.getMessage(), false));
+            }
+        }, "GpuDriverCatalog").start();
+    }
+
+    private void fetchSourceCatalog(DriverSource source, List<DriverOption> options, HashSet<String> seenUrls) throws Exception {
+        String json = downloadText(source.apiUrl);
+        JSONArray releases = new JSONArray(json);
+        int sourceStart = options.size();
+        for (int i = 0; i < releases.length()
+                && options.size() < MAX_DRIVER_OPTIONS
+                && options.size() - sourceStart < MAX_DRIVER_OPTIONS_PER_SOURCE; i++) {
+            JSONObject release = releases.getJSONObject(i);
+            if (release.optBoolean("draft", false)) {
+                continue;
+            }
+
+            String releaseName = release.optString("name", release.optString("tag_name", "Release"));
+            String releaseBody = release.optString("body", "");
+            String publishedAt = friendlyDate(release.optString("published_at", ""));
+            JSONArray assets = release.optJSONArray("assets");
+            if (assets == null) {
+                continue;
+            }
+
+            for (int j = 0; j < assets.length()
+                    && options.size() < MAX_DRIVER_OPTIONS
+                    && options.size() - sourceStart < MAX_DRIVER_OPTIONS_PER_SOURCE; j++) {
+                JSONObject asset = assets.getJSONObject(j);
+                String assetName = asset.optString("name", "");
+                String url = asset.optString("browser_download_url", "");
+                if (!url.isEmpty() && isDriverAsset(assetName, releaseName, releaseBody)) {
+                    addDriverOption(options, seenUrls, new DriverOption(
+                            source.label + " - " + assetName,
+                            url,
+                            releaseName,
+                            publishedAt));
+                }
+            }
+        }
+    }
+
+    private void addDriverOption(List<DriverOption> options, HashSet<String> seenUrls, DriverOption option) {
+        if (seenUrls.add(option.url)) {
+            options.add(option);
+        }
+    }
+
+    private boolean isDriverAsset(String assetName, String releaseName, String releaseBody) {
+        String lowerName = assetName.toLowerCase(Locale.US);
+        String haystack = (assetName + " " + releaseName + " " + releaseBody).toLowerCase(Locale.US);
+        if (!(lowerName.endsWith(".zip") || lowerName.endsWith(".adpkg"))) {
+            return false;
+        }
+        if (!(haystack.contains("turnip") || haystack.contains("mesa"))) {
+            return false;
+        }
+        if (haystack.contains("magisk") || haystack.contains("kernelsu") || haystack.contains("ksu")) {
+            return false;
+        }
+        if (haystack.contains("a8xx") || haystack.contains("gen8") || haystack.contains("a830") || haystack.contains("a840")) {
+            return false;
+        }
+        if (haystack.contains("a710") || haystack.contains("a720") || haystack.contains("710-720")) {
+            return false;
+        }
+        if (Build.VERSION.SDK_INT < 34 && (haystack.contains("android 14") || haystack.contains("android14"))) {
+            return false;
+        }
+        if (Build.VERSION.SDK_INT < 35 && (haystack.contains("android 15") || haystack.contains("android15"))) {
+            return false;
+        }
+        return true;
+    }
+
+    private String friendlyDate(String publishedAt) {
+        if (publishedAt == null || publishedAt.length() < 10) {
+            return "";
+        }
+        return publishedAt.substring(0, 10);
+    }
+
+    private void showDriverPicker(List<DriverOption> options) {
+        String[] labels = new String[options.size()];
+        for (int i = 0; i < options.size(); i++) {
+            DriverOption option = options.get(i);
+            String detail = option.releaseName;
+            if (!option.publishedAt.isEmpty()) {
+                detail += " / " + option.publishedAt;
+            }
+            labels[i] = option.label + "\n" + detail;
+        }
+
+        setBusy(false);
+        new AlertDialog.Builder(this)
+                .setTitle("Select Turnip driver")
+                .setItems(labels, (dialog, which) -> {
+                    DriverOption option = options.get(which);
+                    download(option.url, option.label);
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
@@ -198,6 +356,29 @@ public final class GpuDriverManagerActivity extends Activity {
             while ((read = in.read(buffer)) != -1) {
                 out.write(buffer, 0, read);
             }
+        } finally {
+            connection.disconnect();
+        }
+    }
+
+    private String downloadText(String urlText) throws Exception {
+        HttpURLConnection connection = (HttpURLConnection) new URL(urlText).openConnection();
+        connection.setConnectTimeout(15000);
+        connection.setReadTimeout(30000);
+        connection.setRequestProperty("User-Agent", "NetherSX2-Cheat-Helper");
+        connection.setRequestProperty("Accept", "application/vnd.github+json");
+        int code = connection.getResponseCode();
+        if (code < 200 || code >= 300) {
+            throw new IllegalStateException("HTTP " + code + " from " + urlText);
+        }
+        try (InputStream in = new BufferedInputStream(connection.getInputStream());
+             ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            byte[] buffer = new byte[65536];
+            int read;
+            while ((read = in.read(buffer)) != -1) {
+                out.write(buffer, 0, read);
+            }
+            return out.toString("UTF-8");
         } finally {
             connection.disconnect();
         }
@@ -242,6 +423,7 @@ public final class GpuDriverManagerActivity extends Activity {
         String installedAt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(new Date());
         writeText(enabledMarker(), sourceUrl);
         writeText(new File(dir, "driver-info.txt"), label + "\n" + sourceUrl + "\n" + installedAt + "\n");
+        writeExternalDriverInfo(label, sourceUrl, installedAt, true);
         prefs.edit()
                 .putBoolean("GPUDriver/Enabled", true)
                 .putString("GPUDriver/Name", label)
@@ -254,6 +436,26 @@ public final class GpuDriverManagerActivity extends Activity {
     private void writeText(File file, String text) throws Exception {
         try (FileOutputStream out = new FileOutputStream(file)) {
             out.write(text.getBytes("UTF-8"));
+        }
+    }
+
+    private void writeExternalDriverInfo(String label, String sourceUrl, String installedAt, boolean enabled) {
+        File info = externalInfoFile();
+        if (info == null) {
+            return;
+        }
+        File parent = info.getParentFile();
+        if (parent != null && !parent.isDirectory()) {
+            parent.mkdirs();
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("enabled=").append(enabled ? "true" : "false").append('\n');
+        sb.append("name=").append(label == null ? "" : label).append('\n');
+        sb.append("url=").append(sourceUrl == null ? "" : sourceUrl).append('\n');
+        sb.append("installed_at=").append(installedAt == null ? "" : installedAt).append('\n');
+        try {
+            writeText(info, sb.toString());
+        } catch (Exception ignored) {
         }
     }
 
@@ -270,5 +472,29 @@ public final class GpuDriverManagerActivity extends Activity {
             }
         }
         file.delete();
+    }
+
+    private static final class DriverSource {
+        final String label;
+        final String apiUrl;
+
+        DriverSource(String label, String apiUrl) {
+            this.label = label;
+            this.apiUrl = apiUrl;
+        }
+    }
+
+    private static final class DriverOption {
+        final String label;
+        final String url;
+        final String releaseName;
+        final String publishedAt;
+
+        DriverOption(String label, String url, String releaseName, String publishedAt) {
+            this.label = label;
+            this.url = url;
+            this.releaseName = releaseName;
+            this.publishedAt = publishedAt;
+        }
     }
 }
