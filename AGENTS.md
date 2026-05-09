@@ -13,6 +13,7 @@ This repository is an APK patching workspace for NetherSX2, not a normal Gradle 
 - The OSD PNACH lookup should agree with the game-list badge lookup: use the native game PNACH path only when it exists and contains parsed cheat blocks, then recover the running `GameListEntry` from the game path and fall back to the visible external app `files/cheats/<GameListEntry CRC>.pnach` path before using the live game-info CRC.
 - After pushing PNACH files with ADB, run `tools\FixCheatPermissions.ps1` so shell-owned cheat files become group-writable (`chmod 660`). The app should then edit them directly; do not add app-side ownership-repair save workarounds unless chmod cannot solve the target device.
 - The OSD per-code cheat dialog must not toggle `EmuCore/EnableCheats`; that is a global app setting, not the per-cheat control.
+- Individual cheat toggles still require the emulator's global/per-game `EmuCore/EnableCheats` gate to be enabled. If a selected cheat line is `patch=1,` and still has no effect, check that setting before assuming the PNACH failed.
 - It keeps the existing emulator config keys:
   - `EmuCore/EnableCheats`
   - `EmuCore/EnableWideScreenPatches`
@@ -26,6 +27,20 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\GenerateCheatIndex.ps1
 ```
 
 The FAQ links to `assets/cheats_index.html`, which gives the app an on-device list of games with bundled widescreen or no-interlacing patches.
+
+## PNACH Timing Notes
+
+- `patch=0,` is not disabled. In PCSX2 PNACH syntax it means apply only once at game startup, so many gameplay cheats will appear broken until a console reset, and even then only if the target value is not overwritten later by the game.
+- `patch=1,` applies every frame and is the default for normal gameplay cheats such as health, money, VFX, inventory counts, and timers.
+- Default-off tracked cheats should be stored as commented lines: `// patch=1,...`. The OSD toggle UI enables them by removing the comment and disables them by adding it back.
+- Boot/unlock/event-style cheats may still need a game reset, area transition, save reload, or menu refresh even when the line is `patch=1,`; live stat cheats should not.
+- The Viewtiful Joe 2 issue on Thor was caused by imported `patch=0,` lines. The fix was to convert repo cheats to `// patch=1,...`, normalize existing Thor files from `patch=0,` to `patch=1,`, and make `ApplyOsdCheatTogglePatch.ps1` normalize old enabled lines automatically.
+- Do not reinstall the exact cheat pack just to fix timing on a user's device unless you intend to reset all per-cheat selections. `tools\InstallCheatsToDevice.ps1` pushes the repo baseline files, which are default-off, and can overwrite the user's current toggles.
+- To preserve the user's current selected cheats on Thor while fixing timing, run a targeted in-place normalization like:
+
+```powershell
+adb shell "sed -i -E 's/^([[:space:]]*\/\/[[:space:]]*)?patch=0,/\1patch=1,/' /sdcard/Android/data/xyz.aethersx2.android/files/cheats/1B7DA82A.pnach"
+```
 
 ## Local Tooling
 
