@@ -1,8 +1,11 @@
 param(
     [string]$PackageName = "xyz.aethersx2.android",
     [string]$CheatDirectory = (Join-Path $PSScriptRoot "..\cheats\exact"),
+    [string]$CommunityDirectory = (Join-Path $PSScriptRoot "..\cheats\community\xs1l3n7x"),
     [string]$CandidateDirectory = (Join-Path $PSScriptRoot "..\cheats\candidates"),
     [string]$Device,
+    [switch]$SkipCommunity,
+    [switch]$CommunityOnly,
     [switch]$IncludeCandidates,
     [switch]$DryRun
 )
@@ -29,18 +32,44 @@ function Invoke-Adb {
 }
 
 $remoteCheatDirectory = "/sdcard/Android/data/$PackageName/files/cheats"
-$sourceDirectories = @((Resolve-Path $CheatDirectory).Path)
+$sourceDirectories = @()
+
+if ($CommunityOnly -and $SkipCommunity) {
+    throw "Use either -CommunityOnly or -SkipCommunity, not both."
+}
+
+if (-not $SkipCommunity -and (Test-Path -LiteralPath $CommunityDirectory)) {
+    $sourceDirectories += (Resolve-Path -LiteralPath $CommunityDirectory).Path
+}
+
+if (-not $CommunityOnly) {
+    $sourceDirectories += (Resolve-Path -LiteralPath $CheatDirectory).Path
+}
 
 if ($IncludeCandidates) {
-    if (-not (Test-Path $CandidateDirectory)) {
+    if (-not (Test-Path -LiteralPath $CandidateDirectory)) {
         throw "Candidate cheat directory not found: $CandidateDirectory"
     }
-    $sourceDirectories += (Resolve-Path $CandidateDirectory).Path
+    $sourceDirectories += (Resolve-Path -LiteralPath $CandidateDirectory).Path
 }
 
-$files = foreach ($directory in $sourceDirectories) {
-    Get-ChildItem -LiteralPath $directory -Filter "*.pnach" -File
+$exactNames = @{}
+if ($CommunityOnly) {
+    foreach ($exactFile in (Get-ChildItem -LiteralPath $CheatDirectory -Filter "*.pnach" -File)) {
+        $exactNames[$exactFile.Name.ToUpperInvariant()] = $true
+    }
 }
+
+$filesByName = [ordered]@{}
+foreach ($directory in $sourceDirectories) {
+    foreach ($file in (Get-ChildItem -LiteralPath $directory -Filter "*.pnach" -File | Sort-Object Name)) {
+        if ($CommunityOnly -and $exactNames.ContainsKey($file.Name.ToUpperInvariant())) {
+            continue
+        }
+        $filesByName[$file.Name.ToUpperInvariant()] = $file
+    }
+}
+$files = @($filesByName.Values)
 
 if (-not $files) {
     throw "No .pnach files found."

@@ -1,0 +1,210 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Vampire Night [SLUS-20221] [7FBCDA34]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Gain 5000 Crystals Per Battle]
+// patch=1,EE,901647C4,extended,0C050C74
+
+[Cheats/Infinite Health P1]
+// patch=1,EE,10493030,extended,00000009
+
+[Cheats/Infinite Ammo P1]
+// patch=1,EE,1049306C,extended,00000008
+
+[Cheats/Infinite Health P2]
+// patch=1,EE,10493378,extended,00000009
+
+[Cheats/Infinite Ammo P2]
+// patch=1,EE,104933B4,extended,00000008
+
+[Cheats/Infinite Credits]
+// patch=1,EE,10492DD4,extended,00000008
+// patch=1,EE,00494E03,extended,00000063
+
+[Cheats/Gain Hella Silver]
+// patch=1,EE,10494E14,extended,0000FFFF
+
+[Cheats/Have All Items]
+// patch=1,EE,00494DDF,extended,00000063
+// patch=1,EE,40494DE0,extended,000D0001
+// patch=1,EE,63636363,extended,00000000
+
+[Cheats/Have All Misc. Files]
+// patch=1,EE,10494EBE,extended,00000101
+// patch=1,EE,00494EE4,extended,00000001
+// patch=1,EE,40494EC0,extended,00090001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Have All Item Files]
+// patch=1,EE,10494E8A,extended,00000101
+// patch=1,EE,10494EBC,extended,00000101
+// patch=1,EE,40494E8C,extended,000C0001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Have All Boss Files]
+// patch=1,EE,10494E7A,extended,00000101
+// patch=1,EE,10494E88,extended,00000101
+// patch=1,EE,40494E7C,extended,00030001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Have All Enemy Files]
+// patch=1,EE,10494E78,extended,00000101
+// patch=1,EE,40494E6C,extended,00030001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Have All Player Files]
+// patch=1,EE,40494E60,extended,00030001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Magazine +2]
+// patch=1,EE,00494DDF,extended,00000063
+
+[Cheats/Magazine +4]
+// patch=1,EE,00494DE0,extended,00000063
+
+[Cheats/Magazine +8]
+// patch=1,EE,00494DE1,extended,00000063
+
+[Cheats/Infinite Magazine]
+// patch=1,EE,00494DE2,extended,00000063
+
+[Cheats/Bullet X1.2]
+// patch=1,EE,00494DE3,extended,00000063
+
+[Cheats/Bullet X1.5]
+// patch=1,EE,00494DE4,extended,00000063
+
+[Cheats/Bullet X2.0]
+// patch=1,EE,00494DE5,extended,00000063
+
+[Cheats/Silver Bullets]
+// patch=1,EE,00494DE6,extended,00000063
+
+[Cheats/Silver 92.5 Bullets]
+// patch=1,EE,00494DE7,extended,00000063
+
+[Cheats/Shotgun Bullet]
+// patch=1,EE,00494DE8,extended,00000063
+
+[Cheats/Machinegun Bullet]
+// patch=1,EE,00494DE9,extended,00000063
+
+[Cheats/Magnum Bullet]
+// patch=1,EE,00494DEA,extended,00000063
+
+[Cheats/Gatling Gun Bullet]
+// patch=1,EE,00494DEB,extended,00000063
+
+[Cheats/Launcher Bullet]
+// patch=1,EE,00494DEC,extended,00000063
+
+[Cheats/Comical Bullet]
+// patch=1,EE,00494DED,extended,00000063
+
+[Cheats/Army Gloves]
+// patch=1,EE,00494DEE,extended,00000063
+
+[Cheats/Hunter's Gloves]
+// patch=1,EE,00494DEF,extended,00000063
+
+[Cheats/Hunter's Earring]
+// patch=1,EE,00494DF1,extended,00000063
+
+[Cheats/Holy Earring]
+// patch=1,EE,00494DF3,extended,00000063
+
+[Cheats/Angel Brooch]
+// patch=1,EE,00494DF5,extended,00000063
+
+[Cheats/Member's Badge]
+// patch=1,EE,00494DF6,extended,00000063
+
+[Cheats/Dream Badge]
+// patch=1,EE,00494DF8,extended,00000063
+
+[Cheats/Mystic Charm]
+// patch=1,EE,00494DF9,extended,00000063
+
+[Cheats/Holmes Spectacles]
+// patch=1,EE,00494DFA,extended,00000063
+
+[Cheats/Psychic Goggles]
+// patch=1,EE,00494DFB,extended,00000063
+
+[Cheats/Score Ring]
+// patch=1,EE,00494DF0,extended,00000063
+
+[Cheats/Silver Earring]
+// patch=1,EE,00494DF2,extended,00000063
+
+[Cheats/Spirit Brooch]
+// patch=1,EE,00494DF4,extended,00000063
+
+[Cheats/Silver Badge]
+// patch=1,EE,00494DF7,extended,00000063
+
+[Cheats/Life +1]
+// patch=1,EE,00494DFC,extended,00000063
+
+[Cheats/Life +2]
+// patch=1,EE,00494DFD,extended,00000063
+
+[Cheats/Life +5]
+// patch=1,EE,00494DFE,extended,00000063
+
+[Cheats/Credit +2]
+// patch=1,EE,00494DFF,extended,00000063
+
+[Cheats/Credit +4]
+// patch=1,EE,00494E00,extended,00000063
+
+[Cheats/Credit +6]
+// patch=1,EE,00494E01,extended,00000063
+
+[Cheats/Credit +10]
+// patch=1,EE,00494E02,extended,00000063
+
+[Cheats/Garlic Powder]
+// patch=1,EE,00494E04,extended,00000063
+
+[Cheats/Silver Powder]
+// patch=1,EE,00494E05,extended,00000063
+
+[Cheats/Warp 2]
+// patch=1,EE,00494E06,extended,00000063
+
+[Cheats/Warp 3]
+// patch=1,EE,00494E07,extended,00000063
+
+[Cheats/Warp 4]
+// patch=1,EE,00494E08,extended,00000063
+
+[Cheats/Warp 5]
+// patch=1,EE,00494E09,extended,00000063
+
+[Cheats/Warp 6]
+// patch=1,EE,00494E0A,extended,00000063
+
+[Cheats/Maiden's Sigh]
+// patch=1,EE,00494E0B,extended,00000063
+
+[Cheats/Maiden's Gloom]
+// patch=1,EE,00494E0C,extended,00000063
+
+[Cheats/Score X2]
+// patch=1,EE,00494E0D,extended,00000063
+
+[Cheats/Score X4]
+// patch=1,EE,00494E0E,extended,00000063
+
+[Cheats/Angel's Wink]
+// patch=1,EE,00494E0F,extended,00000063
+
+[Cheats/Angel's Kiss]
+// patch=1,EE,00494E10,extended,00000063
+
+[Cheats/Angel's Miracle]
+// patch=1,EE,00494E11,extended,00000063
+
+[Cheats/Devil's Whisper]
+// patch=1,EE,00494E12,extended,00000063

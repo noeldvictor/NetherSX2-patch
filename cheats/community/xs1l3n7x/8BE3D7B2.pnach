@@ -1,0 +1,182 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Shadow Hearts [SLUS-20347] [8BE3D7B2]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Always Low Clear Time]
+// patch=1,EE,F0200008,extended,00213D3F
+
+[Cheats/Infinite Money]
+// patch=1,EE,10100008,extended,0000FFFF
+
+[Cheats/Max Money]
+// patch=1,EE,20100008,extended,0098967F
+
+[Cheats/Hella Pedometer Steps]
+// patch=1,EE,101015F8,extended,0000FFFF
+
+[Cheats/Have All Items]
+// patch=1,EE,101000CE,extended,00006363
+// patch=1,EE,401000D0,extended,001F0001
+// patch=1,EE,63636363,extended,00000000
+// patch=1,EE,0010014D,extended,00000063
+
+[Cheats/Have All Valueables]
+// patch=1,EE,0010018F,extended,00000001
+// patch=1,EE,40100190,extended,000E0001
+// patch=1,EE,01010101,extended,00000000
+
+[Cheats/Have All Souls]
+// patch=1,EE,101001CE,extended,00000101
+// patch=1,EE,401001D0,extended,00040001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,101001E0,extended,00000101
+
+[Cheats/Have All Armors]
+// patch=1,EE,101000B2,extended,00000101
+// patch=1,EE,401000B4,extended,00050001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,101000C8,extended,00000101
+
+[Cheats/Have All Weapons]
+// patch=1,EE,40100080,extended,000C0001
+// patch=1,EE,01010101,extended,00000000
+// patch=1,EE,001000B0,extended,00000001
+
+[Cheats/All Weapons Upgraded]
+// patch=1,EE,40101574,extended,00180001
+// patch=1,EE,03030303,extended,00000000
+
+[Cheats/Level 99]
+// patch=1,EE,00100283,extended,00000063
+// patch=1,EE,001002D3,extended,00000063
+// patch=1,EE,00100323,extended,00000063
+// patch=1,EE,00100373,extended,00000063
+// patch=1,EE,001003C3,extended,00000063
+// patch=1,EE,00100413,extended,00000063
+// patch=1,EE,00100463,extended,00000063
+
+[Cheats/Infinite HP]
+// patch=1,EE,10100286,extended,000003E7
+// patch=1,EE,101002D6,extended,000003E7
+// patch=1,EE,10100326,extended,000003E7
+// patch=1,EE,10100376,extended,000003E7
+// patch=1,EE,101003C6,extended,000003E7
+// patch=1,EE,10100416,extended,000003E7
+// patch=1,EE,10100466,extended,000003E7
+
+[Cheats/Infinite MP]
+// patch=1,EE,10100288,extended,000003E7
+// patch=1,EE,101002D8,extended,000003E7
+// patch=1,EE,10100328,extended,000003E7
+// patch=1,EE,10100378,extended,000003E7
+// patch=1,EE,101003C8,extended,000003E7
+// patch=1,EE,10100418,extended,000003E7
+// patch=1,EE,10100468,extended,000003E7
+
+[Cheats/Infinite SP]
+// patch=1,EE,1010028A,extended,000003E7
+// patch=1,EE,101002DA,extended,000003E7
+// patch=1,EE,1010032A,extended,000003E7
+// patch=1,EE,1010037A,extended,000003E7
+// patch=1,EE,101003CA,extended,000003E7
+// patch=1,EE,1010041A,extended,000003E7
+// patch=1,EE,1010046A,extended,000003E7
+
+[Cheats/Max HP]
+// patch=1,EE,101002A0,extended,000003E7
+// patch=1,EE,101002F0,extended,000003E7
+// patch=1,EE,10100340,extended,000003E7
+// patch=1,EE,10100390,extended,000003E7
+// patch=1,EE,101003E0,extended,000003E7
+// patch=1,EE,10100430,extended,000003E7
+// patch=1,EE,10100480,extended,000003E7
+
+[Cheats/Max MP]
+// patch=1,EE,101002A2,extended,000003E7
+// patch=1,EE,101002F2,extended,000003E7
+// patch=1,EE,10100342,extended,000003E7
+// patch=1,EE,10100392,extended,000003E7
+// patch=1,EE,101003E2,extended,000003E7
+// patch=1,EE,10100432,extended,000003E7
+// patch=1,EE,10100482,extended,000003E7
+
+[Cheats/Max SP]
+// patch=1,EE,101002A4,extended,000003E7
+// patch=1,EE,101002F4,extended,000003E7
+// patch=1,EE,10100344,extended,000003E7
+// patch=1,EE,10100394,extended,000003E7
+// patch=1,EE,101003E4,extended,000003E7
+// patch=1,EE,10100434,extended,000003E7
+// patch=1,EE,10100484,extended,000003E7
+
+[Cheats/Quick Exp Gain]
+// patch=1,EE,1010028C,extended,0000FFFF
+// patch=1,EE,101002DC,extended,0000FFFF
+// patch=1,EE,1010032C,extended,0000FFFF
+// patch=1,EE,1010037C,extended,0000FFFF
+// patch=1,EE,101003CC,extended,0000FFFF
+// patch=1,EE,1010041C,extended,0000FFFF
+// patch=1,EE,1010046C,extended,0000FFFF
+
+[Cheats/Max Exp]
+// patch=1,EE,2010028C,extended,05F5E0FF
+// patch=1,EE,201002DC,extended,05F5E0FF
+// patch=1,EE,2010032C,extended,05F5E0FF
+// patch=1,EE,2010037C,extended,05F5E0FF
+// patch=1,EE,201003CC,extended,05F5E0FF
+// patch=1,EE,2010041C,extended,05F5E0FF
+// patch=1,EE,2010046C,extended,05F5E0FF
+
+[Cheats/Max Str]
+// patch=1,EE,00100290,extended,000000FF
+// patch=1,EE,001002E0,extended,000000FF
+// patch=1,EE,00100330,extended,000000FF
+// patch=1,EE,00100380,extended,000000FF
+// patch=1,EE,001003D0,extended,000000FF
+// patch=1,EE,00100420,extended,000000FF
+// patch=1,EE,00100470,extended,000000FF
+
+[Cheats/Max Vit]
+// patch=1,EE,00100291,extended,000000FF
+// patch=1,EE,001002E1,extended,000000FF
+// patch=1,EE,00100331,extended,000000FF
+// patch=1,EE,00100381,extended,000000FF
+// patch=1,EE,001003D1,extended,000000FF
+// patch=1,EE,00100421,extended,000000FF
+// patch=1,EE,00100471,extended,000000FF
+
+[Cheats/Max Agl]
+// patch=1,EE,00100292,extended,000000FF
+// patch=1,EE,001002E2,extended,000000FF
+// patch=1,EE,00100332,extended,000000FF
+// patch=1,EE,00100382,extended,000000FF
+// patch=1,EE,001003D2,extended,000000FF
+// patch=1,EE,00100422,extended,000000FF
+// patch=1,EE,00100472,extended,000000FF
+
+[Cheats/Max Int]
+// patch=1,EE,00100293,extended,000000FF
+// patch=1,EE,001002E3,extended,000000FF
+// patch=1,EE,00100333,extended,000000FF
+// patch=1,EE,00100383,extended,000000FF
+// patch=1,EE,001003D3,extended,000000FF
+// patch=1,EE,00100423,extended,000000FF
+// patch=1,EE,00100473,extended,000000FF
+
+[Cheats/Max Pow]
+// patch=1,EE,00100294,extended,000000FF
+// patch=1,EE,001002E4,extended,000000FF
+// patch=1,EE,00100334,extended,000000FF
+// patch=1,EE,00100384,extended,000000FF
+// patch=1,EE,001003D4,extended,000000FF
+// patch=1,EE,00100424,extended,000000FF
+// patch=1,EE,00100474,extended,000000FF
+
+[Cheats/Max Lck]
+// patch=1,EE,00100295,extended,000000FF
+// patch=1,EE,001002E5,extended,000000FF
+// patch=1,EE,00100335,extended,000000FF
+// patch=1,EE,00100385,extended,000000FF
+// patch=1,EE,001003D5,extended,000000FF
+// patch=1,EE,00100425,extended,000000FF
+// patch=1,EE,00100475,extended,000000FF

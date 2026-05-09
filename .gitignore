@@ -1,4 +1,5 @@
 .tools/
+.tmp_pcsx2_cheats_collection/
 dist/
 *.apk
 *.idsig

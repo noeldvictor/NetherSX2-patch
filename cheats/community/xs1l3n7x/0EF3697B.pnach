@@ -1,0 +1,505 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Monster Rancher 4 [SLUS-20702] [0EF3697B]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/No Gauge P2]
+// patch=1,EE,F0100008,extended,002EE1AF
+
+[Cheats/Disable FMV]
+// patch=1,EE,20303130,extended,24020001
+
+[Cheats/Infinite Money-27A260]
+// patch=1,EE,10659584,extended,0000FFFF
+
+[Cheats/Max Money]
+// patch=1,EE,20659584,extended,0098967F
+
+[Cheats/P1 Press {L1}+{SELECT} For Infinite Food Usage On]
+// patch=1,EE,D04ED3CE,extended,0000FBFE
+// patch=1,EE,2027A3E0,extended,00000000
+
+[Cheats/P1 Press {L2}+{SELECT} For Infinite Food Usage Off]
+// patch=1,EE,D04ED3CE,extended,0000FEFE
+// patch=1,EE,2027A3E0,extended,A2620000
+
+[Cheats/Infinite HP P1]
+// patch=1,EE,105EE94C,extended,000003E7
+// patch=1,EE,205F65C0,extended,03E703E7
+
+[Cheats/Max HP P1]
+// patch=1,EE,105F65C8,extended,000003E7
+
+[Cheats/No HP P1]
+// patch=1,EE,105EE94C,extended,00000000
+// patch=1,EE,205F65C0,extended,00000000
+
+[Cheats/Low Max HP P1]
+// patch=1,EE,105F65C8,extended,0000000A
+
+[Cheats/Max Guts P1]
+// patch=1,EE,105EE95C,extended,00000063
+
+[Cheats/No Guts P1]
+// patch=1,EE,105EE95C,extended,00000000
+
+[Cheats/P1 Press {L1}+{SELECT} For No HP P2]
+// patch=1,EE,E002FBFE,extended,004ED402
+// patch=1,EE,105EF44C,extended,00000000
+// patch=1,EE,205F6674,extended,00000000
+
+[Cheats/P1 Press {R1}+{SELECT} For Full HP P1]
+// patch=1,EE,E003F7FE,extended,004ED402
+// patch=1,EE,105EE94C,extended,000003E7
+// patch=1,EE,205F65C0,extended,03E703E7
+// patch=1,EE,105F65C8,extended,000003E7
+
+[Cheats/Infinite HP P2]
+// patch=1,EE,105EF44C,extended,000003E7
+// patch=1,EE,205F6674,extended,03E703E7
+
+[Cheats/Max HP P2]
+// patch=1,EE,105F667C,extended,000003E7
+
+[Cheats/No HP P2]
+// patch=1,EE,105EF44C,extended,00000000
+// patch=1,EE,205F6674,extended,00000000
+
+[Cheats/Low Max HP P2]
+// patch=1,EE,105F667C,extended,0000000A
+
+[Cheats/Max Guts P2]
+// patch=1,EE,105EF45C,extended,00000063
+
+[Cheats/No Guts P2]
+// patch=1,EE,105EF45C,extended,00000000
+
+[Cheats/P2 Press {L1}+{SELECT} For No HP P1]
+// patch=1,EE,E002FBFE,extended,004ED602
+// patch=1,EE,105EE94C,extended,00000000
+// patch=1,EE,205F65C0,extended,00000000
+
+[Cheats/P2 Press {R1}+{SELECT} For Full HP P2]
+// patch=1,EE,E003F7FE,extended,004ED602
+// patch=1,EE,105EF44C,extended,000003E7
+// patch=1,EE,205F6674,extended,03E703E7
+// patch=1,EE,105F667C,extended,000003E7
+
+[Cheats/Mushroom]
+// patch=1,EE,0065B3FC,extended,00000063
+
+[Cheats/Potato]
+// patch=1,EE,0065B3FD,extended,00000063
+
+[Cheats/Carrot]
+// patch=1,EE,0065B3FE,extended,00000063
+
+[Cheats/Watermelon]
+// patch=1,EE,0065B3FF,extended,00000063
+
+[Cheats/Mango]
+// patch=1,EE,0065B400,extended,00000063
+
+[Cheats/Banana]
+// patch=1,EE,0065B401,extended,00000063
+
+[Cheats/Peach]
+// patch=1,EE,0065B402,extended,00000063
+
+[Cheats/Melon]
+// patch=1,EE,0065B403,extended,00000063
+
+[Cheats/Squid]
+// patch=1,EE,0065B404,extended,00000063
+
+[Cheats/Salmon]
+// patch=1,EE,0065B405,extended,00000063
+
+[Cheats/Fish]
+// patch=1,EE,0065B406,extended,00000063
+
+[Cheats/Shrimp]
+// patch=1,EE,0065B407,extended,00000063
+
+[Cheats/Beef]
+// patch=1,EE,0065B408,extended,00000063
+
+[Cheats/Pork]
+// patch=1,EE,0065B409,extended,00000063
+
+[Cheats/Energy 9ar]
+// patch=1,EE,0065B40A,extended,00000063
+
+[Cheats/Vitamin]
+// patch=1,EE,0065B40B,extended,00000063
+
+[Cheats/Honey Drops]
+// patch=1,EE,0065B40C,extended,00000063
+
+[Cheats/Chocolate]
+// patch=1,EE,0065B40D,extended,00000063
+
+[Cheats/Honey Toast]
+// patch=1,EE,0065B40E,extended,00000063
+
+[Cheats/Cake]
+// patch=1,EE,0065B40F,extended,00000063
+
+[Cheats/Screws]
+// patch=1,EE,0065B410,extended,00000063
+
+[Cheats/Canned Fuel]
+// patch=1,EE,0065B411,extended,00000063
+
+[Cheats/Oily Oil]
+// patch=1,EE,0065B412,extended,00000063
+
+[Cheats/Troron]
+// patch=1,EE,0065B413,extended,00000063
+
+[Cheats/Trokatin]
+// patch=1,EE,0065B414,extended,00000063
+
+[Cheats/Nageel]
+// patch=1,EE,0065B415,extended,00000063
+
+[Cheats/Teromean]
+// patch=1,EE,0065B416,extended,00000063
+
+[Cheats/Baisin]
+// patch=1,EE,0065B417,extended,00000063
+
+[Cheats/Tapaurin]
+// patch=1,EE,0065B418,extended,00000063
+
+[Cheats/Larox]
+// patch=1,EE,0065B419,extended,00000063
+
+[Cheats/Goldoll Sword]
+// patch=1,EE,0065B41A,extended,00000063
+
+[Cheats/White Pot]
+// patch=1,EE,0065B41B,extended,00000063
+
+[Cheats/Nunchaku]
+// patch=1,EE,0065B41C,extended,00000063
+
+[Cheats/Fossil]
+// patch=1,EE,0065B41D,extended,00000063
+
+[Cheats/Mocchi Scream]
+// patch=1,EE,0065B41E,extended,00000063
+
+[Cheats/Rose Perfume]
+// patch=1,EE,0065B41F,extended,00000063
+
+[Cheats/Silver Coin]
+// patch=1,EE,0065B420,extended,00000063
+
+[Cheats/Gold Coin]
+// patch=1,EE,0065B421,extended,00000063
+
+[Cheats/Silver Nugget]
+// patch=1,EE,0065B422,extended,00000063
+
+[Cheats/Gold Nugget]
+// patch=1,EE,0065B423,extended,00000063
+
+[Cheats/Amethyst]
+// patch=1,EE,0065B424,extended,00000063
+
+[Cheats/Ruby]
+// patch=1,EE,0065B425,extended,00000063
+
+[Cheats/Emerald]
+// patch=1,EE,0065B426,extended,00000063
+
+[Cheats/Crystal Skull]
+// patch=1,EE,0065B427,extended,00000063
+
+[Cheats/Rose]
+// patch=1,EE,0065B428,extended,00000063
+
+[Cheats/Teddy Bear]
+// patch=1,EE,0065B429,extended,00000063
+
+[Cheats/Yarn Ball]
+// patch=1,EE,0065B42A,extended,00000063
+
+[Cheats/Junk Toy]
+// patch=1,EE,0065B42B,extended,00000063
+
+[Cheats/Toy Glasses]
+// patch=1,EE,0065B42C,extended,00000063
+
+[Cheats/Battle Cards]
+// patch=1,EE,0065B42D,extended,00000063
+
+[Cheats/Reference]
+// patch=1,EE,0065B42E,extended,00000063
+
+[Cheats/Bone]
+// patch=1,EE,0065B42F,extended,00000063
+
+[Cheats/Fishbone]
+// patch=1,EE,0065B430,extended,00000063
+
+[Cheats/Lucky Medal]
+// patch=1,EE,0065B431,extended,00000063
+
+[Cheats/Magic Medal]
+// patch=1,EE,0065B432,extended,00000063
+
+[Cheats/Intense Medal]
+// patch=1,EE,0065B433,extended,00000063
+
+[Cheats/Healing Medal]
+// patch=1,EE,0065B434,extended,00000063
+
+[Cheats/(NONE)]
+// patch=1,EE,0065B435,extended,00000063
+
+[Cheats/STR Stone]
+// patch=1,EE,0065B436,extended,00000063
+
+[Cheats/INT Stone]
+// patch=1,EE,0065B437,extended,00000063
+
+[Cheats/ACC Stone]
+// patch=1,EE,0065B438,extended,00000063
+
+[Cheats/SPD Stone]
+// patch=1,EE,0065B439,extended,00000063
+
+[Cheats/TGH Stone]
+// patch=1,EE,0065B43A,extended,00000063
+
+[Cheats/LIF Stone]
+// patch=1,EE,0065B43B,extended,00000063
+
+[Cheats/Sight Scroll]
+// patch=1,EE,0065B43C,extended,00000063
+
+[Cheats/Dumbbells]
+// patch=1,EE,0065B43D,extended,00000063
+
+[Cheats/Eagle Eyes]
+// patch=1,EE,0065B43E,extended,00000063
+
+[Cheats/Tough Heart]
+// patch=1,EE,0065B43F,extended,00000063
+
+[Cheats/Lucky Star]
+// patch=1,EE,0065B440,extended,00000063
+
+[Cheats/Smart Glasses]
+// patch=1,EE,0065B441,extended,00000063
+
+[Cheats/Mimiccho]
+// patch=1,EE,0065B442,extended,00000001
+
+[Cheats/Mimiccho 2]
+// patch=1,EE,0065B443,extended,00000001
+
+[Cheats/Mimiccho 3]
+// patch=1,EE,0065B444,extended,00000001
+
+[Cheats/Document 1]
+// patch=1,EE,0065B445,extended,00000001
+
+[Cheats/Document 2]
+// patch=1,EE,0065B446,extended,00000001
+
+[Cheats/Document 3]
+// patch=1,EE,0065B447,extended,00000001
+
+[Cheats/Document 4]
+// patch=1,EE,0065B448,extended,00000001
+
+[Cheats/Document 5]
+// patch=1,EE,0065B449,extended,00000001
+
+[Cheats/Document 6]
+// patch=1,EE,0065B44A,extended,00000001
+
+[Cheats/Document 7]
+// patch=1,EE,0065B44B,extended,00000001
+
+[Cheats/Document 8]
+// patch=1,EE,0065B44C,extended,00000001
+
+[Cheats/Document 9]
+// patch=1,EE,0065B44D,extended,00000001
+
+[Cheats/Document 10]
+// patch=1,EE,0065B44E,extended,00000001
+
+[Cheats/Document 11]
+// patch=1,EE,0065B44F,extended,00000001
+
+[Cheats/Document 12]
+// patch=1,EE,0065B450,extended,00000001
+
+[Cheats/Document 13]
+// patch=1,EE,0065B451,extended,00000001
+
+[Cheats/Document 14]
+// patch=1,EE,0065B452,extended,00000001
+
+[Cheats/Document 15]
+// patch=1,EE,0065B453,extended,00000001
+
+[Cheats/Document 16]
+// patch=1,EE,0065B454,extended,00000001
+
+[Cheats/Document 17]
+// patch=1,EE,0065B455,extended,00000001
+
+[Cheats/Document 18]
+// patch=1,EE,0065B456,extended,00000001
+
+[Cheats/Document 19]
+// patch=1,EE,0065B457,extended,00000001
+
+[Cheats/Document 20]
+// patch=1,EE,0065B458,extended,00000001
+
+[Cheats/Document 21]
+// patch=1,EE,0065B459,extended,00000001
+
+[Cheats/Document 22]
+// patch=1,EE,0065B45A,extended,00000001
+
+[Cheats/Document 23]
+// patch=1,EE,0065B45B,extended,00000001
+
+[Cheats/Document 24]
+// patch=1,EE,0065B45C,extended,00000001
+
+[Cheats/Document 25]
+// patch=1,EE,0065B45D,extended,00000001
+
+[Cheats/Document 26]
+// patch=1,EE,0065B45E,extended,00000001
+
+[Cheats/Document 27]
+// patch=1,EE,0065B45F,extended,00000001
+
+[Cheats/Document 28]
+// patch=1,EE,0065B460,extended,00000001
+
+[Cheats/Document 29]
+// patch=1,EE,0065B461,extended,00000001
+
+[Cheats/Document 30]
+// patch=1,EE,0065B462,extended,00000001
+
+[Cheats/Document 31]
+// patch=1,EE,0065B463,extended,00000001
+
+[Cheats/Document 32]
+// patch=1,EE,0065B464,extended,00000001
+
+[Cheats/Document 33]
+// patch=1,EE,0065B465,extended,00000001
+
+[Cheats/Document 34]
+// patch=1,EE,0065B466,extended,00000001
+
+[Cheats/Document 35]
+// patch=1,EE,0065B467,extended,00000001
+
+[Cheats/Document 36]
+// patch=1,EE,0065B468,extended,00000001
+
+[Cheats/Document 37]
+// patch=1,EE,0065B469,extended,00000001
+
+[Cheats/Document 38]
+// patch=1,EE,0065B46A,extended,00000001
+
+[Cheats/Document 39]
+// patch=1,EE,0065B46B,extended,00000001
+
+[Cheats/Document 40]
+// patch=1,EE,0065B46C,extended,00000001
+
+[Cheats/Document 41]
+// patch=1,EE,0065B46D,extended,00000001
+
+[Cheats/Document 42]
+// patch=1,EE,0065B46E,extended,00000001
+
+[Cheats/Document 43]
+// patch=1,EE,0065B46F,extended,00000001
+
+[Cheats/Document 44]
+// patch=1,EE,0065B470,extended,00000001
+
+[Cheats/Document 45]
+// patch=1,EE,0065B471,extended,00000001
+
+[Cheats/Document 46]
+// patch=1,EE,0065B472,extended,00000001
+
+[Cheats/Document 47]
+// patch=1,EE,0065B473,extended,00000001
+
+[Cheats/Document 48]
+// patch=1,EE,0065B474,extended,00000001
+
+[Cheats/Document 49]
+// patch=1,EE,0065B475,extended,00000001
+
+[Cheats/Document 50]
+// patch=1,EE,0065B476,extended,00000001
+
+[Cheats/Blue Gaia]
+// patch=1,EE,0065B477,extended,00000001
+
+[Cheats/Red Gaia]
+// patch=1,EE,0065B478,extended,00000001
+
+[Cheats/Green Gaia]
+// patch=1,EE,0065B479,extended,00000001
+
+[Cheats/White Gaia]
+// patch=1,EE,0065B47A,extended,00000001
+
+[Cheats/Heal Mushroom]
+// patch=1,EE,0065B47B,extended,00000001
+
+[Cheats/Black Object]
+// patch=1,EE,0065B47C,extended,00000001
+
+[Cheats/Envelope 1]
+// patch=1,EE,0065B47D,extended,00000001
+
+[Cheats/Envelope 2]
+// patch=1,EE,0065B47E,extended,00000001
+
+[Cheats/Certificate]
+// patch=1,EE,0065B47F,extended,00000001
+
+[Cheats/Letter 1]
+// patch=1,EE,0065B480,extended,00000001
+
+[Cheats/Letter 2]
+// patch=1,EE,0065B481,extended,00000001
+
+[Cheats/Trophy]
+// patch=1,EE,0065B482,extended,00000001
+
+[Cheats/Black Egg]
+// patch=1,EE,0065B483,extended,00000001
+
+[Cheats/King Feather]
+// patch=1,EE,0065B484,extended,00000001
+
+[Cheats/Mocchi Doll]
+// patch=1,EE,0065B485,extended,00000001
+
+[Cheats/Bird Feather]
+// patch=1,EE,0065B486,extended,00000001
+
+[Cheats/Pamphlet]
+// patch=1,EE,0065B487,extended,00000001

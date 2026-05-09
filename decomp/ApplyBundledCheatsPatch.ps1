@@ -22,11 +22,18 @@ if ([string]::IsNullOrWhiteSpace($RepoRoot)) {
 
 $ProjectPath = (Resolve-Path -LiteralPath $ProjectPath).Path
 $RepoRoot = (Resolve-Path -LiteralPath $RepoRoot).Path
-$sourceCheats = Join-Path $RepoRoot "cheats\exact"
-
-if (-not (Test-Path -LiteralPath $sourceCheats)) {
-    throw "Missing exact cheat directory: $sourceCheats"
-}
+$sourceSets = @(
+    [pscustomobject]@{
+        Name = "community"
+        Path = Join-Path $RepoRoot "cheats\community\xs1l3n7x"
+        Required = $false
+    },
+    [pscustomobject]@{
+        Name = "exact"
+        Path = Join-Path $RepoRoot "cheats\exact"
+        Required = $true
+    }
+)
 
 $assetCheats = Join-Path $ProjectPath "assets\cheats_exact"
 if (Test-Path -LiteralPath $assetCheats) {
@@ -34,13 +41,27 @@ if (Test-Path -LiteralPath $assetCheats) {
 }
 [void](New-Item -ItemType Directory -Path $assetCheats -Force)
 
-$cheatFiles = Get-ChildItem -LiteralPath $sourceCheats -Filter "*.pnach" -File
-if (-not $cheatFiles) {
-    throw "No exact PNACH files found in $sourceCheats"
-}
+$copiedBySet = @{}
+$copiedFiles = @{}
 
-foreach ($file in $cheatFiles) {
-    Copy-Item -LiteralPath $file.FullName -Destination (Join-Path $assetCheats $file.Name) -Force
+foreach ($sourceSet in $sourceSets) {
+    if (-not (Test-Path -LiteralPath $sourceSet.Path)) {
+        if ($sourceSet.Required) {
+            throw "Missing $($sourceSet.Name) cheat directory: $($sourceSet.Path)"
+        }
+        continue
+    }
+
+    $cheatFiles = Get-ChildItem -LiteralPath $sourceSet.Path -Filter "*.pnach" -File
+    if ($sourceSet.Required -and -not $cheatFiles) {
+        throw "No PNACH files found in $($sourceSet.Path)"
+    }
+
+    $copiedBySet[$sourceSet.Name] = $cheatFiles.Count
+    foreach ($file in $cheatFiles) {
+        Copy-Item -LiteralPath $file.FullName -Destination (Join-Path $assetCheats $file.Name) -Force
+        $copiedFiles[$file.Name.ToUpperInvariant()] = $true
+    }
 }
 
 $targetDir = Join-Path $ProjectPath "smali\xyz\aethersx2\android"
@@ -207,4 +228,5 @@ if ($mainText -notmatch "Lxyz/aethersx2/android/BundledCheats;->install") {
     [System.IO.File]::WriteAllText($mainPath, $updated, $utf8NoBom)
 }
 
-Write-Host "Bundled $($cheatFiles.Count) exact PNACH file(s) and patched startup seeding in $ProjectPath"
+$setSummary = ($copiedBySet.GetEnumerator() | Sort-Object Name | ForEach-Object { "$($_.Key): $($_.Value)" }) -join ", "
+Write-Host "Bundled $($copiedFiles.Count) unique PNACH file(s) ($setSummary) and patched startup seeding in $ProjectPath"

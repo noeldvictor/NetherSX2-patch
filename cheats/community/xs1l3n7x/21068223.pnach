@@ -1,0 +1,270 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Okami [SLUS-21115] [21068223]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Omnibooster]
+// patch=1,EE,903EDBC8,extended,00832021
+
+[Cheats/Max Yen]
+// patch=1,EE,204ACEF0,extended,0001869F
+
+[Cheats/Max Purse Pouches]
+// patch=1,EE,004ACEF4,extended,00000003
+
+[Cheats/Max Solar Energy]
+// patch=1,EE,004ACEF5,extended,0000000C
+
+[Cheats/Max Ink Pot]
+// patch=1,EE,204ACEE8,extended,00025800
+
+[Cheats/Max Ink Pot Capacity]
+// patch=1,EE,204ACEEC,extended,00025800
+
+[Cheats/Have All Celestial Brush Techniques]
+// patch=1,EE,204F22A8,extended,FFFFFFFF
+
+[Cheats/Max Praise Orbs]
+// patch=1,EE,10552E40,extended,0000270F
+
+[Cheats/Max Health]
+// patch=1,EE,10683270,extended,00002328
+
+[Cheats/Infinite Health]
+// patch=1,EE,10683272,extended,00002328
+
+[Cheats/Max Infinite Health]
+// patch=1,EE,20683270,extended,23282328
+
+[Cheats/Max Astral Pouch]
+// patch=1,EE,10683276,extended,00000320
+
+[Cheats/Holy Bone L]
+// patch=1,EE,104ACF48,extended,00000063
+
+[Cheats/Exorcism Slip L]
+// patch=1,EE,104ACF50,extended,00000063
+
+[Cheats/Exorcism Slip M]
+// patch=1,EE,104ACF52,extended,00000063
+
+[Cheats/Exorcism Slip S]
+// patch=1,EE,104ACF54,extended,00000063
+
+[Cheats/Vengeance Slip]
+// patch=1,EE,104ACF58,extended,00000063
+
+[Cheats/Inkfinity Stone]
+// patch=1,EE,104ACF5A,extended,00000063
+
+[Cheats/Mermaid Coin]
+// patch=1,EE,104ACF5C,extended,00000063
+
+[Cheats/Golden Peach]
+// patch=1,EE,104ACF5E,extended,00000063
+
+[Cheats/Canine Tracker]
+// patch=1,EE,104ACFC4,extended,00000001
+
+[Cheats/Lucky Mallet]
+// patch=1,EE,104ACFC6,extended,00000001
+
+[Cheats/Border Key]
+// patch=1,EE,104ACFC8,extended,00000001
+
+[Cheats/Dragon Orb]
+// patch=1,EE,104ACFCA,extended,00000001
+
+[Cheats/Fox Rods]
+// patch=1,EE,104ACFCC,extended,00000001
+
+[Cheats/Thunder Brew]
+// patch=1,EE,104ACFCE,extended,00000001
+
+[Cheats/Shell Amulet]
+// patch=1,EE,104ACFD0,extended,00000001
+
+[Cheats/Mask]
+// patch=1,EE,104ACFD2,extended,00000001
+
+[Cheats/Ogre Liver]
+// patch=1,EE,104ACFD4,extended,00000001
+
+[Cheats/Lips Of Ice]
+// patch=1,EE,104ACFD6,extended,00000001
+
+[Cheats/Eyeball Of Fire]
+// patch=1,EE,104ACFD8,extended,00000001
+
+[Cheats/Black Demon Horn]
+// patch=1,EE,104ACFDA,extended,00000001
+
+[Cheats/Loyalty Orb]
+// patch=1,EE,104ACFDC,extended,00000001
+
+[Cheats/Justice Orb]
+// patch=1,EE,104ACFDE,extended,00000001
+
+[Cheats/Duty Orb]
+// patch=1,EE,104ACFE0,extended,00000001
+
+[Cheats/Karmic Transformer 1]
+// patch=1,EE,104ACFF6,extended,00000063
+
+[Cheats/Golden Mushroom]
+// patch=1,EE,104ACFFE,extended,00000001
+
+[Cheats/Gimmick Gear]
+// patch=1,EE,104AD000,extended,00000001
+
+[Cheats/8 Purification Sake]
+// patch=1,EE,104AD004,extended,00000001
+
+[Cheats/Sewaprolo]
+// patch=1,EE,104AD006,extended,00000001
+
+[Cheats/Traveler's Charm]
+// patch=1,EE,104AD020,extended,00000063
+
+[Cheats/Charcoal]
+// patch=1,EE,104AD022,extended,00000001
+
+[Cheats/Blinding Snow]
+// patch=1,EE,104AD024,extended,00000001
+
+[Cheats/Treasure Box]
+// patch=1,EE,104AD026,extended,00000001
+
+[Cheats/Herbal Medicine]
+// patch=1,EE,104AD02A,extended,00000001
+
+[Cheats/Pinwheel]
+// patch=1,EE,104AD02C,extended,00000001
+
+[Cheats/Marlin Rod]
+// patch=1,EE,104AD02E,extended,00000063
+
+[Cheats/Karmic Transformer 3]
+// patch=1,EE,104AD032,extended,00000063
+
+[Cheats/Karmic Transformer 8]
+// patch=1,EE,104AD034,extended,00000063
+
+[Cheats/Karmic Transformer 7]
+// patch=1,EE,104AD036,extended,00000063
+
+[Cheats/Karmic Transformer 9]
+// patch=1,EE,104AD038,extended,00000063
+
+[Cheats/Holy Bone M]
+// patch=1,EE,104AD05C,extended,00000063
+
+[Cheats/Holy Bone S]
+// patch=1,EE,104AD05E,extended,00000063
+
+[Cheats/Feedbag (Meat)]
+// patch=1,EE,104AD060,extended,00000063
+
+[Cheats/Feedbag (Herbs)]
+// patch=1,EE,104AD062,extended,00000063
+
+[Cheats/Feedbag (Seeds)]
+// patch=1,EE,104AD064,extended,00000063
+
+[Cheats/Feedbag (Fish)]
+// patch=1,EE,104AD066,extended,00000063
+
+[Cheats/Steel Fist Sake]
+// patch=1,EE,104AD072,extended,00000063
+
+[Cheats/Steel Soul Sake]
+// patch=1,EE,104AD074,extended,00000063
+
+[Cheats/Godly Charm]
+// patch=1,EE,104AD076,extended,00000063
+
+[Cheats/Gold Dust]
+// patch=1,EE,1040D07C,extended,00000063
+
+[Cheats/Karmic Returner]
+// patch=1,EE,104AD0D0,extended,00000063
+
+[Cheats/Karmic Transformer 2]
+// patch=1,EE,104AD0D2,extended,00000063
+
+[Cheats/Karmic Transformer 6]
+// patch=1,EE,104AD0D4,extended,00000063
+
+[Cheats/Karmic Transformer 5]
+// patch=1,EE,104AD0D6,extended,00000063
+
+[Cheats/Karmic Transformer 4]
+// patch=1,EE,104AD0DE,extended,00000063
+
+[Cheats/Peace Bell]
+// patch=1,EE,104ACF56,extended,00000001
+
+[Cheats/Divine Retribution]
+// patch=1,EE,104ACF60,extended,00000001
+
+[Cheats/Snarling Beast]
+// patch=1,EE,104ACF62,extended,00000001
+
+[Cheats/Infinity Judge]
+// patch=1,EE,104ACF64,extended,00000001
+
+[Cheats/Trinity Mirror]
+// patch=1,EE,104ACF66,extended,00000001
+
+[Cheats/Solar Flare]
+// patch=1,EE,104ACF68,extended,00000001
+
+[Cheats/Devoute Beads]
+// patch=1,EE,104ACF6A,extended,00000001
+
+[Cheats/Life Beads]
+// patch=1,EE,104ACF6C,extended,00000001
+
+[Cheats/Exorcism Beads]
+// patch=1,EE,104ACF6E,extended,00000001
+
+[Cheats/Resurrection Beads]
+// patch=1,EE,104ACF70,extended,00000001
+
+[Cheats/Tundra Beads]
+// patch=1,EE,104ACF72,extended,00000001
+
+[Cheats/Tsumugari]
+// patch=1,EE,104ACF74,extended,00000001
+
+[Cheats/Seven Strike]
+// patch=1,EE,104ACF76,extended,00000001
+
+[Cheats/Blade Of Kusanagi]
+// patch=1,EE,104ACF78,extended,00000001
+
+[Cheats/Eighth Wonder]
+// patch=1,EE,104ACF7A,extended,00000001
+
+[Cheats/Thunder Edge]
+// patch=1,EE,104ACF7C,extended,00000001
+
+[Cheats/Golden Lucky Cat]
+// patch=1,EE,104AD06A,extended,00000001
+
+[Cheats/Thief's Glove]
+// patch=1,EE,104AD06C,extended,00000001
+
+[Cheats/Wood Mat]
+// patch=1,EE,104AD06E,extended,00000001
+
+[Cheats/Golden Ink Pot]
+// patch=1,EE,104AD070,extended,00000001
+
+[Cheats/Water Tablet]
+// patch=1,EE,104AD078,extended,00000001
+
+[Cheats/Fire Tablet]
+// patch=1,EE,104AD07A,extended,00000001
+
+[Cheats/String Of Beads]
+// patch=1,EE,104AD0DA,extended,00000001

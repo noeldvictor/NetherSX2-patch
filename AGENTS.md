@@ -10,7 +10,7 @@ This repository is an APK patching workspace for NetherSX2, not a normal Gradle 
 - The game list CHEATS badges are applied by `decomp/ApplyCheatBadgePatch.ps1`.
 - The badge script generates `smali/xyz/aethersx2/android/CheatSupport.smali`, then patches the grid and list adapters to show a `cheat_badge` view only when a matching `.pnach` file in the visible external app `files/cheats` folder contains a real `patch=` code line. Do not use private internal app files, `assets/cheats_ws.zip`, or `assets/cheats_ni.zip` for the CHEATS badge; those are not user-visible real cheat availability.
 - The OSD Patch Codes menu is patched by `decomp/ApplyOsdCheatTogglePatch.ps1`; its `Toggle Cheat Codes` row opens a multi-choice dialog for the current game's `.pnach` and toggles each named cheat block individually by commenting/uncommenting its `patch=` lines. It normalizes enabled `patch=0,` lines to `patch=1,` so gameplay cheats apply every frame. It includes a non-closing `Deselect All` button and leaves an `Edit .pnach` fallback only when no cheat blocks can be parsed.
-- The bundled default cheat pack is applied by `decomp/ApplyBundledCheatsPatch.ps1`. It copies tracked `cheats/exact/*.pnach` into decoded APK `assets/cheats_exact`, generates `smali/xyz/aethersx2/android/BundledCheats.smali`, and patches `MainActivity.onCreate` to seed missing external `files/cheats/*.pnach` files on startup. It must never overwrite non-empty existing device PNACH files, because those hold user toggle state.
+- The bundled default cheat pack is applied by `decomp/ApplyBundledCheatsPatch.ps1`. It copies tracked `cheats/community/xs1l3n7x/*.pnach` and `cheats/exact/*.pnach` into decoded APK `assets/cheats_exact`, with exact files overriding community files for duplicate CRCs. It generates `smali/xyz/aethersx2/android/BundledCheats.smali` and patches `MainActivity.onCreate` to seed missing external `files/cheats/*.pnach` files on startup. It must never overwrite non-empty existing device PNACH files, because those hold user toggle state.
 - The OSD PNACH lookup should agree with the game-list badge lookup: use the native game PNACH path only when it exists and contains parsed cheat blocks, then recover the running `GameListEntry` from the game path and fall back to the visible external app `files/cheats/<GameListEntry CRC>.pnach` path before using the live game-info CRC.
 - After pushing PNACH files with ADB, run `tools\FixCheatPermissions.ps1` so shell-owned cheat files become group-writable (`chmod 660`). The app should then edit them directly; do not add app-side ownership-repair save workarounds unless chmod cannot solve the target device.
 - The OSD per-code cheat dialog must not toggle `EmuCore/EnableCheats`; that is a global app setting, not the per-cheat control.
@@ -70,7 +70,7 @@ The generated Android resources live under `branding/android/res`, and `decomp/A
 
 For the decompiled patch flow, run `decomp\Hackify.bat` after decoding the APK folder as either `4248` or `NetherSX2`; the script accepts both names. It applies the Cheats and Patches settings cleanup, game-list CHEATS badges, and OSD per-code cheat toggles. Rebuild and sign the APK after patching.
 
-`decomp\Hackify.bat` also bundles `cheats/exact` into the APK via `assets/cheats_exact`; do not commit decoded APK folders just to capture those generated asset copies.
+`decomp\Hackify.bat` also bundles the tracked PNACH packs into the APK via `assets/cheats_exact`; do not commit decoded APK folders just to capture those generated asset copies.
 
 Before signing an APK for Android 11+ devices, run `zipalign -p -f 4` on the unsigned APK, then sign the aligned APK with `apksigner`. Otherwise Android can reject the install because `resources.arsc` is not 4-byte aligned.
 
@@ -105,11 +105,19 @@ adb pull /sdcard/Android/data/xyz.aethersx2.android/files/game_crc_index.tsv .\g
 
 Match `game_crc_index.tsv` against visible external files in `/sdcard/Android/data/xyz.aethersx2.android/files/cheats/<CRC>.pnach`, and count only files with real `patch=` lines. If importing PNACH files from an external cheat pack, prefer exact CRC matches, remove enhancement-only blocks such as widescreen or 60 FPS, and keep gameplay cheats as `patch=1,` every-frame lines unless a source explicitly needs another timing. Default-disabled cheats should be commented as `// patch=1,...`; do not use `patch=0` as a disabled state because in PNACH syntax it means apply only at game startup.
 
-Tracked PNACH files live under `cheats/exact` and can be pushed with:
+Tracked PNACH files live under `cheats/exact` and `cheats/community/xs1l3n7x`; `cheats/exact` overrides duplicate community CRCs. Refresh the normalized community import with:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\ImportPcsx2CheatsCollection.ps1 -Clean
+```
+
+Push tracked PNACH files with:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File tools\InstallCheatsToDevice.ps1
 ```
+
+Use `-CommunityOnly` to refresh imported community PNACHs on a device without overwriting curated exact-file toggle state; it skips community files that duplicate `cheats/exact` CRCs.
 
 Same-serial or fan-translation candidates live under `cheats/candidates`; install them only with `-IncludeCandidates` while actively testing in-game.
 

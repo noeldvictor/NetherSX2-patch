@@ -1,0 +1,171 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Chaos Legion [SLUS-20695] [F3B0734E]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Always No Weight Carried]
+// patch=1,EE,902155F4,extended,0C08802C
+
+[Cheats/Disable FMV]
+// patch=1,EE,2020A310,extended,24020001
+
+[Cheats/Access All Movies]
+// patch=1,EE,205C1050,extended,0000000E
+
+[Cheats/Quick Exp Gain]
+// patch=1,EE,105C1444,extended,0000FFFF
+
+[Cheats/Max Exp]
+// patch=1,EE,205C1444,extended,3B9AC9FF
+
+[Cheats/Max Smash]
+// patch=1,EE,205C1448,extended,0000270F
+
+[Cheats/Always Low Stage Time]
+// patch=1,EE,205C1468,extended,00000000
+
+[Cheats/Always Low Boss Time]
+// patch=1,EE,205C146C,extended,00000000
+
+[Cheats/Max Smash Count]
+// patch=1,EE,105C1478,extended,0000270F
+
+[Cheats/Max Special Monster]
+// patch=1,EE,105C147A,extended,0000270F
+
+[Cheats/Infinite Life]
+// patch=1,EE,105A99C4,extended,000003E7
+
+[Cheats/Max Life]
+// patch=1,EE,105C143A,extended,000003E7
+// patch=1,EE,105C1438,extended,000003E8
+
+[Cheats/Infinite Soul]
+// patch=1,EE,105C13F4,extended,000003E7
+
+[Cheats/Max Soul]
+// patch=1,EE,105C13F6,extended,000003E7
+// patch=1,EE,105C13F8,extended,000005DC
+
+[Cheats/Have All Legions]
+// patch=1,EE,005C13E5,extended,000000FF
+
+[Cheats/P1 Press {CROSS} For Moon Jump]
+// patch=1,EE,D05C6482,extended,0000BFFF
+// patch=1,EE,205A7E74,extended,BFC00000
+
+[Cheats/Max Attack]
+// patch=1,EE,105C143C,extended,00005000
+
+[Cheats/Max Defense]
+// patch=1,EE,105C1440,extended,00000000
+
+[Cheats/EXP Gem (S)]
+// patch=1,EE,005C14C1,extended,00000063
+
+[Cheats/EXP Gem (M)]
+// patch=1,EE,005C14C2,extended,00000063
+
+[Cheats/Life Recovery (S)]
+// patch=1,EE,005C14C3,extended,00000063
+
+[Cheats/Soul Recovery (S)]
+// patch=1,EE,005C14C4,extended,00000063
+
+[Cheats/Life Max Up (S)]
+// patch=1,EE,005C14C5,extended,00000001
+
+[Cheats/Soul Max Up (S)]
+// patch=1,EE,005C14C6,extended,00000001
+
+[Cheats/Attack Up (S)]
+// patch=1,EE,005C14C7,extended,00000001
+
+[Cheats/EXP Gem (L)]
+// patch=1,EE,005C14C8,extended,00000063
+
+[Cheats/Life Recovery (L)]
+// patch=1,EE,005C14C9,extended,00000063
+
+[Cheats/Soul Recovery (L)]
+// patch=1,EE,005C14CA,extended,00000063
+
+[Cheats/EXP Gem (XL)]
+// patch=1,EE,005C14CB,extended,00000063
+
+[Cheats/Sword Crest]
+// patch=1,EE,005C14CC,extended,00000001
+
+[Cheats/Power Crest]
+// patch=1,EE,005C14CD,extended,00000001
+
+[Cheats/Arrow Crest]
+// patch=1,EE,005C14CE,extended,00000001
+
+[Cheats/Shield Crest]
+// patch=1,EE,005C14D0,extended,00000001
+
+[Cheats/Claw Crest]
+// patch=1,EE,005C14D1,extended,00000001
+
+[Cheats/Bomb Crest]
+// patch=1,EE,005C14D2,extended,00000001
+
+[Cheats/Thanatos Chip]
+// patch=1,EE,005C14D3,extended,00000009
+
+[Cheats/Ultimate Crest]
+// patch=1,EE,005C14D4,extended,00000001
+
+[Cheats/Life Max Up (L)]
+// patch=1,EE,005C14D5,extended,00000001
+
+[Cheats/Soul Max Up (L)]
+// patch=1,EE,005C14D6,extended,00000001
+
+[Cheats/Attack Up (L)]
+// patch=1,EE,005C14D7,extended,00000001
+
+[Cheats/Defense Up (S)]
+// patch=1,EE,005C14D8,extended,00000001
+
+[Cheats/Defense Up (L)]
+// patch=1,EE,005C14D9,extended,00000001
+
+[Cheats/Spiritual Gem]
+// patch=1,EE,005C14DB,extended,00000063
+
+[Cheats/Max Legion Attack]
+// patch=1,EE,205C1400,extended,77777777
+
+[Cheats/Max Legion Defense]
+// patch=1,EE,205C1404,extended,77777777
+
+[Cheats/Max Enchant]
+// patch=1,EE,205C1408,extended,22222222
+
+[Cheats/Max Assist]
+// patch=1,EE,205C140C,extended,22222222
+
+[Cheats/Max Force]
+// patch=1,EE,205C1410,extended,22222222
+
+[Cheats/Guilt]
+// patch=1,EE,205C1418,extended,3B9AC9FF
+
+[Cheats/Hatred]
+// patch=1,EE,205C141C,extended,3B9AC9FF
+
+[Cheats/Malice]
+// patch=1,EE,205C1420,extended,3B9AC9FF
+
+[Cheats/Arrogance]
+// patch=1,EE,205C1428,extended,3B9AC9FF
+
+[Cheats/Flawed]
+// patch=1,EE,205C142C,extended,3B9AC9FF
+
+[Cheats/Blasphemy]
+// patch=1,EE,205C1430,extended,3B9AC9FF
+
+[Cheats/Thanatos]
+// patch=1,EE,205C1434,extended,3B9AC9FF

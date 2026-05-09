@@ -1,0 +1,773 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Evergrace [SLUS-20016] [758F0EE6]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Beryl Knife]
+// patch=1,EE,901C4D18,extended,0C07698C
+
+[Cheats/Max Str]
+// patch=1,EE,101F7110,extended,000003E7
+
+[Cheats/Max Sta]
+// patch=1,EE,101F7112,extended,000003E7
+
+[Cheats/Max Int]
+// patch=1,EE,101F7114,extended,000003E7
+
+[Cheats/Max Res]
+// patch=1,EE,101F7116,extended,000003E7
+
+[Cheats/Max Luk]
+// patch=1,EE,101F7118,extended,000003E7
+
+[Cheats/Max Atk Slash]
+// patch=1,EE,101F712E,extended,000003E7
+
+[Cheats/Max Atk Hit]
+// patch=1,EE,101F7130,extended,000003E7
+
+[Cheats/Max Atk Lunge]
+// patch=1,EE,101F7132,extended,000003E7
+
+[Cheats/Max Atk Lightning]
+// patch=1,EE,101F7134,extended,000003E7
+
+[Cheats/Max Atk Tree]
+// patch=1,EE,101F7136,extended,000003E7
+
+[Cheats/Max Atk Flame]
+// patch=1,EE,101F7138,extended,000003E7
+
+[Cheats/Max Atk Ice]
+// patch=1,EE,101F713A,extended,000003E7
+
+[Cheats/Max Def Slash]
+// patch=1,EE,101F7140,extended,000003E7
+
+[Cheats/Max Def Hit]
+// patch=1,EE,101F7142,extended,000003E7
+
+[Cheats/Max Def Lunge]
+// patch=1,EE,101F7144,extended,000003E7
+
+[Cheats/Max Def Lightning]
+// patch=1,EE,101F7146,extended,000003E7
+
+[Cheats/Max Def Tree]
+// patch=1,EE,101F7148,extended,000003E7
+
+[Cheats/Max Def Flame]
+// patch=1,EE,101F714A,extended,000003E7
+
+[Cheats/Max Def Ice]
+// patch=1,EE,101F714C,extended,000003E7
+
+[Cheats/Infinite Health & Power]
+// patch=1,EE,101F7E60,extended,00000428
+// patch=1,EE,101F7E66,extended,00000428
+
+[Cheats/Max Money]
+// patch=1,EE,201F716C,extended,05F5E0FF
+// patch=1,EE,201F7170,extended,05F5E0FF
+
+[Cheats/Serrated Blade L1]
+// patch=1,EE,101F2E90,extended,00004081
+
+[Cheats/Serrated Blade L2]
+// patch=1,EE,101F2E98,extended,00004081
+
+[Cheats/Serrated Blade L3]
+// patch=1,EE,101F2EA0,extended,00004081
+
+[Cheats/Majestic Sword L1]
+// patch=1,EE,101F2EA8,extended,00004081
+
+[Cheats/Majestic Sword L2]
+// patch=1,EE,101F2EB0,extended,00004081
+
+[Cheats/Majestic Sword L3]
+// patch=1,EE,101F2EB8,extended,00004081
+
+[Cheats/Degutla L1]
+// patch=1,EE,101F2EC0,extended,00004081
+
+[Cheats/Degutla L2]
+// patch=1,EE,101F2EC8,extended,00004081
+
+[Cheats/Degutla L3]
+// patch=1,EE,101F2ED0,extended,00004081
+
+[Cheats/Tear Blade L1]
+// patch=1,EE,101F2ED8,extended,00004081
+
+[Cheats/Tear Blade L2]
+// patch=1,EE,101F2EE0,extended,00004081
+
+[Cheats/Tear Blade L3]
+// patch=1,EE,101F2EE8,extended,00004081
+
+[Cheats/Defender L1]
+// patch=1,EE,101F2EF0,extended,00004081
+
+[Cheats/Defender L2]
+// patch=1,EE,101F2EF8,extended,00004081
+
+[Cheats/Defender L3]
+// patch=1,EE,101F2F00,extended,00004081
+
+[Cheats/Alterstar L1]
+// patch=1,EE,101F2F08,extended,00004081
+
+[Cheats/Alterstar L2]
+// patch=1,EE,101F2F10,extended,00004081
+
+[Cheats/Alterstar L3]
+// patch=1,EE,101F2F18,extended,00004081
+
+[Cheats/Moonlight Sword L1]
+// patch=1,EE,101F2F20,extended,00004081
+
+[Cheats/Moonlight Sword L2]
+// patch=1,EE,101F2F28,extended,00004081
+
+[Cheats/Moonlight Sword L3]
+// patch=1,EE,101F2F30,extended,00004081
+
+[Cheats/Katana L1]
+// patch=1,EE,101F2F38,extended,00004081
+
+[Cheats/Katana L2]
+// patch=1,EE,101F2F40,extended,00004081
+
+[Cheats/Katana L3]
+// patch=1,EE,101F2F48,extended,00004081
+
+[Cheats/Club L1]
+// patch=1,EE,101F2F50,extended,00004081
+
+[Cheats/Club L2]
+// patch=1,EE,101F2F58,extended,00004081
+
+[Cheats/Club L3]
+// patch=1,EE,101F2F60,extended,00004081
+
+[Cheats/Cleaver L1]
+// patch=1,EE,101F2F68,extended,00004081
+
+[Cheats/Cleaver L2]
+// patch=1,EE,101F2F70,extended,00004081
+
+[Cheats/Cleaver L3]
+// patch=1,EE,101F2F78,extended,00004081
+
+[Cheats/Olden Warhammer L1]
+// patch=1,EE,101F2F80,extended,00004081
+
+[Cheats/Olden Warhammer L2]
+// patch=1,EE,101F2F88,extended,00004081
+
+[Cheats/Azure Headband L1]
+// patch=1,EE,101F30D8,extended,0000C089
+// patch=1,EE,101F3678,extended,0000408D
+
+[Cheats/Azure Headband L2]
+// patch=1,EE,101F30E0,extended,0000C089
+// patch=1,EE,101F3680,extended,0000408D
+
+[Cheats/Azure Headband L3]
+// patch=1,EE,101F30E8,extended,0000C089
+// patch=1,EE,101F3688,extended,0000408D
+
+[Cheats/Blessed Mask L1]
+// patch=1,EE,101F30F0,extended,0000C089
+
+[Cheats/Blessed Mask L2]
+// patch=1,EE,101F30F8,extended,0000C089
+
+[Cheats/Blessed Mask L3]
+// patch=1,EE,101F3100,extended,0000C089
+
+[Cheats/Paldio Helmet L1]
+// patch=1,EE,101F3108,extended,0000C089
+
+[Cheats/Infinite Paldio Helmet Palmira Power]
+// patch=1,EE,101F310E,extended,000003E7
+
+[Cheats/Paldio Helmet L2]
+// patch=1,EE,101F3110,extended,0000C089
+
+[Cheats/Paldio Helmet L3]
+// patch=1,EE,101F3118,extended,0000C089
+
+[Cheats/Tylissa's Mask L1]
+// patch=1,EE,101F3120,extended,0000C089
+
+[Cheats/Tylissa's Mask L2]
+// patch=1,EE,101F3128,extended,0000C089
+
+[Cheats/Tylissa's Mask L3]
+// patch=1,EE,101F3130,extended,0000C089
+
+[Cheats/Astute Turban L1]
+// patch=1,EE,101F3138,extended,0000C089
+
+[Cheats/Astute Turban L2]
+// patch=1,EE,101F3140,extended,0000C089
+
+[Cheats/Astute Turban L3]
+// patch=1,EE,101F3148,extended,0000C089
+
+[Cheats/Pot L1]
+// patch=1,EE,101F3150,extended,0000C089
+// patch=1,EE,101F3708,extended,0000408D
+
+[Cheats/Pot L2]
+// patch=1,EE,101F3158,extended,0000C089
+// patch=1,EE,101F3710,extended,0000408D
+
+[Cheats/Pot L3]
+// patch=1,EE,101F3160,extended,0000C089
+// patch=1,EE,101F3718,extended,0000408D
+
+[Cheats/Swan Beret L1]
+// patch=1,EE,101F3168,extended,0000C089
+// patch=1,EE,101F3720,extended,0000408D
+
+[Cheats/Swan Beret L2]
+// patch=1,EE,101F3170,extended,0000C089
+// patch=1,EE,101F3728,extended,0000408D
+
+[Cheats/Swan Beret L3]
+// patch=1,EE,101F3178,extended,0000C089
+// patch=1,EE,101F3730,extended,0000408D
+
+[Cheats/Rabbit Helmet L1]
+// patch=1,EE,101F3180,extended,0000C089
+// patch=1,EE,101F3750,extended,0000408D
+
+[Cheats/Rabbit Helmet L2]
+// patch=1,EE,101F3188,extended,0000C089
+// patch=1,EE,101F3758,extended,0000408D
+
+[Cheats/Rabbit Helmet L3]
+// patch=1,EE,101F3190,extended,0000C089
+// patch=1,EE,101F3760,extended,0000408D
+
+[Cheats/Devine Halo L1]
+// patch=1,EE,101F3198,extended,0000C089
+
+[Cheats/Devine Halo L2]
+// patch=1,EE,101F31A0,extended,0000C089
+
+[Cheats/Devine Halo L3]
+// patch=1,EE,101F31A8,extended,0000C089
+
+[Cheats/Armor Of Frost L1]
+// patch=1,EE,101F3230,extended,00004091
+// patch=1,EE,101F3818,extended,00004095
+
+[Cheats/Armor Of Frost L2]
+// patch=1,EE,101F3238,extended,00004091
+// patch=1,EE,101F3820,extended,00004095
+
+[Cheats/Armor Of Frost L3]
+// patch=1,EE,101F3240,extended,00004091
+// patch=1,EE,101F3828,extended,00004095
+
+[Cheats/Flayed Skin Armor L1]
+// patch=1,EE,101F3248,extended,00004091
+// patch=1,EE,101F3830,extended,00004095
+
+[Cheats/Flayed Skin Armor L2]
+// patch=1,EE,101F3250,extended,00004091
+// patch=1,EE,101F3838,extended,00004095
+
+[Cheats/Flayed Skin Armor L3]
+// patch=1,EE,101F3258,extended,00004091
+// patch=1,EE,101F3840,extended,00004095
+
+[Cheats/Royal Robe L1]
+// patch=1,EE,101F3260,extended,00004091
+
+[Cheats/Royal Robe L2]
+// patch=1,EE,101F3268,extended,00000490
+
+[Cheats/Royal Robe L3]
+// patch=1,EE,101F3270,extended,00000490
+
+[Cheats/Paldio Breastplate L1]
+// patch=1,EE,101F3278,extended,00004091
+// patch=1,EE,101F3848,extended,00004095
+
+[Cheats/Infinite Paldio Breastplate Palmira Power]
+// patch=1,EE,101F327E,extended,000003E7
+
+[Cheats/Paldio Breastplate L2]
+// patch=1,EE,101F3280,extended,00004091
+// patch=1,EE,101F3850,extended,00004095
+
+[Cheats/Paldio Breastplate L3]
+// patch=1,EE,101F3288,extended,00004091
+// patch=1,EE,101F3858,extended,00004095
+
+[Cheats/War Cry Armor L1]
+// patch=1,EE,101F3290,extended,00004091
+
+[Cheats/War Cry Armor L2]
+// patch=1,EE,101F3298,extended,00004091
+
+[Cheats/War Cry Armor L3]
+// patch=1,EE,101F32A0,extended,00000491
+
+[Cheats/Volt Suit L1]
+// patch=1,EE,101F32A8,extended,00000491
+// patch=1,EE,101F3860,extended,00004095
+
+[Cheats/Volt Suit L2]
+// patch=1,EE,101F32B0,extended,00000491
+// patch=1,EE,101F3868,extended,00004095
+
+[Cheats/Volt Suit L3]
+// patch=1,EE,101F32B8,extended,00000491
+// patch=1,EE,101F3870,extended,00004095
+
+[Cheats/Absorbtion Armor L1]
+// patch=1,EE,101F32C0,extended,00000491
+
+[Cheats/Absorbtion Armor L2]
+// patch=1,EE,101F32C8,extended,00000491
+
+[Cheats/Absorbtion Armor L3]
+// patch=1,EE,101F32D0,extended,00000491
+
+[Cheats/Armor Of Valor L1]
+// patch=1,EE,101F32D8,extended,00000491
+// patch=1,EE,101F38A8,extended,00004095
+
+[Cheats/Armor Of Valor L2]
+// patch=1,EE,101F32E8,extended,00000491
+// patch=1,EE,101F38B0,extended,00004095
+
+[Cheats/Darkforge Armor L1]
+// patch=1,EE,101F32F0,extended,00000491
+
+[Cheats/Darkforge Armor L2]
+// patch=1,EE,101F32F8,extended,00000491
+
+[Cheats/Darkforge Armor L3]
+// patch=1,EE,101F3300,extended,00000491
+
+[Cheats/Guard Boots L1]
+// patch=1,EE,101F3310,extended,0000C099
+
+[Cheats/Guard Boots L2]
+// patch=1,EE,101F3318,extended,0000C099
+
+[Cheats/Guard Boots L3]
+// patch=1,EE,101F3320,extended,0000C099
+
+[Cheats/Royal Boots L1]
+// patch=1,EE,101F3328,extended,0000C099
+
+[Cheats/Royal Boots L2]
+// patch=1,EE,101F3330,extended,0000C099
+
+[Cheats/Royal Boots L3]
+// patch=1,EE,101F3338,extended,0000C099
+
+[Cheats/Armored Boots L1]
+// patch=1,EE,101F3340,extended,0000C099
+// patch=1,EE,101F38F8,extended,0000409D
+
+[Cheats/Armored Boots L2]
+// patch=1,EE,101F3348,extended,0000C099
+// patch=1,EE,101F3900,extended,0000409D
+
+[Cheats/Armored Boots L3]
+// patch=1,EE,101F3350,extended,0000C099
+// patch=1,EE,101F3908,extended,0000409D
+
+[Cheats/Dragolos Boots L1]
+// patch=1,EE,101F3358,extended,0000C099
+// patch=1,EE,101F3910,extended,0000409D
+
+[Cheats/Dragolos Boots L2]
+// patch=1,EE,101F3360,extended,0000C099
+// patch=1,EE,101F3918,extended,0000409D
+
+[Cheats/Dragolos Boots L3]
+// patch=1,EE,101F3368,extended,0000C099
+// patch=1,EE,101F3920,extended,0000409D
+
+[Cheats/Speed Boots L1]
+// patch=1,EE,101F3370,extended,0000C099
+// patch=1,EE,101F3928,extended,0000409D
+
+[Cheats/Speed Boots L2]
+// patch=1,EE,101F3378,extended,0000C099
+// patch=1,EE,101F3930,extended,0000409D
+
+[Cheats/Speed Boots L3]
+// patch=1,EE,101F3380,extended,0000C099
+// patch=1,EE,101F3938,extended,0000409D
+
+[Cheats/Hover Boots L1]
+// patch=1,EE,101F3388,extended,0000C099
+
+[Cheats/Woven Boots L2]
+// patch=1,EE,101F3388,extended,0000C099
+// patch=1,EE,101F3390,extended,0000C099
+// patch=1,EE,101F3948,extended,0000409D
+
+[Cheats/Hover Boots L2]
+// patch=1,EE,101F3390,extended,0000C099
+
+[Cheats/Hover Boots L3]
+// patch=1,EE,101F3398,extended,0000C099
+
+[Cheats/Woven Boots L3]
+// patch=1,EE,101F3398,extended,0000C099
+// patch=1,EE,101F3950,extended,0000409D
+
+[Cheats/Paldio Boots L1]
+// patch=1,EE,101F33A0,extended,0000C099
+// patch=1,EE,101F3958,extended,0000409D
+
+[Cheats/Paldio Boots L2]
+// patch=1,EE,101F33A8,extended,0000C099
+// patch=1,EE,101F3960,extended,0000409D
+
+[Cheats/Paldio Boots L3]
+// patch=1,EE,101F33B0,extended,0000C099
+// patch=1,EE,101F3968,extended,0000409D
+
+[Cheats/Heroic Necklace]
+// patch=1,EE,101F33C0,extended,000040A1
+
+[Cheats/Star Necklace]
+// patch=1,EE,101F33C8,extended,000040A1
+// patch=1,EE,101F39B0,extended,000040A5
+
+[Cheats/Pendant Of Hope]
+// patch=1,EE,101F33D0,extended,000040A1
+// patch=1,EE,101F39B8,extended,000040A5
+
+[Cheats/Icon Of Divinity]
+// patch=1,EE,101F33D8,extended,000040A1
+// patch=1,EE,101F39C0,extended,000040A5
+
+[Cheats/Icon Of Loyalty]
+// patch=1,EE,101F33E0,extended,000040A1
+// patch=1,EE,101F39C8,extended,000040A5
+
+[Cheats/Band Of Clarity]
+// patch=1,EE,101F33E8,extended,000040A1
+// patch=1,EE,101F39D0,extended,000040A5
+
+[Cheats/Ring Of Blessing]
+// patch=1,EE,101F33F0,extended,000040A1
+// patch=1,EE,101F39D8,extended,000040A5
+
+[Cheats/Elder's Ring]
+// patch=1,EE,101F33F8,extended,000040A1
+// patch=1,EE,101F39E0,extended,000040A5
+
+[Cheats/Amulet Of Purity]
+// patch=1,EE,101F3400,extended,000040A1
+// patch=1,EE,101F39E8,extended,000040A5
+
+[Cheats/Ring Of Resist]
+// patch=1,EE,101F3408,extended,000040A1
+// patch=1,EE,101F39F0,extended,000040A5
+
+[Cheats/Life Extract]
+// patch=1,EE,101F3410,extended,000004C1
+// patch=1,EE,101F39F8,extended,000004C5
+
+[Cheats/Antidote]
+// patch=1,EE,101F3418,extended,000004C1
+// patch=1,EE,101F3A00,extended,000004C5
+
+[Cheats/Billiana Leaf]
+// patch=1,EE,101F3420,extended,000004C1
+// patch=1,EE,101F3A08,extended,000004C5
+
+[Cheats/Release Emblem]
+// patch=1,EE,101F3428,extended,000004C1
+// patch=1,EE,101F3A10,extended,000004C5
+
+[Cheats/Orb Of Atonement]
+// patch=1,EE,101F3430,extended,000004C1
+// patch=1,EE,101F3A18,extended,000004C5
+
+[Cheats/Billiana Extract]
+// patch=1,EE,101F3438,extended,000004C1
+// patch=1,EE,101F3A20,extended,000004C5
+
+[Cheats/Red Fruit]
+// patch=1,EE,101F3440,extended,000004C1
+// patch=1,EE,101F3A28,extended,000004C5
+
+[Cheats/Blue Fruit]
+// patch=1,EE,101F3448,extended,000004C1
+// patch=1,EE,101F3A30,extended,000004C5
+
+[Cheats/Mushrooms]
+// patch=1,EE,101F3450,extended,000004C1
+// patch=1,EE,101F3A38,extended,000004C5
+
+[Cheats/Palmira Ore]
+// patch=1,EE,101F3458,extended,000004C1
+// patch=1,EE,101F3A40,extended,000004C5
+
+[Cheats/Sword Star]
+// patch=1,EE,101F3460,extended,000004C1
+// patch=1,EE,101F3A48,extended,000004C5
+
+[Cheats/Royal Medal]
+// patch=1,EE,101F3468,extended,000004C1
+// patch=1,EE,101F3A50,extended,000004C5
+
+[Cheats/Red Sphere]
+// patch=1,EE,101F3470,extended,000004C1
+// patch=1,EE,101F3A58,extended,000004C5
+
+[Cheats/Blue Sphere]
+// patch=1,EE,101F3478,extended,000004C1
+// patch=1,EE,101F3A60,extended,000004C5
+
+[Cheats/Master Key 2F]
+// patch=1,EE,101F3480,extended,000004C1
+// patch=1,EE,101F3A68,extended,000004C5
+
+[Cheats/Billiana Fruit]
+// patch=1,EE,101F3488,extended,000004C1
+// patch=1,EE,101F3A70,extended,000004C5
+
+[Cheats/Right Winged Key]
+// patch=1,EE,101F3490,extended,000004C1
+// patch=1,EE,101F3A78,extended,000004C5
+
+[Cheats/Left Winged Key]
+// patch=1,EE,101F3498,extended,000004C1
+// patch=1,EE,101F3A80,extended,000004C5
+
+[Cheats/Red Sphere (B)]
+// patch=1,EE,101F34A0,extended,000004C1
+// patch=1,EE,101F3A88,extended,000004C5
+
+[Cheats/Blue Sphere (B)]
+// patch=1,EE,101F34A8,extended,000004C1
+// patch=1,EE,101F3A90,extended,000004C5
+
+[Cheats/Scarlet Sphere]
+// patch=1,EE,101F34B0,extended,000004C1
+// patch=1,EE,101F3A98,extended,000004C5
+
+[Cheats/Azure Sphere]
+// patch=1,EE,101F34B8,extended,000004C1
+// patch=1,EE,101F3AA0,extended,000004C5
+
+[Cheats/Dark Guide Post]
+// patch=1,EE,101F34C0,extended,000004C1
+// patch=1,EE,101F3AA8,extended,000004C5
+
+[Cheats/Caped Statue Body]
+// patch=1,EE,101F34C8,extended,000004C1
+
+[Cheats/Caped Statue Head]
+// patch=1,EE,101F34D0,extended,000004C1
+
+[Cheats/Treasure Key]
+// patch=1,EE,101F34D8,extended,000004C1
+// patch=1,EE,101F3AC0,extended,000004C5
+
+[Cheats/Soul Of Goddess]
+// patch=1,EE,101F34E0,extended,000004C1
+// patch=1,EE,101F3AC8,extended,000004C5
+
+[Cheats/Small Flower]
+// patch=1,EE,101F34E8,extended,000004C1
+// patch=1,EE,101F3AD0,extended,000004C5
+
+[Cheats/Transpot Palmira]
+// patch=1,EE,101F34F0,extended,000004C1
+// patch=1,EE,101F3AD8,extended,000004C5
+
+[Cheats/Sealed Key]
+// patch=1,EE,101F34F8,extended,000004C1
+// patch=1,EE,101F3AE0,extended,000004C5
+
+[Cheats/Premier Spear L1]
+// patch=1,EE,101F3580,extended,00004085
+
+[Cheats/Premier Spear L2]
+// patch=1,EE,101F3588,extended,00004085
+
+[Cheats/Premier Spear L3]
+// patch=1,EE,101F3590,extended,00004085
+
+[Cheats/Sacred Rod L1]
+// patch=1,EE,101F3598,extended,00004085
+
+[Cheats/Sacred Rod L2]
+// patch=1,EE,101F35A0,extended,00004085
+
+[Cheats/Sacred Rod L3]
+// patch=1,EE,101F35A8,extended,00004085
+
+[Cheats/Velancer L1]
+// patch=1,EE,101F35B0,extended,00004085
+
+[Cheats/Velancer L2]
+// patch=1,EE,101F35B8,extended,00004085
+
+[Cheats/Velancer L3]
+// patch=1,EE,101F35C0,extended,00004085
+
+[Cheats/Bloodclaw L1]
+// patch=1,EE,101F35C8,extended,00004085
+
+[Cheats/Bloodclaw L2]
+// patch=1,EE,101F35D0,extended,00004085
+
+[Cheats/Bloodclaw L3]
+// patch=1,EE,101F35D8,extended,00004085
+
+[Cheats/Solta Bow L1]
+// patch=1,EE,101F35E0,extended,00004085
+
+[Cheats/Solta Bow L2]
+// patch=1,EE,101F35E8,extended,00004085
+
+[Cheats/Solta Bow L3]
+// patch=1,EE,101F35F0,extended,00004085
+
+[Cheats/Elite Bow L1]
+// patch=1,EE,101F35F8,extended,00004085
+
+[Cheats/Elite Bow L2]
+// patch=1,EE,101F3600,extended,00004085
+
+[Cheats/Elite Bow L3]
+// patch=1,EE,101F3608,extended,00004085
+
+[Cheats/Frying Pan L1]
+// patch=1,EE,101F3610,extended,00004085
+
+[Cheats/Frying Pan L2]
+// patch=1,EE,101F3618,extended,00004085
+
+[Cheats/Frying Pan L3]
+// patch=1,EE,101F3620,extended,00004085
+
+[Cheats/Tiger Claw L1]
+// patch=1,EE,101F3628,extended,00004085
+
+[Cheats/Tiger Claw L2]
+// patch=1,EE,101F3630,extended,00004085
+
+[Cheats/Tiger Claw L3]
+// patch=1,EE,101F3638,extended,00004085
+
+[Cheats/Avenger L1]
+// patch=1,EE,101F3640,extended,00004085
+
+[Cheats/Avenger L2]
+// patch=1,EE,101F3648,extended,00004085
+
+[Cheats/Avenger L3]
+// patch=1,EE,101F3650,extended,00004085
+
+[Cheats/Zul's Toy L1]
+// patch=1,EE,101F3658,extended,00004085
+
+[Cheats/Zul's Toy L2]
+// patch=1,EE,101F3660,extended,00004085
+
+[Cheats/Zul's Toy L3]
+// patch=1,EE,101F3668,extended,00004085
+
+[Cheats/Kanzashi L1]
+// patch=1,EE,101F36D8,extended,0000408D
+
+[Cheats/Kanzashi L2]
+// patch=1,EE,101F36E0,extended,0000408D
+
+[Cheats/Kanzashi L3]
+// patch=1,EE,101F36E8,extended,0000408D
+
+[Cheats/Billiana Hood L1]
+// patch=1,EE,101F36F0,extended,0000408D
+
+[Cheats/Billiana Hood L2]
+// patch=1,EE,101F36F8,extended,0000408D
+
+[Cheats/Billiana Hood L3]
+// patch=1,EE,101F3700,extended,0000408D
+
+[Cheats/Cat Ears L1]
+// patch=1,EE,101F3738,extended,0000408D
+
+[Cheats/Cat Ears L2]
+// patch=1,EE,101F3740,extended,0000408D
+
+[Cheats/Cat Ears L3]
+// patch=1,EE,101F3748,extended,0000408D
+
+[Cheats/Absorption Armor L1]
+// patch=1,EE,101F3878,extended,00004095
+
+[Cheats/Absorption Armor L2]
+// patch=1,EE,101F3880,extended,00004095
+
+[Cheats/Absorption Armor L3]
+// patch=1,EE,101F3888,extended,00004095
+
+[Cheats/Dragolos Armor L1]
+// patch=1,EE,101F3890,extended,00004095
+
+[Cheats/Dragolos Armor L2]
+// patch=1,EE,101F3898,extended,00004095
+
+[Cheats/Dragolos Armor L3]
+// patch=1,EE,101F38A0,extended,00004095
+
+[Cheats/Armor of Valor L3]
+// patch=1,EE,101F38B8,extended,00004095
+
+[Cheats/HRL-000-A L1]
+// patch=1,EE,101F38C0,extended,00004095
+
+[Cheats/HRL-000-A L2]
+// patch=1,EE,101F38C8,extended,00004095
+
+[Cheats/HRL-000-A L3]
+// patch=1,EE,101F38D0,extended,00004095
+
+[Cheats/Woven Boots L1]
+// patch=1,EE,101F3940,extended,0000409D
+
+[Cheats/HRL-000-B L1]
+// patch=1,EE,101F3970,extended,0000409D
+
+[Cheats/HRL-000-B L2]
+// patch=1,EE,101F3978,extended,0000409D
+
+[Cheats/HRL-000-B L3]
+// patch=1,EE,101F3980,extended,0000409D
+
+[Cheats/Cat Feet L1]
+// patch=1,EE,101F3988,extended,0000409D
+
+[Cheats/Cat Feet L2]
+// patch=1,EE,101F3990,extended,0000409D
+
+[Cheats/Cat Feet L3]
+// patch=1,EE,101F3998,extended,0000409D
+
+[Cheats/Caped Stat Body]
+// patch=1,EE,101F3AB0,extended,000004C5
+
+[Cheats/Caped Stat Head]
+// patch=1,EE,101F3AB8,extended,000004C5

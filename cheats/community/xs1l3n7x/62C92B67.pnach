@@ -1,0 +1,96 @@
+// Source: https://github.com/xs1l3n7x/pcsx2_cheats_collection
+// Source gametitle: Dual Hearts [SLUS-20475] [62C92B67]
+// Imported default-off for NetherSX2 Cheat Helper OSD toggles.
+
+[Cheats/Unlock All Missions]
+// patch=1,EE,F0200008,extended,0038799F
+
+[Cheats/Baku Infinite Kigen]
+// patch=1,EE,206B5410,extended,000003E7
+
+[Cheats/Baku Infinite Esamon]
+// patch=1,EE,206B5414,extended,000003E7
+
+[Cheats/Baku Max Esamon]
+// patch=1,EE,206B5418,extended,000003E7
+
+[Cheats/Have Green Key]
+// patch=1,EE,006BB5E0,extended,00000001
+
+[Cheats/Have Red Key]
+// patch=1,EE,006BB5E1,extended,00000001
+
+[Cheats/Have Orange Key]
+// patch=1,EE,006BB5E2,extended,00000001
+
+[Cheats/Have Indigo Key]
+// patch=1,EE,006BB5E3,extended,00000001
+
+[Cheats/Have Yellow Key]
+// patch=1,EE,006BB5E4,extended,00000001
+
+[Cheats/Have Purple Key]
+// patch=1,EE,006BB5E5,extended,00000001
+
+[Cheats/Have Blue Key]
+// patch=1,EE,006BB5E6,extended,00000001
+
+[Cheats/Have Black Key]
+// patch=1,EE,006BB5E7,extended,00000001
+
+[Cheats/Have White Key]
+// patch=1,EE,006BB5E8,extended,00000001
+
+[Cheats/Max Health]
+// patch=1,EE,006FD679,extended,00000050
+
+[Cheats/Infinite Health]
+// patch=1,EE,006FD678,extended,00000050
+
+[Cheats/Max Infinite Health]
+// patch=1,EE,106FD678,extended,00005050
+
+[Cheats/Have All Weapon Data]
+// patch=1,EE,206FD698,extended,FFFFFFFF
+
+[Cheats/Max Weapon 1]
+// patch=1,EE,106FD6B0,extended,000003E7
+
+[Cheats/Max Weapon 2]
+// patch=1,EE,106FD6B2,extended,000003E7
+
+[Cheats/Max Weapon 3]
+// patch=1,EE,106FD6B4,extended,000003E7
+
+[Cheats/Max Weapon 4]
+// patch=1,EE,106FD6B6,extended,000003E7
+
+[Cheats/Weapon 1 Next Always 1]
+// patch=1,EE,106FD6B8,extended,00000001
+
+[Cheats/Weapon 2 Next Always 1]
+// patch=1,EE,106FD6BA,extended,00000001
+
+[Cheats/Weapon 3 Next Always 1]
+// patch=1,EE,106FD6BC,extended,00000001
+
+[Cheats/Weapon 4 Next Always 1]
+// patch=1,EE,106FD6BE,extended,00000001
+
+[Cheats/Have All Baku Abilities]
+// patch=1,EE,206FD6CC,extended,FFFFFFFF
+
+[Cheats/Have Baku Diary]
+// patch=1,EE,006FD6D0,extended,00000001
+
+[Cheats/Max Dream Crystals]
+// patch=1,EE,106FD6DA,extended,000003E7
+
+[Cheats/Max Dream Energy]
+// patch=1,EE,006FD6DC,extended,00000064
+
+[Cheats/Max Gold Esamon]
+// patch=1,EE,006FD6DD,extended,00000064
+
+[Cheats/Max Dc Gold Esamon]
+// patch=1,EE,006FD6DE,extended,00000064
