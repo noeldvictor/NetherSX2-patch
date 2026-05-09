@@ -72,6 +72,28 @@ For the decompiled patch flow, run `decomp\Hackify.bat` after decoding the APK f
 
 `decomp\Hackify.bat` also bundles the tracked PNACH packs into the APK via `assets/cheats_exact`; do not commit decoded APK folders just to capture those generated asset copies.
 
+## Custom GPU Driver Notes
+
+`decomp\ApplyCustomGpuDriverPatch.ps1` adds a `Custom GPU Driver` row directly under `Settings > Graphics > GPU Renderer`. The row opens `xyz.aethersx2.android.GpuDriverManagerActivity`, which is compiled from `android-src/xyz/aethersx2/android/GpuDriverManagerActivity.java` into `classes2.dex` during patching.
+
+The manager downloads a Turnip/AdrenoTools driver zip, extracts the Vulkan `.so`, renames it to `libvulkan_freedreno.so`, stores it under private app storage at `files/gpu_drivers/current`, writes an `enabled` marker, and sets `EmuCore/GS/Renderer = 14` for Vulkan. The default download URL is K11MCH1's `Turnip_v26.0.0_R8.zip`, and the UI also allows a custom URL override.
+
+The native side is built by `tools\BuildGpuDriverShim.ps1`, which clones pinned `bylaws/libadrenotools` into ignored `.tools/libadrenotools`, builds arm64 libraries with the Android NDK, and copies these generated files into the decoded APK:
+
+- `lib/arm64-v8a/libvulkad.so`
+- `lib/arm64-v8a/libhook_impl.so`
+- `lib/arm64-v8a/libmain_hook.so`
+
+`ApplyCustomGpuDriverPatch.ps1` patches `lib/arm64-v8a/libemucore.so` strings from `libvulkan.so` to `libvulkad.so`. With no enabled marker or no installed driver, the shim falls back to the system Vulkan driver. Driver changes require a full emulator process restart, because Vulkan is loaded once per process. The shim logs to:
+
+```powershell
+adb shell cat /sdcard/Android/data/xyz.aethersx2.android/files/gpu_driver_shim.log
+```
+
+The generated native libs and libadrenotools checkout stay under `.tools/` and should not be committed. Commit the shim source, Java source, and patch scripts only.
+
+Because the generated APK statically links BSD-licensed libadrenotools/linkernsbypass code into `libvulkad.so`, keep `third_party_notices/libadrenotools-BSD-2-Clause.txt` in the repo. `ApplyCustomGpuDriverPatch.ps1` copies it into APK assets at `assets/licenses/libadrenotools-BSD-2-Clause.txt`.
+
 ## Thor Haptics Notes
 
 The AYN Thor exposes Android device haptics, not a normal dual-motor controller rumble device on the `Odin Controller` input device. `dumpsys input` shows the controller as gamepad/joystick only, while `dumpsys vibrator_manager` reports device vibrator id `0`.
