@@ -39,19 +39,20 @@ function Patch-PatchesMenuLabel {
     }
 
     $text = [System.IO.File]::ReadAllText($path)
-    $text = $text.Replace("<item>Edit Patches</item>", "<item>Edit / Toggle Cheats</item>")
+    $text = $text.Replace("<item>Edit Patches</item>", "<item>Toggle Cheat Codes</item>")
+    $text = $text.Replace("<item>Edit / Toggle Cheats</item>", "<item>Toggle Cheat Codes</item>")
     [System.IO.File]::WriteAllText($path, $text, $utf8NoBom)
 }
 
-function Patch-OsdStrings {
+function Restore-OsdPatchStrings {
     $path = Join-Path $ProjectPath "res\values\strings.xml"
     if (-not (Test-Path -LiteralPath $path)) {
         throw "Missing strings resource: $path"
     }
 
     $text = [System.IO.File]::ReadAllText($path)
-    $text = $text.Replace('<string name="patches_menu_disable_patches">Disable Patches</string>', '<string name="patches_menu_disable_patches">Disable Cheats</string>')
-    $text = $text.Replace('<string name="patches_menu_enable_patches">Enable Patches</string>', '<string name="patches_menu_enable_patches">Enable Cheats</string>')
+    $text = $text.Replace('<string name="patches_menu_disable_patches">Disable Cheats</string>', '<string name="patches_menu_disable_patches">Disable Patches</string>')
+    $text = $text.Replace('<string name="patches_menu_enable_patches">Enable Cheats</string>', '<string name="patches_menu_enable_patches">Enable Patches</string>')
     [System.IO.File]::WriteAllText($path, $text, $utf8NoBom)
 }
 
@@ -76,8 +77,353 @@ function Write-OsdCheatMenuClasses {
     return-void
 .end method
 
-.method public static openEditor(Lxyz/aethersx2/android/EmulationActivity;)V
+.method private static addCode(Ljava/util/ArrayList;Ljava/lang/String;IIZ)V
+    .locals 2
+
+    if-eqz p1, :cond_fallback
+
+    invoke-virtual {p1}, Ljava/lang/String;->length()I
+
+    move-result v0
+
+    if-lez v0, :cond_fallback
+
+    goto :goto_title
+
+    :cond_fallback
+    invoke-virtual {p0}, Ljava/util/ArrayList;->size()I
+
+    move-result v0
+
+    invoke-static {v0}, Lxyz/aethersx2/android/OsdCheatMenu;->makeFallbackTitle(I)Ljava/lang/String;
+
+    move-result-object p1
+
+    :goto_title
+    new-instance v0, Lxyz/aethersx2/android/OsdCheatMenu$Code;
+
+    invoke-direct {v0, p1, p2, p3, p4}, Lxyz/aethersx2/android/OsdCheatMenu$Code;-><init>(Ljava/lang/String;IIZ)V
+
+    invoke-virtual {p0, v0}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+
+    return-void
+.end method
+
+.method private static cleanTitle(Ljava/lang/String;)Ljava/lang/String;
+    .locals 3
+
+    if-eqz p0, :cond_empty
+
+    invoke-virtual {p0}, Ljava/lang/String;->trim()Ljava/lang/String;
+
+    move-result-object v0
+
+    const-string v1, "\\"
+
+    const-string v2, " / "
+
+    invoke-virtual {v0, v1, v2}, Ljava/lang/String;->replace(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+
+    :cond_empty
+    const-string v0, ""
+
+    return-object v0
+.end method
+
+.method private static disableLine(Ljava/lang/String;)Ljava/lang/String;
+    .locals 2
+
+    invoke-static {p0}, Lxyz/aethersx2/android/OsdCheatMenu;->isActivePatchLine(Ljava/lang/String;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_return
+
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v1, "// "
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {p0}, Ljava/lang/String;->trim()Ljava/lang/String;
+
+    move-result-object p0
+
+    invoke-virtual {v0, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object p0
+
+    :cond_return
+    return-object p0
+.end method
+
+.method private static enableLine(Ljava/lang/String;)Ljava/lang/String;
     .locals 4
+
+    if-eqz p0, :cond_return
+
+    invoke-static {p0}, Lxyz/aethersx2/android/OsdCheatMenu;->isActivePatchLine(Ljava/lang/String;)Z
+
+    move-result v0
+
+    if-nez v0, :cond_return
+
+    invoke-virtual {p0}, Ljava/lang/String;->trim()Ljava/lang/String;
+
+    move-result-object v0
+
+    const-string v1, "//"
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_hash
+
+    const/4 v1, 0x2
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->substring(I)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/String;->trim()Ljava/lang/String;
+
+    move-result-object v1
+
+    const-string v2, "patch="
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_hash
+
+    return-object v1
+
+    :cond_hash
+    const-string v1, "#"
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_return
+
+    const/4 v1, 0x1
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->substring(I)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/String;->trim()Ljava/lang/String;
+
+    move-result-object v1
+
+    const-string v2, "patch="
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_return
+
+    return-object v1
+
+    :cond_return
+    return-object p0
+.end method
+
+.method private static extractTitle(Ljava/lang/String;)Ljava/lang/String;
+    .locals 7
+
+    const/4 v0, 0x0
+
+    if-eqz p0, :cond_return_null
+
+    invoke-virtual {p0}, Ljava/lang/String;->trim()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/String;->length()I
+
+    move-result v2
+
+    if-eqz v2, :cond_return_null
+
+    const-string v2, "["
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_comment_marker
+
+    const-string v2, "]"
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->indexOf(Ljava/lang/String;)I
+
+    move-result v2
+
+    if-lez v2, :cond_comment_marker
+
+    const/4 v3, 0x1
+
+    invoke-virtual {v1, v3, v2}, Ljava/lang/String;->substring(II)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-static {v1}, Lxyz/aethersx2/android/OsdCheatMenu;->cleanTitle(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+
+    :cond_comment_marker
+    const/4 v5, 0x0
+
+    const-string v2, "//"
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_hash_marker
+
+    const/4 v2, 0x2
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->substring(I)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/String;->trim()Ljava/lang/String;
+
+    move-result-object v1
+
+    const/4 v5, 0x1
+
+    goto :goto_after_marker
+
+    :cond_hash_marker
+    const-string v2, "#"
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v2
+
+    if-eqz v2, :goto_after_marker
+
+    const/4 v2, 0x1
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->substring(I)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/String;->trim()Ljava/lang/String;
+
+    move-result-object v1
+
+    const/4 v5, 0x1
+
+    :goto_after_marker
+    invoke-virtual {v1}, Ljava/lang/String;->toLowerCase()Ljava/lang/String;
+
+    move-result-object v4
+
+    const-string v2, "comment="
+
+    invoke-virtual {v4, v2}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_not_comment
+
+    const/16 v2, 0x8
+
+    invoke-virtual {v1}, Ljava/lang/String;->length()I
+
+    move-result v3
+
+    if-le v3, v2, :cond_return_null
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->substring(I)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-static {v1}, Lxyz/aethersx2/android/OsdCheatMenu;->cleanTitle(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+
+    :cond_not_comment
+    const-string v2, "gametitle="
+
+    invoke-virtual {v4, v2}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v3
+
+    if-nez v3, :cond_return_null
+
+    const-string v2, "file generated"
+
+    invoke-virtual {v4, v2}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v3
+
+    if-nez v3, :cond_return_null
+
+    const-string v2, "author="
+
+    invoke-virtual {v4, v2}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v3
+
+    if-nez v3, :cond_return_null
+
+    const-string v2, "description="
+
+    invoke-virtual {v4, v2}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v3
+
+    if-nez v3, :cond_return_null
+
+    const-string v2, "patch="
+
+    invoke-virtual {v4, v2}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v3
+
+    if-nez v3, :cond_return_null
+
+    if-eqz v5, :cond_return_null
+
+    invoke-virtual {v1}, Ljava/lang/String;->length()I
+
+    move-result v6
+
+    if-eqz v6, :cond_return_null
+
+    invoke-static {v1}, Lxyz/aethersx2/android/OsdCheatMenu;->cleanTitle(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+
+    :cond_return_null
+    return-object v0
+.end method
+
+.method private static getPatchFile(Lxyz/aethersx2/android/EmulationActivity;)Ljava/io/File;
+    .locals 1
 
     invoke-static {}, Lxyz/aethersx2/android/NativeLibrary;->getGameInfo()Ll6/l4;
 
@@ -89,12 +435,155 @@ function Write-OsdCheatMenuClasses {
 
     move-result-object v0
 
-    goto :goto_path
+    if-eqz v0, :cond_no_path
+
+    invoke-interface {v0}, Ljava/nio/file/Path;->toFile()Ljava/io/File;
+
+    move-result-object v0
+
+    return-object v0
 
     :cond_no_path
     const/4 v0, 0x0
 
-    :goto_path
+    return-object v0
+.end method
+
+.method private static isActivePatchLine(Ljava/lang/String;)Z
+    .locals 2
+
+    if-eqz p0, :cond_false
+
+    invoke-virtual {p0}, Ljava/lang/String;->trim()Ljava/lang/String;
+
+    move-result-object v0
+
+    const-string v1, "patch="
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v0
+
+    return v0
+
+    :cond_false
+    const/4 v0, 0x0
+
+    return v0
+.end method
+
+.method private static isPatchLine(Ljava/lang/String;)Z
+    .locals 4
+
+    if-eqz p0, :cond_false
+
+    invoke-virtual {p0}, Ljava/lang/String;->trim()Ljava/lang/String;
+
+    move-result-object v0
+
+    const-string v1, "patch="
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_slash
+
+    const/4 v0, 0x1
+
+    return v0
+
+    :cond_slash
+    const-string v2, "//"
+
+    invoke-virtual {v0, v2}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_hash
+
+    const/4 v2, 0x2
+
+    invoke-virtual {v0, v2}, Ljava/lang/String;->substring(I)Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/String;->trim()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v2, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_hash
+
+    const/4 v0, 0x1
+
+    return v0
+
+    :cond_hash
+    const-string v2, "#"
+
+    invoke-virtual {v0, v2}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_false
+
+    const/4 v2, 0x1
+
+    invoke-virtual {v0, v2}, Ljava/lang/String;->substring(I)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/String;->trim()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v3, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_false
+
+    return v2
+
+    :cond_false
+    const/4 v0, 0x0
+
+    return v0
+.end method
+
+.method private static makeFallbackTitle(I)Ljava/lang/String;
+    .locals 2
+
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v1, "Code "
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    add-int/lit8 p0, p0, 0x1
+
+    invoke-virtual {v0, p0}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public static openEditor(Lxyz/aethersx2/android/EmulationActivity;)V
+    .locals 4
+
+    invoke-static {p0}, Lxyz/aethersx2/android/OsdCheatMenu;->getPatchFile(Lxyz/aethersx2/android/EmulationActivity;)Ljava/io/File;
+
+    move-result-object v0
+
     if-nez v0, :cond_open
 
     const v0, 0x7f1001a0
@@ -118,10 +607,6 @@ function Write-OsdCheatMenuClasses {
 
     invoke-direct {v1, p0, v2}, Landroid/content/Intent;-><init>(Landroid/content/Context;Ljava/lang/Class;)V
 
-    invoke-interface {v0}, Ljava/nio/file/Path;->toFile()Ljava/io/File;
-
-    move-result-object v0
-
     invoke-static {v0}, Landroid/net/Uri;->fromFile(Ljava/io/File;)Landroid/net/Uri;
 
     move-result-object v0
@@ -135,112 +620,398 @@ function Write-OsdCheatMenuClasses {
     return-void
 .end method
 
-.method public static show(Lxyz/aethersx2/android/EmulationActivity;)V
-    .locals 7
+.method public static parseCodes(Ljava/io/File;)Ljava/util/ArrayList;
+    .locals 12
 
-    new-instance v0, Landroid/widget/LinearLayout;
+    new-instance v0, Ljava/util/ArrayList;
 
-    invoke-direct {v0, p0}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
+    invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
-    const/4 v1, 0x1
+    :try_start_0
+    invoke-virtual {p0}, Ljava/io/File;->toPath()Ljava/nio/file/Path;
 
-    invoke-virtual {v0, v1}, Landroid/widget/LinearLayout;->setOrientation(I)V
+    move-result-object v1
 
-    const/16 v2, 0x30
+    invoke-static {v1}, Ljava/nio/file/Files;->readAllLines(Ljava/nio/file/Path;)Ljava/util/List;
 
-    const/16 v3, 0x18
+    move-result-object v1
 
-    invoke-virtual {v0, v2, v3, v2, v3}, Landroid/view/View;->setPadding(IIII)V
-
-    new-instance v2, Landroid/widget/Switch;
-
-    invoke-direct {v2, p0}, Landroid/widget/Switch;-><init>(Landroid/content/Context;)V
-
-    const-string v3, "Enable Cheats"
-
-    invoke-virtual {v2, v3}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
-
-    const/high16 v3, 0x41800000    # 16.0f
-
-    invoke-virtual {v2, v3}, Landroid/widget/TextView;->setTextSize(F)V
-
-    invoke-virtual {v2, v1}, Landroid/widget/Switch;->setShowText(Z)V
-
-    const-string v3, "ON"
-
-    invoke-virtual {v2, v3}, Landroid/widget/Switch;->setTextOn(Ljava/lang/CharSequence;)V
-
-    const-string v3, "OFF"
-
-    invoke-virtual {v2, v3}, Landroid/widget/Switch;->setTextOff(Ljava/lang/CharSequence;)V
-
-    iget-object v3, p0, Lxyz/aethersx2/android/EmulationActivity;->E:Landroid/content/SharedPreferences;
-
-    const-string v4, "EmuCore/EnableCheats"
-
-    const/4 v5, 0x0
-
-    invoke-interface {v3, v4, v5}, Landroid/content/SharedPreferences;->getBoolean(Ljava/lang/String;Z)Z
-
-    move-result v3
-
-    invoke-virtual {v2, v3}, Landroid/widget/CompoundButton;->setChecked(Z)V
-
-    new-instance v3, Lxyz/aethersx2/android/OsdCheatMenu$ToggleListener;
-
-    invoke-direct {v3, p0}, Lxyz/aethersx2/android/OsdCheatMenu$ToggleListener;-><init>(Lxyz/aethersx2/android/EmulationActivity;)V
-
-    invoke-virtual {v2, v3}, Landroid/widget/CompoundButton;->setOnCheckedChangeListener(Landroid/widget/CompoundButton$OnCheckedChangeListener;)V
-
-    invoke-virtual {v0, v2}, Landroid/view/ViewGroup;->addView(Landroid/view/View;)V
-
-    new-instance v2, Landroid/widget/TextView;
-
-    invoke-direct {v2, p0}, Landroid/widget/TextView;-><init>(Landroid/content/Context;)V
-
-    const-string v3, "Turn cheat patch files on or off without opening the text editor."
-
-    invoke-virtual {v2, v3}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
-
-    const/16 v3, 0xc
-
-    invoke-virtual {v2, v5, v3, v5, v5}, Landroid/view/View;->setPadding(IIII)V
-
-    invoke-virtual {v0, v2}, Landroid/view/ViewGroup;->addView(Landroid/view/View;)V
-
-    new-instance v2, Landroidx/appcompat/app/d$a;
-
-    invoke-direct {v2, p0}, Landroidx/appcompat/app/d$a;-><init>(Landroid/content/Context;)V
-
-    const v3, 0x7f1000ba
-
-    invoke-virtual {v2, v3}, Landroidx/appcompat/app/d$a;->j(I)Landroidx/appcompat/app/d$a;
-
-    iget-object v3, v2, Landroidx/appcompat/app/d$a;->a:Landroidx/appcompat/app/AlertController$b;
-
-    iput-object v0, v3, Landroidx/appcompat/app/AlertController$b;->s:Landroid/view/View;
-
-    new-instance v0, Ll6/q3;
-
-    invoke-direct {v0, p0}, Ll6/q3;-><init>(Lxyz/aethersx2/android/EmulationActivity;)V
-
-    iput-object v0, v3, Landroidx/appcompat/app/AlertController$b;->n:Landroid/content/DialogInterface$OnDismissListener;
-
-    const-string v0, "Edit .pnach"
-
-    new-instance v3, Lxyz/aethersx2/android/OsdCheatMenu$EditListener;
-
-    invoke-direct {v3, p0}, Lxyz/aethersx2/android/OsdCheatMenu$EditListener;-><init>(Lxyz/aethersx2/android/EmulationActivity;)V
-
-    invoke-virtual {v2, v0, v3}, Landroidx/appcompat/app/d$a;->h(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroidx/appcompat/app/d$a;
-
-    const v0, 0x7f100097
+    const/4 v2, 0x0
 
     const/4 v3, 0x0
 
-    invoke-virtual {v2, v0, v3}, Landroidx/appcompat/app/d$a;->e(ILandroid/content/DialogInterface$OnClickListener;)Landroidx/appcompat/app/d$a;
+    const/4 v4, -0x1
 
-    invoke-virtual {v2}, Landroidx/appcompat/app/d$a;->a()Landroidx/appcompat/app/d;
+    const/4 v5, 0x0
+
+    const/4 v6, 0x0
+
+    const/4 v7, -0x1
+
+    :goto_loop
+    invoke-interface {v1}, Ljava/util/List;->size()I
+
+    move-result v8
+
+    if-ge v2, v8, :cond_eof
+
+    invoke-interface {v1, v2}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    move-result-object v8
+
+    check-cast v8, Ljava/lang/String;
+
+    invoke-static {v8}, Lxyz/aethersx2/android/OsdCheatMenu;->extractTitle(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v9
+
+    if-eqz v9, :cond_after_title
+
+    if-eqz v5, :cond_set_title
+
+    invoke-static {v0, v3, v4, v7, v6}, Lxyz/aethersx2/android/OsdCheatMenu;->addCode(Ljava/util/ArrayList;Ljava/lang/String;IIZ)V
+
+    const/4 v5, 0x0
+
+    const/4 v6, 0x0
+
+    const/4 v7, -0x1
+
+    :cond_set_title
+    move-object v3, v9
+
+    move v4, v2
+
+    :cond_after_title
+    invoke-static {v8}, Lxyz/aethersx2/android/OsdCheatMenu;->isPatchLine(Ljava/lang/String;)Z
+
+    move-result v9
+
+    if-eqz v9, :cond_maybe_blank
+
+    if-nez v3, :cond_have_title
+
+    invoke-virtual {v0}, Ljava/util/ArrayList;->size()I
+
+    move-result v9
+
+    invoke-static {v9}, Lxyz/aethersx2/android/OsdCheatMenu;->makeFallbackTitle(I)Ljava/lang/String;
+
+    move-result-object v3
+
+    move v4, v2
+
+    :cond_have_title
+    if-gez v4, :cond_start_ok
+
+    move v4, v2
+
+    :cond_start_ok
+    const/4 v5, 0x1
+
+    move v7, v2
+
+    invoke-static {v8}, Lxyz/aethersx2/android/OsdCheatMenu;->isActivePatchLine(Ljava/lang/String;)Z
+
+    move-result v9
+
+    if-eqz v9, :cond_after_line
+
+    const/4 v6, 0x1
+
+    goto :cond_after_line
+
+    :cond_maybe_blank
+    invoke-virtual {v8}, Ljava/lang/String;->trim()Ljava/lang/String;
+
+    move-result-object v9
+
+    invoke-virtual {v9}, Ljava/lang/String;->length()I
+
+    move-result v9
+
+    if-nez v9, :cond_after_line
+
+    if-eqz v5, :cond_clear_pending
+
+    invoke-static {v0, v3, v4, v7, v6}, Lxyz/aethersx2/android/OsdCheatMenu;->addCode(Ljava/util/ArrayList;Ljava/lang/String;IIZ)V
+
+    :cond_clear_pending
+    const/4 v3, 0x0
+
+    const/4 v4, -0x1
+
+    const/4 v5, 0x0
+
+    const/4 v6, 0x0
+
+    const/4 v7, -0x1
+
+    :cond_after_line
+    add-int/lit8 v2, v2, 0x1
+
+    goto :goto_loop
+
+    :cond_eof
+    if-eqz v5, :cond_return
+
+    invoke-static {v0, v3, v4, v7, v6}, Lxyz/aethersx2/android/OsdCheatMenu;->addCode(Ljava/util/ArrayList;Ljava/lang/String;IIZ)V
+
+    :cond_return
+    :try_end_0
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
+
+    return-object v0
+
+    :catch_0
+    return-object v0
+.end method
+
+.method public static saveStates(Ljava/io/File;Ljava/util/ArrayList;[Z)V
+    .locals 11
+
+    invoke-virtual {p0}, Ljava/io/File;->toPath()Ljava/nio/file/Path;
+
+    move-result-object v0
+
+    invoke-static {v0}, Ljava/nio/file/Files;->readAllLines(Ljava/nio/file/Path;)Ljava/util/List;
+
+    move-result-object v1
+
+    new-instance v2, Ljava/util/ArrayList;
+
+    invoke-direct {v2, v1}, Ljava/util/ArrayList;-><init>(Ljava/util/Collection;)V
+
+    const/4 v3, 0x0
+
+    :goto_code_loop
+    invoke-virtual {p1}, Ljava/util/ArrayList;->size()I
+
+    move-result v4
+
+    if-ge v3, v4, :cond_write
+
+    invoke-virtual {p1, v3}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
+
+    move-result-object v5
+
+    check-cast v5, Lxyz/aethersx2/android/OsdCheatMenu$Code;
+
+    aget-boolean v6, p2, v3
+
+    iget v7, v5, Lxyz/aethersx2/android/OsdCheatMenu$Code;->b:I
+
+    iget v8, v5, Lxyz/aethersx2/android/OsdCheatMenu$Code;->c:I
+
+    :goto_line_loop
+    if-le v7, v8, :cond_line
+
+    add-int/lit8 v3, v3, 0x1
+
+    goto :goto_code_loop
+
+    :cond_line
+    invoke-virtual {v2, v7}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
+
+    move-result-object v9
+
+    check-cast v9, Ljava/lang/String;
+
+    invoke-static {v9}, Lxyz/aethersx2/android/OsdCheatMenu;->isPatchLine(Ljava/lang/String;)Z
+
+    move-result v10
+
+    if-eqz v10, :cond_next_line
+
+    if-eqz v6, :cond_disable
+
+    invoke-static {v9}, Lxyz/aethersx2/android/OsdCheatMenu;->enableLine(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v9
+
+    goto :cond_set_line
+
+    :cond_disable
+    invoke-static {v9}, Lxyz/aethersx2/android/OsdCheatMenu;->disableLine(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v9
+
+    :cond_set_line
+    invoke-virtual {v2, v7, v9}, Ljava/util/ArrayList;->set(ILjava/lang/Object;)Ljava/lang/Object;
+
+    :cond_next_line
+    add-int/lit8 v7, v7, 0x1
+
+    goto :goto_line_loop
+
+    :cond_write
+    const/4 v3, 0x0
+
+    new-array v3, v3, [Ljava/nio/file/OpenOption;
+
+    invoke-static {v0, v2, v3}, Ljava/nio/file/Files;->write(Ljava/nio/file/Path;Ljava/lang/Iterable;[Ljava/nio/file/OpenOption;)Ljava/nio/file/Path;
+
+    return-void
+.end method
+
+.method public static show(Lxyz/aethersx2/android/EmulationActivity;)V
+    .locals 8
+
+    invoke-static {p0}, Lxyz/aethersx2/android/OsdCheatMenu;->getPatchFile(Lxyz/aethersx2/android/EmulationActivity;)Ljava/io/File;
+
+    move-result-object v0
+
+    if-nez v0, :cond_has_file
+
+    const v0, 0x7f1001a0
+
+    const/4 v1, 0x1
+
+    invoke-static {p0, v0, v1}, Landroid/widget/Toast;->makeText(Landroid/content/Context;II)Landroid/widget/Toast;
+
+    move-result-object p0
+
+    invoke-virtual {p0}, Landroid/widget/Toast;->show()V
+
+    return-void
+
+    :cond_has_file
+    invoke-static {v0}, Lxyz/aethersx2/android/OsdCheatMenu;->parseCodes(Ljava/io/File;)Ljava/util/ArrayList;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/util/ArrayList;->size()I
+
+    move-result v2
+
+    if-nez v2, :cond_has_codes
+
+    invoke-static {p0, v0}, Lxyz/aethersx2/android/OsdCheatMenu;->showNoCodes(Lxyz/aethersx2/android/EmulationActivity;Ljava/io/File;)V
+
+    return-void
+
+    :cond_has_codes
+    new-array v3, v2, [Ljava/lang/CharSequence;
+
+    new-array v4, v2, [Z
+
+    const/4 v5, 0x0
+
+    :goto_item_loop
+    if-ge v5, v2, :cond_build
+
+    invoke-virtual {v1, v5}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
+
+    move-result-object v6
+
+    check-cast v6, Lxyz/aethersx2/android/OsdCheatMenu$Code;
+
+    iget-object v7, v6, Lxyz/aethersx2/android/OsdCheatMenu$Code;->a:Ljava/lang/String;
+
+    aput-object v7, v3, v5
+
+    iget-boolean v7, v6, Lxyz/aethersx2/android/OsdCheatMenu$Code;->d:Z
+
+    aput-boolean v7, v4, v5
+
+    add-int/lit8 v5, v5, 0x1
+
+    goto :goto_item_loop
+
+    :cond_build
+    new-instance v5, Landroidx/appcompat/app/d$a;
+
+    invoke-direct {v5, p0}, Landroidx/appcompat/app/d$a;-><init>(Landroid/content/Context;)V
+
+    const v2, 0x7f1000ba
+
+    invoke-virtual {v5, v2}, Landroidx/appcompat/app/d$a;->j(I)Landroidx/appcompat/app/d$a;
+
+    new-instance v6, Lxyz/aethersx2/android/OsdCheatMenu$ChoiceListener;
+
+    invoke-direct {v6, v4}, Lxyz/aethersx2/android/OsdCheatMenu$ChoiceListener;-><init>([Z)V
+
+    invoke-virtual {v5, v3, v4, v6}, Landroidx/appcompat/app/d$a;->d([Ljava/lang/CharSequence;[ZLandroid/content/DialogInterface$OnMultiChoiceClickListener;)Landroidx/appcompat/app/d$a;
+
+    const-string v3, "Apply"
+
+    new-instance v6, Lxyz/aethersx2/android/OsdCheatMenu$ApplyListener;
+
+    invoke-direct {v6, p0, v0, v1, v4}, Lxyz/aethersx2/android/OsdCheatMenu$ApplyListener;-><init>(Lxyz/aethersx2/android/EmulationActivity;Ljava/io/File;Ljava/util/ArrayList;[Z)V
+
+    invoke-virtual {v5, v3, v6}, Landroidx/appcompat/app/d$a;->h(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroidx/appcompat/app/d$a;
+
+    const v0, 0x7f100097
+
+    const/4 v1, 0x0
+
+    invoke-virtual {v5, v0, v1}, Landroidx/appcompat/app/d$a;->e(ILandroid/content/DialogInterface$OnClickListener;)Landroidx/appcompat/app/d$a;
+
+    iget-object v0, v5, Landroidx/appcompat/app/d$a;->a:Landroidx/appcompat/app/AlertController$b;
+
+    const-string v1, "Edit .pnach"
+
+    iput-object v1, v0, Landroidx/appcompat/app/AlertController$b;->k:Ljava/lang/CharSequence;
+
+    new-instance v1, Lxyz/aethersx2/android/OsdCheatMenu$EditListener;
+
+    invoke-direct {v1, p0}, Lxyz/aethersx2/android/OsdCheatMenu$EditListener;-><init>(Lxyz/aethersx2/android/EmulationActivity;)V
+
+    iput-object v1, v0, Landroidx/appcompat/app/AlertController$b;->l:Landroid/content/DialogInterface$OnClickListener;
+
+    new-instance v1, Ll6/q3;
+
+    invoke-direct {v1, p0}, Ll6/q3;-><init>(Lxyz/aethersx2/android/EmulationActivity;)V
+
+    iput-object v1, v0, Landroidx/appcompat/app/AlertController$b;->n:Landroid/content/DialogInterface$OnDismissListener;
+
+    invoke-virtual {v5}, Landroidx/appcompat/app/d$a;->a()Landroidx/appcompat/app/d;
+
+    move-result-object p0
+
+    invoke-virtual {p0}, Landroid/app/Dialog;->show()V
+
+    return-void
+.end method
+
+.method private static showNoCodes(Lxyz/aethersx2/android/EmulationActivity;Ljava/io/File;)V
+    .locals 4
+
+    new-instance v0, Landroidx/appcompat/app/d$a;
+
+    invoke-direct {v0, p0}, Landroidx/appcompat/app/d$a;-><init>(Landroid/content/Context;)V
+
+    const p1, 0x7f1000ba
+
+    invoke-virtual {v0, p1}, Landroidx/appcompat/app/d$a;->j(I)Landroidx/appcompat/app/d$a;
+
+    iget-object p1, v0, Landroidx/appcompat/app/d$a;->a:Landroidx/appcompat/app/AlertController$b;
+
+    const-string v1, "No cheat code blocks found in this .pnach."
+
+    iput-object v1, p1, Landroidx/appcompat/app/AlertController$b;->f:Ljava/lang/CharSequence;
+
+    const-string v1, "Edit .pnach"
+
+    new-instance v2, Lxyz/aethersx2/android/OsdCheatMenu$EditListener;
+
+    invoke-direct {v2, p0}, Lxyz/aethersx2/android/OsdCheatMenu$EditListener;-><init>(Lxyz/aethersx2/android/EmulationActivity;)V
+
+    invoke-virtual {v0, v1, v2}, Landroidx/appcompat/app/d$a;->h(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroidx/appcompat/app/d$a;
+
+    const v1, 0x7f100097
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v0, v1, v2}, Landroidx/appcompat/app/d$a;->e(ILandroid/content/DialogInterface$OnClickListener;)Landroidx/appcompat/app/d$a;
+
+    new-instance v1, Ll6/q3;
+
+    invoke-direct {v1, p0}, Ll6/q3;-><init>(Lxyz/aethersx2/android/EmulationActivity;)V
+
+    iput-object v1, p1, Landroidx/appcompat/app/AlertController$b;->n:Landroid/content/DialogInterface$OnDismissListener;
+
+    invoke-virtual {v0}, Landroidx/appcompat/app/d$a;->a()Landroidx/appcompat/app/d;
 
     move-result-object p0
 
@@ -250,13 +1021,13 @@ function Write-OsdCheatMenuClasses {
 .end method
 '@
 
-    Write-SmaliFile -Path (Join-Path $targetDir "OsdCheatMenu`$ToggleListener.smali") -Text @'
-.class public final Lxyz/aethersx2/android/OsdCheatMenu$ToggleListener;
+    Write-SmaliFile -Path (Join-Path $targetDir "OsdCheatMenu`$ApplyListener.smali") -Text @'
+.class public final Lxyz/aethersx2/android/OsdCheatMenu$ApplyListener;
 .super Ljava/lang/Object;
 .source "OsdCheatMenu.java"
 
 # interfaces
-.implements Landroid/widget/CompoundButton$OnCheckedChangeListener;
+.implements Landroid/content/DialogInterface$OnClickListener;
 
 
 # annotations
@@ -266,45 +1037,174 @@ function Write-OsdCheatMenuClasses {
 
 .annotation system Ldalvik/annotation/InnerClass;
     accessFlags = 0x19
-    name = "ToggleListener"
+    name = "ApplyListener"
 .end annotation
 
 
 # instance fields
 .field public final a:Lxyz/aethersx2/android/EmulationActivity;
 
+.field public final b:Ljava/io/File;
+
+.field public final c:Ljava/util/ArrayList;
+
+.field public final d:[Z
+
 
 # direct methods
-.method public constructor <init>(Lxyz/aethersx2/android/EmulationActivity;)V
+.method public constructor <init>(Lxyz/aethersx2/android/EmulationActivity;Ljava/io/File;Ljava/util/ArrayList;[Z)V
     .locals 0
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    iput-object p1, p0, Lxyz/aethersx2/android/OsdCheatMenu$ToggleListener;->a:Lxyz/aethersx2/android/EmulationActivity;
+    iput-object p1, p0, Lxyz/aethersx2/android/OsdCheatMenu$ApplyListener;->a:Lxyz/aethersx2/android/EmulationActivity;
+
+    iput-object p2, p0, Lxyz/aethersx2/android/OsdCheatMenu$ApplyListener;->b:Ljava/io/File;
+
+    iput-object p3, p0, Lxyz/aethersx2/android/OsdCheatMenu$ApplyListener;->c:Ljava/util/ArrayList;
+
+    iput-object p4, p0, Lxyz/aethersx2/android/OsdCheatMenu$ApplyListener;->d:[Z
 
     return-void
 .end method
 
 
 # virtual methods
-.method public final onCheckedChanged(Landroid/widget/CompoundButton;Z)V
-    .locals 2
+.method public final onClick(Landroid/content/DialogInterface;I)V
+    .locals 4
 
-    iget-object p1, p0, Lxyz/aethersx2/android/OsdCheatMenu$ToggleListener;->a:Lxyz/aethersx2/android/EmulationActivity;
+    :try_start_0
+    iget-object p1, p0, Lxyz/aethersx2/android/OsdCheatMenu$ApplyListener;->b:Ljava/io/File;
 
-    iget-object p1, p1, Lxyz/aethersx2/android/EmulationActivity;->E:Landroid/content/SharedPreferences;
+    iget-object p2, p0, Lxyz/aethersx2/android/OsdCheatMenu$ApplyListener;->c:Ljava/util/ArrayList;
 
-    invoke-interface {p1}, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;
+    iget-object v0, p0, Lxyz/aethersx2/android/OsdCheatMenu$ApplyListener;->d:[Z
+
+    invoke-static {p1, p2, v0}, Lxyz/aethersx2/android/OsdCheatMenu;->saveStates(Ljava/io/File;Ljava/util/ArrayList;[Z)V
+
+    invoke-static {}, Lxyz/aethersx2/android/NativeLibrary;->reloadPatches()V
+
+    iget-object p1, p0, Lxyz/aethersx2/android/OsdCheatMenu$ApplyListener;->a:Lxyz/aethersx2/android/EmulationActivity;
+
+    const-string p2, "Cheat codes updated"
+
+    const/4 v0, 0x0
+
+    invoke-static {p1, p2, v0}, Landroid/widget/Toast;->makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;
 
     move-result-object p1
 
-    const-string v0, "EmuCore/EnableCheats"
+    invoke-virtual {p1}, Landroid/widget/Toast;->show()V
+    :try_end_0
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
 
-    invoke-interface {p1, v0, p2}, Landroid/content/SharedPreferences$Editor;->putBoolean(Ljava/lang/String;Z)Landroid/content/SharedPreferences$Editor;
+    return-void
 
-    invoke-interface {p1}, Landroid/content/SharedPreferences$Editor;->apply()V
+    :catch_0
+    iget-object p1, p0, Lxyz/aethersx2/android/OsdCheatMenu$ApplyListener;->a:Lxyz/aethersx2/android/EmulationActivity;
 
-    invoke-static {}, Lxyz/aethersx2/android/NativeLibrary;->applySettings()V
+    const-string p2, "Could not update cheat codes"
+
+    const/4 v0, 0x1
+
+    invoke-static {p1, p2, v0}, Landroid/widget/Toast;->makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Landroid/widget/Toast;->show()V
+
+    return-void
+.end method
+'@
+
+    Write-SmaliFile -Path (Join-Path $targetDir "OsdCheatMenu`$ChoiceListener.smali") -Text @'
+.class public final Lxyz/aethersx2/android/OsdCheatMenu$ChoiceListener;
+.super Ljava/lang/Object;
+.source "OsdCheatMenu.java"
+
+# interfaces
+.implements Landroid/content/DialogInterface$OnMultiChoiceClickListener;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Lxyz/aethersx2/android/OsdCheatMenu;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = "ChoiceListener"
+.end annotation
+
+
+# instance fields
+.field public final a:[Z
+
+
+# direct methods
+.method public constructor <init>([Z)V
+    .locals 0
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, p0, Lxyz/aethersx2/android/OsdCheatMenu$ChoiceListener;->a:[Z
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final onClick(Landroid/content/DialogInterface;IZ)V
+    .locals 1
+
+    iget-object p1, p0, Lxyz/aethersx2/android/OsdCheatMenu$ChoiceListener;->a:[Z
+
+    aput-boolean p3, p1, p2
+
+    return-void
+.end method
+'@
+
+    Write-SmaliFile -Path (Join-Path $targetDir "OsdCheatMenu`$Code.smali") -Text @'
+.class public final Lxyz/aethersx2/android/OsdCheatMenu$Code;
+.super Ljava/lang/Object;
+.source "OsdCheatMenu.java"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Lxyz/aethersx2/android/OsdCheatMenu;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = "Code"
+.end annotation
+
+
+# instance fields
+.field public final a:Ljava/lang/String;
+
+.field public final b:I
+
+.field public final c:I
+
+.field public final d:Z
+
+
+# direct methods
+.method public constructor <init>(Ljava/lang/String;IIZ)V
+    .locals 0
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, p0, Lxyz/aethersx2/android/OsdCheatMenu$Code;->a:Ljava/lang/String;
+
+    iput p2, p0, Lxyz/aethersx2/android/OsdCheatMenu$Code;->b:I
+
+    iput p3, p0, Lxyz/aethersx2/android/OsdCheatMenu$Code;->c:I
+
+    iput-boolean p4, p0, Lxyz/aethersx2/android/OsdCheatMenu$Code;->d:Z
 
     return-void
 .end method
@@ -357,6 +1257,11 @@ function Write-OsdCheatMenuClasses {
     return-void
 .end method
 '@
+
+    $oldToggleListener = Join-Path $targetDir "OsdCheatMenu`$ToggleListener.smali"
+    if (Test-Path -LiteralPath $oldToggleListener) {
+        Remove-Item -LiteralPath $oldToggleListener -Force
+    }
 }
 
 function Patch-OsdMenuHandler {
@@ -390,8 +1295,8 @@ function Patch-OsdMenuHandler {
 }
 
 Patch-PatchesMenuLabel
-Patch-OsdStrings
+Restore-OsdPatchStrings
 Write-OsdCheatMenuClasses
 Patch-OsdMenuHandler
 
-Write-Host "OSD cheat toggle dialog updated in $ProjectPath"
+Write-Host "OSD per-code cheat toggle dialog updated in $ProjectPath"

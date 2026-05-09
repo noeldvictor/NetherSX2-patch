@@ -205,7 +205,7 @@ function Write-CheatSupportClass {
 
     invoke-direct {v2, v1, p1}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
 
-    invoke-virtual {v2}, Ljava/io/File;->isFile()Z
+    invoke-static {v2}, Lxyz/aethersx2/android/CheatSupport;->hasRealCheatFile(Ljava/io/File;)Z
 
     move-result v0
 
@@ -219,11 +219,153 @@ function Write-CheatSupportClass {
 
     invoke-direct {v2, v1, p1}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
 
-    invoke-virtual {v2}, Ljava/io/File;->isFile()Z
+    invoke-static {v2}, Lxyz/aethersx2/android/CheatSupport;->hasRealCheatFile(Ljava/io/File;)Z
 
     move-result v0
 
     :cond_return
+    return v0
+.end method
+
+.method private static hasRealCheatFile(Ljava/io/File;)Z
+    .locals 5
+
+    const/4 v0, 0x0
+
+    if-eqz p0, :cond_return
+
+    invoke-virtual {p0}, Ljava/io/File;->isFile()Z
+
+    move-result v1
+
+    if-eqz v1, :cond_return
+
+    :try_start_0
+    invoke-virtual {p0}, Ljava/io/File;->toPath()Ljava/nio/file/Path;
+
+    move-result-object v1
+
+    invoke-static {v1}, Ljava/nio/file/Files;->readAllLines(Ljava/nio/file/Path;)Ljava/util/List;
+
+    move-result-object v1
+
+    const/4 v2, 0x0
+
+    :goto_loop
+    invoke-interface {v1}, Ljava/util/List;->size()I
+
+    move-result v3
+
+    if-ge v2, v3, :cond_return
+
+    invoke-interface {v1, v2}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    move-result-object v3
+
+    check-cast v3, Ljava/lang/String;
+
+    invoke-static {v3}, Lxyz/aethersx2/android/CheatSupport;->isPatchLine(Ljava/lang/String;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_next
+
+    const/4 v0, 0x1
+
+    return v0
+
+    :cond_next
+    add-int/lit8 v2, v2, 0x1
+
+    goto :goto_loop
+    :try_end_0
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
+
+    :catch_0
+    :cond_return
+    return v0
+.end method
+
+.method private static isPatchLine(Ljava/lang/String;)Z
+    .locals 4
+
+    if-eqz p0, :cond_false
+
+    invoke-virtual {p0}, Ljava/lang/String;->trim()Ljava/lang/String;
+
+    move-result-object v0
+
+    const-string v1, "patch="
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_slash
+
+    const/4 v0, 0x1
+
+    return v0
+
+    :cond_slash
+    const-string v2, "//"
+
+    invoke-virtual {v0, v2}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_hash
+
+    const/4 v2, 0x2
+
+    invoke-virtual {v0, v2}, Ljava/lang/String;->substring(I)Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/String;->trim()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v2, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_hash
+
+    const/4 v0, 0x1
+
+    return v0
+
+    :cond_hash
+    const-string v2, "#"
+
+    invoke-virtual {v0, v2}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_false
+
+    const/4 v2, 0x1
+
+    invoke-virtual {v0, v2}, Ljava/lang/String;->substring(I)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/String;->trim()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v3, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_false
+
+    return v2
+
+    :cond_false
+    const/4 v0, 0x0
+
     return v0
 .end method
 
@@ -283,7 +425,7 @@ function Write-CheatSupportClass {
 '@
 
     [System.IO.File]::WriteAllText($targetPath, (ConvertTo-Lf -Text $content), (New-Object System.Text.UTF8Encoding($false)))
-    Write-Host "Generated CheatSupport.smali for runtime .pnach file checks"
+    Write-Host "Generated CheatSupport.smali for runtime .pnach patch-line checks"
 }
 
 function ConvertTo-Lf {
