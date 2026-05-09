@@ -1,0 +1,6 @@
+.tools/
+dist/
+*.apk
+*.idsig
+decomp/NetherSX2-build/
+decomp/NetherSX2-v*-4248/

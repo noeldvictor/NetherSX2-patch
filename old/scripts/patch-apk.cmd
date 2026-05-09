@@ -90,6 +90,12 @@ if %vercheck%==0 (
   echo \033[92m[Done] | %col%
 )
 
+:: Adds the Cheat Support Index
+<nul set /p "=\033[96mUpdating the \033[91mCheat Support Index...           " | %col%
+lib\aapt r %vername%[patched].apk assets/cheats_index.html >nul 2>&1
+lib\aapt a %vername%[patched].apk assets/cheats_index.html >nul 2>&1
+echo \033[92m[Done] | %col%
+
 :: Updates to Latest GameDB with features removed that are not supported by the libemucore.so from March 13th
 <nul set /p "=\033[96mUpdating the \033[91mGameDB...                        " | %col%
 lib\aapt r %vername%[patched].apk assets/GameIndex.yaml

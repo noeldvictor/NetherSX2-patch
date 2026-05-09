@@ -80,6 +80,15 @@ if command -v "aapt" >/dev/null 2>&1; then
 		display_done
 	fi
 
+	# Adds the Cheat Support Index
+	display_cyan "Updating the "
+	display_light_red "Cheat Support Index...           "
+	aapt r 15210-v1.5-4248-patched.apk assets/cheats_index.html				> /dev/null 2>&1
+	aapt a 15210-v1.5-4248-patched.apk assets/cheats_index.html				> /dev/null 2>&1
+	if [ $? -eq 0 ]; then
+		display_done
+	fi
+
 	# Updates to Latest GameDB with features removed that are not supported by the libemucore.so from March 13th
 	display_cyan "Updating the "
 	display_light_red "GameDB...                        "
@@ -159,6 +168,14 @@ else
 	display_light_red "FAQ...                           "
 	lib/aapt r 15210-v1.5-4248-patched.apk assets/faq.html
 	lib/aapt a 15210-v1.5-4248-patched.apk assets/faq.html					> /dev/null 2>&1
+	if [ $? -eq 0 ]; then
+		display_done
+	fi
+
+	display_cyan "Updating the "
+	display_light_red "Cheat Support Index...           "
+	lib/aapt r 15210-v1.5-4248-patched.apk assets/cheats_index.html			> /dev/null 2>&1
+	lib/aapt a 15210-v1.5-4248-patched.apk assets/cheats_index.html			> /dev/null 2>&1
 	if [ $? -eq 0 ]; then
 		display_done
 	fi
