@@ -64,3 +64,15 @@ After pushing cheat PNACH files to the Thor:
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File tools\FixCheatPermissions.ps1
 ```
+
+## ADB Cheat Inventory Notes
+
+When checking which games truly have cheats on the AYN Thor, use the emulator's game CRC as the source of truth. Do not infer cheat availability from ROM filenames, cover filenames, serial-only matches, widescreen patches, 60 FPS patches, or no-interlacing patches.
+
+The temporary CRC inventory export writes this untracked file in external app storage:
+
+```powershell
+adb pull /sdcard/Android/data/xyz.aethersx2.android/files/game_crc_index.tsv .\game_crc_index.tsv
+```
+
+Match `game_crc_index.tsv` against visible external files in `/sdcard/Android/data/xyz.aethersx2.android/files/cheats/<CRC>.pnach`, and count only files with real `patch=` lines. If importing PNACH files from an external cheat pack, prefer exact CRC matches, remove enhancement-only blocks such as widescreen or 60 FPS, and set imported `patch=1,` lines to `patch=0,` by default so the OSD per-code toggle page is the activation UI.
