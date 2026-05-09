@@ -1,0 +1,8 @@
+// Candidate only: same serial SLPM-66513 PNACH; user CRC is English v1.0. Test in-game before moving to cheats/exact.
+// Source file: F6C5993B - Fate-Stay Night [Realta Nua] SLPM-66513.pnach
+[Cheats/Unlock Extra Menu] 
+patch=0,EE,4050CAA0,extended,00A90001
+patch=0,EE,FFFFFFFF,extended,00000000
+patch=0,EE,2050C900,extended,FFFFFFFF
+
+

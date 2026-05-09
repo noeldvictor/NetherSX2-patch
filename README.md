@@ -13,9 +13,31 @@ They aim to do the following:
 * Add an in-game OSD Patch Codes dialog that toggles individual `.pnach` cheat-code blocks, including a Deselect All action
 * Mark games with visible external `.pnach` files containing real `patch=` cheat-code lines with a CHEATS badge
 * Add an in-app FAQ link to a searchable list of games with bundled widescreen and no-interlacing patches
+* Include an exact-CRC PNACH cheat pack and ADB install helper for the visible Android app cheats folder
+* Add an ADB cover installer that defaults to xlenore's PS2 cover repository and supports custom cover URL templates
 * Update the GameDB, Controller Support, and the Widescreen and No-Interlace Patches
 * Add additional AetherSX2/NetherSX2 spesific fixes to the GameDB
 * Resign the APK to Remove the Play Protect Warning
+
+## Android Usability Helpers
+
+Install the tracked exact-CRC cheat pack to an attached Android device:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\InstallCheatsToDevice.ps1
+```
+
+Install covers for the games listed in `game_crc_index.tsv` using xlenore's default 2D cover URL:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\InstallCoversToDevice.ps1
+```
+
+Use another cover source by overriding `-BaseUrl`. The template supports `{serial}`, `{crc}`, `{title}`, and `{ext}`:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\InstallCoversToDevice.ps1 -BaseUrl 'https://raw.githubusercontent.com/xlenore/ps2-covers/main/covers/3d/{serial}.png'
+```
 
 ## Installing NetherSX2
 Once you've grabbed a copy of the [NetherSX2 APK](https://github.com/Trixarian/NetherSX2-patch/releases/download/2.1/NetherSX2-v2.1-4248.apk), it's time to install it on to your device

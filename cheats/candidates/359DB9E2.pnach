@@ -1,0 +1,27 @@
+// Candidate only: same serial SLUS-20487 PNACH; user CRC differs. Test in-game before moving to cheats/exact.
+// Source file: 3EDA6DE7 - Megaman X7 SLUS-20487.pnach
+[Cheats/Infinite Lives] 
+patch=0,EE,004637A0,extended,00000009
+
+[Cheats/Invincible Main Character] 
+patch=0,EE,00E51314,extended,00000001
+
+[Cheats/Infinite Health Main Character] 
+patch=0,EE,20E5131C,extended,00000064
+
+[Cheats/Invincible Sub Character] 
+patch=0,EE,00E51414,extended,00000001
+
+[Cheats/Infinite Health Sub Character] 
+patch=0,EE,20E5141C,extended,00000064
+
+[Cheats/All Characters Infinite Health] 
+patch=0,EE,00E5131C,extended,00000063
+patch=0,EE,00E5141C,extended,00000020
+
+[Cheats/All Characters Infinite Special] 
+patch=0,EE,004EDBD8,extended,00000063
+
+[Cheats/All Characters All Reploids Rescued] 
+patch=0,EE,40E09638,extended,000F0001
+patch=0,EE,31186352,extended,1F66FBB8

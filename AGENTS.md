@@ -76,3 +76,25 @@ adb pull /sdcard/Android/data/xyz.aethersx2.android/files/game_crc_index.tsv .\g
 ```
 
 Match `game_crc_index.tsv` against visible external files in `/sdcard/Android/data/xyz.aethersx2.android/files/cheats/<CRC>.pnach`, and count only files with real `patch=` lines. If importing PNACH files from an external cheat pack, prefer exact CRC matches, remove enhancement-only blocks such as widescreen or 60 FPS, and set imported `patch=1,` lines to `patch=0,` by default so the OSD per-code toggle page is the activation UI.
+
+Tracked PNACH files live under `cheats/exact` and can be pushed with:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\InstallCheatsToDevice.ps1
+```
+
+Same-serial or fan-translation candidates live under `cheats/candidates`; install them only with `-IncludeCandidates` while actively testing in-game.
+
+## Cover Installer Notes
+
+Use `tools\InstallCoversToDevice.ps1` to download covers for the games in `game_crc_index.tsv` and push them into the visible external app `files/covers` folder. It defaults to xlenore's documented 2D cover URL:
+
+```powershell
+https://raw.githubusercontent.com/xlenore/ps2-covers/main/covers/default/{serial}.jpg
+```
+
+The script must keep `-BaseUrl` override support. The template supports `{serial}`, `{crc}`, `{title}`, and `{ext}`; for example, xlenore 3D covers use:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\InstallCoversToDevice.ps1 -BaseUrl 'https://raw.githubusercontent.com/xlenore/ps2-covers/main/covers/3d/{serial}.png'
+```

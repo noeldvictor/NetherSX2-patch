@@ -1,0 +1,12 @@
+[Cheats/Infinite Health] 
+patch=0,EE,208F2AD8,extended,00000500
+
+[Cheats/Infinite Ogre Power] 
+patch=0,EE,208F4D32,extended,00000500
+
+[Cheats/Infinite Arrows and Item Usage] 
+patch=0,EE,20336EBC,extended,00000000
+
+[Cheats/Unlock All Special Features] 
+patch=0,EE,2054783C,extended,FFFFFFFF
+
