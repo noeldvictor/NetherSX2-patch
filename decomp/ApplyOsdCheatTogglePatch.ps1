@@ -945,59 +945,13 @@ function Write-OsdCheatMenuClasses {
     goto :goto_line_loop
 
     :cond_write
-    const-string v3, "pnach"
+    const/4 v3, 0x0
 
-    const-string v4, ".tmp"
+    new-array v3, v3, [Ljava/nio/file/OpenOption;
 
-    invoke-virtual {p0}, Ljava/io/File;->getParentFile()Ljava/io/File;
-
-    move-result-object v5
-
-    invoke-static {v3, v4, v5}, Ljava/io/File;->createTempFile(Ljava/lang/String;Ljava/lang/String;Ljava/io/File;)Ljava/io/File;
-
-    move-result-object v3
-
-    invoke-virtual {v3}, Ljava/io/File;->toPath()Ljava/nio/file/Path;
-
-    move-result-object v4
-
-    const/4 v5, 0x0
-
-    new-array v5, v5, [Ljava/nio/file/OpenOption;
-
-    invoke-static {v4, v2, v5}, Ljava/nio/file/Files;->write(Ljava/nio/file/Path;Ljava/lang/Iterable;[Ljava/nio/file/OpenOption;)Ljava/nio/file/Path;
-
-    invoke-virtual {p0}, Ljava/io/File;->delete()Z
-
-    move-result v4
-
-    if-nez v4, :cond_rename
-
-    new-instance p0, Ljava/io/IOException;
-
-    const-string p1, "Could not replace cheat file"
-
-    invoke-direct {p0, p1}, Ljava/io/IOException;-><init>(Ljava/lang/String;)V
-
-    throw p0
-
-    :cond_rename
-    invoke-virtual {v3, p0}, Ljava/io/File;->renameTo(Ljava/io/File;)Z
-
-    move-result p0
-
-    if-eqz p0, :cond_rename_failed
+    invoke-static {v0, v2, v3}, Ljava/nio/file/Files;->write(Ljava/nio/file/Path;Ljava/lang/Iterable;[Ljava/nio/file/OpenOption;)Ljava/nio/file/Path;
 
     return-void
-
-    :cond_rename_failed
-    new-instance p0, Ljava/io/IOException;
-
-    const-string p1, "Could not rename cheat file"
-
-    invoke-direct {p0, p1}, Ljava/io/IOException;-><init>(Ljava/lang/String;)V
-
-    throw p0
 .end method
 
 .method public static show(Lxyz/aethersx2/android/EmulationActivity;)V

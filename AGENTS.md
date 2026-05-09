@@ -11,7 +11,7 @@ This repository is an APK patching workspace for NetherSX2, not a normal Gradle 
 - The badge script generates `smali/xyz/aethersx2/android/CheatSupport.smali`, then patches the grid and list adapters to show a `cheat_badge` view only when a matching `.pnach` file in the visible external app `files/cheats` folder contains a real `patch=` code line. Do not use private internal app files, `assets/cheats_ws.zip`, or `assets/cheats_ni.zip` for the CHEATS badge; those are not user-visible real cheat availability.
 - The OSD Patch Codes menu is patched by `decomp/ApplyOsdCheatTogglePatch.ps1`; its `Toggle Cheat Codes` row opens a multi-choice dialog for the current game's `.pnach` and toggles each named cheat block individually by commenting/uncommenting its `patch=` lines. It includes a non-closing `Deselect All` button and leaves an `Edit .pnach` fallback only when no cheat blocks can be parsed.
 - The OSD PNACH lookup should agree with the game-list badge lookup: use the native game PNACH path only when it exists and contains parsed cheat blocks, then recover the running `GameListEntry` from the game path and fall back to the visible external app `files/cheats/<GameListEntry CRC>.pnach` path before using the live game-info CRC.
-- OSD PNACH saves must write a temp file in the same cheats directory and replace the original instead of opening the original for write, because PNACH files pushed by ADB can be owned by `shell` and read-only to the app process.
+- After pushing PNACH files with ADB, run `tools\FixCheatPermissions.ps1` so shell-owned cheat files become group-writable (`chmod 660`). The app should then edit them directly; do not add app-side ownership-repair save workarounds unless chmod cannot solve the target device.
 - The OSD per-code cheat dialog must not toggle `EmuCore/EnableCheats`; that is a global app setting, not the per-cheat control.
 - It keeps the existing emulator config keys:
   - `EmuCore/EnableCheats`
@@ -58,3 +58,9 @@ adb install -r path\to\NetherSX2.apk
 ```
 
 If Android rejects a signature mismatch, uninstall the old package from the device first or install over a build signed with the same key.
+
+After pushing cheat PNACH files to the Thor:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\FixCheatPermissions.ps1
+```
