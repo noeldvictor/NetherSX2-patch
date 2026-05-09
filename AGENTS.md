@@ -131,6 +131,8 @@ adb devices -l
 adb install -r path\to\NetherSX2.apk
 ```
 
+The checked-in `decomp\lib\android.jks` uses store password `android_sign`, key alias `android_sign_alias`, and key password `android_sign_alias`. This matches the older patch scripts and the signed APKs currently installed on Thor.
+
 If Android rejects a signature mismatch, uninstall the old package from the device first or install over a build signed with the same key.
 
 After pushing cheat PNACH files to the Thor:

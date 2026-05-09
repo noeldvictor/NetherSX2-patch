@@ -113,54 +113,48 @@ def draw_foreground(size: int = WORK) -> Image.Image:
     def xy(values: tuple[float, ...]) -> tuple[int, ...]:
         return tuple(int(v * s) for v in values)
 
-    shadow = (0, 0, 0, 95)
     white = (*COLORS["white"], 255)
     cyan = (*COLORS["cyan"], 255)
     green = (*COLORS["green"], 255)
-    amber = (*COLORS["amber"], 255)
     ink = (*COLORS["ink"], 255)
+    shadow = (0, 0, 0, 110)
 
     glow = Image.new("RGBA", (size, size), (0, 0, 0, 0))
     gd = ImageDraw.Draw(glow, "RGBA")
-    gd.rounded_rectangle(xy((254, 238, 1794, 1782)), radius=int(330 * s), fill=(31, 210, 198, 58))
-    img.alpha_composite(glow.filter(ImageFilter.GaussianBlur(max(1, int(42 * s)))))
+    gd.rounded_rectangle(xy((408, 344, 1640, 1704)), radius=int(280 * s), fill=(31, 210, 198, 56))
+    gd.ellipse(xy((1030, 1180, 1690, 1770)), fill=(190, 245, 82, 62))
+    img.alpha_composite(glow.filter(ImageFilter.GaussianBlur(max(1, int(48 * s)))))
 
     d.rounded_rectangle(
-        xy((308, 292, 1740, 1726)),
-        radius=int(280 * s),
+        xy((440, 354, 1608, 1674)),
+        radius=int(250 * s),
         fill=(*COLORS["panel"], 246),
-        outline=(31, 210, 198, 190),
-        width=max(3, int(18 * s)),
+        outline=(31, 210, 198, 210),
+        width=max(3, int(20 * s)),
     )
     d.rounded_rectangle(
-        xy((386, 370, 1662, 1648)),
-        radius=int(224 * s),
-        outline=(255, 255, 255, 28),
-        width=max(2, int(8 * s)),
+        xy((520, 434, 1528, 1594)),
+        radius=int(192 * s),
+        outline=(244, 250, 248, 32),
+        width=max(2, int(7 * s)),
     )
 
-    for x in (642, 1024, 1406):
-        d.line(xy((x, 446, x, 876)), fill=(255, 255, 255, 24), width=max(2, int(8 * s)))
-    for y in (566, 742):
-        d.line(xy((492, y, 1556, y)), fill=(255, 255, 255, 20), width=max(2, int(8 * s)))
+    n_font = font(int(900 * s), bold=True)
+    d.text(xy((1024, 880)), "N", font=n_font, fill=shadow, anchor="mm")
+    d.text(xy((1002, 846)), "N", font=n_font, fill=white, anchor="mm")
 
-    n_font = font(int(780 * s), bold=True)
-    two_font = font(int(430 * s), bold=True)
+    d.rounded_rectangle(
+        xy((1104, 1230, 1532, 1468)),
+        radius=int(119 * s),
+        fill=green,
+        outline=(244, 250, 248, 130),
+        width=max(3, int(12 * s)),
+    )
+    d.ellipse(xy((1316, 1268, 1494, 1446)), fill=ink)
+    d.rounded_rectangle(xy((1172, 1318, 1286, 1374)), radius=int(28 * s), fill=(5, 18, 21, 145))
 
-    d.text(xy((846, 815)), "N", font=n_font, fill=shadow, anchor="mm")
-    d.text(xy((826, 782)), "N", font=n_font, fill=white, anchor="mm")
-    d.text(xy((1270, 864)), "2", font=two_font, fill=shadow, anchor="mm")
-    d.text(xy((1252, 832)), "2", font=two_font, fill=cyan, anchor="mm")
-
-    d.arc(xy((444, 506, 1604, 1438)), start=196, end=346, fill=(31, 210, 198, 230), width=max(7, int(28 * s)))
-    d.arc(xy((514, 572, 1534, 1372)), start=330, end=26, fill=amber, width=max(7, int(28 * s)))
-
-    pill = xy((512, 1262, 1536, 1500))
-    d.rounded_rectangle(pill, radius=int(119 * s), fill=green, outline=(255, 255, 255, 100), width=max(3, int(12 * s)))
-    d.rounded_rectangle(xy((616, 1341, 984, 1392)), radius=int(16 * s), fill=(5, 18, 21, 145))
-    d.rounded_rectangle(xy((616, 1422, 842, 1456)), radius=int(10 * s), fill=(5, 18, 21, 98))
-    d.ellipse(xy((1214, 1302, 1448, 1462)), fill=ink)
-    d.line(xy((1276, 1390, 1334, 1448, 1414, 1330)), fill=amber, width=max(10, int(36 * s)), joint="curve")
+    d.line(xy((1234, 1548, 1376, 1548)), fill=cyan, width=max(8, int(30 * s)))
+    d.line(xy((1376, 1548, 1496, 1548)), fill=(255, 184, 76, 255), width=max(8, int(30 * s)))
     return img
 
 
