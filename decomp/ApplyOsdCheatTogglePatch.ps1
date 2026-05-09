@@ -77,6 +77,42 @@ function Write-OsdCheatMenuClasses {
     return-void
 .end method
 
+.method public static addRootShortcut(Lxyz/aethersx2/android/EmulationActivity$c;Z)V
+    .locals 3
+
+    new-instance v0, Landroidx/preference/Preference;
+
+    invoke-virtual {p0}, Landroidx/fragment/app/o;->getContext()Landroid/content/Context;
+
+    move-result-object v1
+
+    invoke-direct {v0, v1}, Landroidx/preference/Preference;-><init>(Landroid/content/Context;)V
+
+    const-string v1, "Toggle Cheat Codes"
+
+    invoke-virtual {v0, v1}, Landroidx/preference/Preference;->T(Ljava/lang/CharSequence;)V
+
+    const v1, 0x7f080090
+
+    invoke-virtual {v0, v1}, Landroidx/preference/Preference;->L(I)V
+
+    new-instance v1, Lxyz/aethersx2/android/OsdCheatMenu$RootShortcutListener;
+
+    invoke-direct {v1, p0}, Lxyz/aethersx2/android/OsdCheatMenu$RootShortcutListener;-><init>(Lxyz/aethersx2/android/EmulationActivity$c;)V
+
+    iput-object v1, v0, Landroidx/preference/Preference;->o:Landroidx/preference/Preference$e;
+
+    invoke-virtual {v0, p1}, Landroidx/preference/Preference;->J(Z)V
+
+    invoke-virtual {p0}, Landroidx/preference/b;->z()Landroidx/preference/PreferenceScreen;
+
+    move-result-object p0
+
+    invoke-virtual {p0, v0}, Landroidx/preference/PreferenceGroup;->Z(Landroidx/preference/Preference;)V
+
+    return-void
+.end method
+
 .method private static addCode(Ljava/util/ArrayList;Ljava/lang/String;IIZ)V
     .locals 2
 
@@ -1489,10 +1525,101 @@ function Write-OsdCheatMenuClasses {
 .end method
 '@
 
+    Write-SmaliFile -Path (Join-Path $targetDir "OsdCheatMenu`$RootShortcutListener.smali") -Text @'
+.class public final Lxyz/aethersx2/android/OsdCheatMenu$RootShortcutListener;
+.super Ljava/lang/Object;
+.source "OsdCheatMenu.java"
+
+# interfaces
+.implements Landroidx/preference/Preference$e;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Lxyz/aethersx2/android/OsdCheatMenu;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = "RootShortcutListener"
+.end annotation
+
+
+# instance fields
+.field public final a:Lxyz/aethersx2/android/EmulationActivity$c;
+
+
+# direct methods
+.method public constructor <init>(Lxyz/aethersx2/android/EmulationActivity$c;)V
+    .locals 0
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, p0, Lxyz/aethersx2/android/OsdCheatMenu$RootShortcutListener;->a:Lxyz/aethersx2/android/EmulationActivity$c;
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final b(Landroidx/preference/Preference;)Z
+    .locals 2
+
+    iget-object p1, p0, Lxyz/aethersx2/android/OsdCheatMenu$RootShortcutListener;->a:Lxyz/aethersx2/android/EmulationActivity$c;
+
+    iget-object v0, p1, Lxyz/aethersx2/android/EmulationActivity$c;->q0:Lxyz/aethersx2/android/EmulationActivity$b;
+
+    const/4 v1, 0x0
+
+    invoke-virtual {v0, v1}, Lxyz/aethersx2/android/EmulationActivity$b;->A(Z)V
+
+    iget-object p1, p1, Lxyz/aethersx2/android/EmulationActivity$c;->r0:Lxyz/aethersx2/android/EmulationActivity;
+
+    invoke-static {p1}, Lxyz/aethersx2/android/OsdCheatMenu;->show(Lxyz/aethersx2/android/EmulationActivity;)V
+
+    const/4 p1, 0x1
+
+    return p1
+.end method
+'@
+
     $oldToggleListener = Join-Path $targetDir "OsdCheatMenu`$ToggleListener.smali"
     if (Test-Path -LiteralPath $oldToggleListener) {
         Remove-Item -LiteralPath $oldToggleListener -Force
     }
+}
+
+function Patch-RootOsdCheatShortcut {
+    $path = Join-Path $ProjectPath "smali\xyz\aethersx2\android\EmulationActivity`$c.smali"
+    if (-not (Test-Path -LiteralPath $path)) {
+        throw "Missing root OSD menu class: $path"
+    }
+
+    $text = ConvertTo-Lf -Text ([System.IO.File]::ReadAllText($path))
+    if ($text.Contains("Lxyz/aethersx2/android/OsdCheatMenu;->addRootShortcut")) {
+        [System.IO.File]::WriteAllText($path, $text, $utf8NoBom)
+        return
+    }
+
+    $old = @'
+    xor-int/2addr p2, v1
+
+    .line 14
+'@
+    $new = @'
+    xor-int/2addr p2, v1
+
+    invoke-static {p0, p2}, Lxyz/aethersx2/android/OsdCheatMenu;->addRootShortcut(Lxyz/aethersx2/android/EmulationActivity$c;Z)V
+
+    .line 14
+'@
+
+    $patched = $text.Replace((ConvertTo-Lf -Text $old), (ConvertTo-Lf -Text $new))
+    if ($patched -eq $text) {
+        throw "Could not patch root OSD cheat shortcut."
+    }
+
+    [System.IO.File]::WriteAllText($path, $patched, $utf8NoBom)
 }
 
 function Patch-OsdMenuHandler {
@@ -1528,6 +1655,7 @@ function Patch-OsdMenuHandler {
 Patch-PatchesMenuLabel
 Restore-OsdPatchStrings
 Write-OsdCheatMenuClasses
+Patch-RootOsdCheatShortcut
 Patch-OsdMenuHandler
 
 Write-Host "OSD per-code cheat toggle dialog updated in $ProjectPath"

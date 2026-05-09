@@ -94,13 +94,3 @@
 // patch=1,EE,40445B70,extended,00060001
 // patch=1,EE,09090909,extended,00000000
 // patch=1,EE,00445B88,extended,00000009
-
-[Cheats/Experimental No Monster Proximity Test A]
-// patch=1,EE,0048A038,extended,00000000
-
-[Cheats/Experimental Encounter Calm Test B]
-// patch=1,EE,004892FD,extended,00000004
-// patch=1,EE,004892FF,extended,00000004
-// patch=1,EE,0048966D,extended,00000004
-// patch=1,EE,0048966F,extended,00000004
-
