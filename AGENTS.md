@@ -187,6 +187,13 @@ adb pull "/sdcard/Android/data/xyz.aethersx2.android/files/sstates/SLUS-20259 (D
 
 Ask the user to create slot 0 right after a battle or while encounter pressure feels low, then create slot 1 after walking until the next random battle feels close. A third state immediately after the encounter triggers or after the battle resets is useful for rejecting false positives. Extract `eeMemory.bin` with a normal zip reader, compare 8/16/32-bit little-endian values that change monotonically while walking and reset around battle entry, then test only the smallest plausible freeze or clamp in `cheats/exact/DD11BEF7.pnach` as default-off `// patch=1,...` lines. Promote the block only after it is verified in-game through the OSD toggle UI.
 
+On 2026-05-09, Thor savestate slot 9 was captured with the monster warning active and slot 10 with no monster warning. The `.p2s` files used Zstandard-compressed zip entries, so install Python `zstandard` if the system zip reader cannot extract `eeMemory.bin`. The strongest low-risk diff candidate was byte `0048A038`, which was `04` in slot 9 and `00` in slot 10. Additional duplicated candidates were bytes `004892FD`, `004892FF`, `0048966D`, and `0048966F`, which were `0C` while the monster was close and `04` while calm. These are tracked as default-off experimental OSD toggles in `cheats/exact/DD11BEF7.pnach`:
+
+- `Experimental No Monster Proximity Test A` clamps `0048A038` to `00`.
+- `Experimental Encounter Calm Test B` clamps the duplicated `0C`/`04` candidates to `04`.
+
+Push this exact PNACH by itself when testing so existing device toggles for other games are untouched, then run `tools\FixCheatPermissions.ps1`. In-game, enable Test A first from OSD > Patch Codes; if the warning does not change after walking, disable A and try B. Do not rename either block to a final no-encounter cheat until the user verifies behavior in live play.
+
 ## Cover Installer Notes
 
 Use `tools\InstallCoversToDevice.ps1` to download covers for the games in `game_crc_index.tsv` and push them into the visible external app `files/covers` folder. It defaults to xlenore's documented 2D cover URL:
