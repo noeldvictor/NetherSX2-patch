@@ -165,6 +165,23 @@ function Write-OsdCheatMenuClasses {
     return-object p0
 .end method
 
+.method private static normalizeEnabledLine(Ljava/lang/String;)Ljava/lang/String;
+    .locals 2
+
+    if-eqz p0, :cond_return
+
+    const-string v0, "patch=0,"
+
+    const-string v1, "patch=1,"
+
+    invoke-virtual {p0, v0, v1}, Ljava/lang/String;->replaceFirst(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object p0
+
+    :cond_return
+    return-object p0
+.end method
+
 .method private static enableLine(Ljava/lang/String;)Ljava/lang/String;
     .locals 4
 
@@ -174,7 +191,15 @@ function Write-OsdCheatMenuClasses {
 
     move-result v0
 
-    if-nez v0, :cond_return
+    if-eqz v0, :cond_parse
+
+    invoke-static {p0}, Lxyz/aethersx2/android/OsdCheatMenu;->normalizeEnabledLine(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object p0
+
+    goto :cond_return
+
+    :cond_parse
 
     invoke-virtual {p0}, Ljava/lang/String;->trim()Ljava/lang/String;
 
@@ -206,6 +231,10 @@ function Write-OsdCheatMenuClasses {
 
     if-eqz v2, :cond_hash
 
+    invoke-static {v1}, Lxyz/aethersx2/android/OsdCheatMenu;->normalizeEnabledLine(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v1
+
     return-object v1
 
     :cond_hash
@@ -234,6 +263,10 @@ function Write-OsdCheatMenuClasses {
     move-result v3
 
     if-eqz v3, :cond_return
+
+    invoke-static {v1}, Lxyz/aethersx2/android/OsdCheatMenu;->normalizeEnabledLine(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v1
 
     return-object v1
 

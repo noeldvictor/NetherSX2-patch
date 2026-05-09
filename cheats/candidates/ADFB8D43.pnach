@@ -1,19 +1,19 @@
 // Candidate only: same serial SLUS-20309 PNACH; user CRC is Complete Edition/UNDUB. Test in-game before moving to cheats/exact.
 // Source file: CA91718B - Jade Cocoon 2 SLUS-20309.pnach
-[Cheats/Max Money] 
-patch=0,EE,20879888,extended,0098967F
+[Cheats/Max Money]
+// patch=1,EE,20879888,extended,0098967F
 
-[Cheats/Max Reputation] 
-patch=0,EE,2087988C,extended,0000270F
+[Cheats/Max Reputation]
+// patch=1,EE,2087988C,extended,0000270F
 
-[Cheats/Beast 1 Max HP] 
-patch=0,EE,2087A010,extended,000003E7
+[Cheats/Beast 1 Max HP]
+// patch=1,EE,2087A010,extended,000003E7
 
-[Cheats/Beast 1 Infinite HP] 
-patch=0,EE,2087A014,extended,000003E7
+[Cheats/Beast 1 Infinite HP]
+// patch=1,EE,2087A014,extended,000003E7
 
-[Cheats/Beast 1 Max MP] 
-patch=0,EE,2087A028,extended,000003E7
+[Cheats/Beast 1 Max MP]
+// patch=1,EE,2087A028,extended,000003E7
 
-[Cheats/Beast 1 Infinite MP] 
-patch=0,EE,2087A02C,extended,000003E7
+[Cheats/Beast 1 Infinite MP]
+// patch=1,EE,2087A02C,extended,000003E7

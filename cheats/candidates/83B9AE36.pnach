@@ -1,16 +1,16 @@
 // Candidate only: same serial SCKA-20055 English patched PNACH; user CRC is English v1.2.2. Test in-game before moving to cheats/exact.
 // Source file: CDD36744 - Mystic Nights English Patched SCKA-20055.pnach
-[Cheats/Infinite Health] 
-patch=0,EE,001f98f0,extended,84c30012
+[Cheats/Infinite Health]
+// patch=1,EE,001f98f0,extended,84c30012
 
-[Cheats/Infinity Armor Bruce] 
-patch=0,EE,204A1F00,extended,0FFF000F
+[Cheats/Infinity Armor Bruce]
+// patch=1,EE,204A1F00,extended,0FFF000F
 
-[Cheats/Infinite Pistol Ammo] 
-patch=0,EE,001f7f90,extended,24420000
+[Cheats/Infinite Pistol Ammo]
+// patch=1,EE,001f7f90,extended,24420000
 
 [Cheats/Infinite Pistol Spare Ammo]
-patch=0,EE,001F8984,extended,24420000
+// patch=1,EE,001F8984,extended,24420000
 
-[Cheats/Infinite Ammo All] 
-patch=0,EE,201F7F94,extended,C6E20030
+[Cheats/Infinite Ammo All]
+// patch=1,EE,201F7F94,extended,C6E20030

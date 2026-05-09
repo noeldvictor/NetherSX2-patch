@@ -1,112 +1,112 @@
 // Candidate only: same serial SLPS-25842 English PNACH; user CRC is English v1.6. Test in-game before moving to cheats/exact.
 // Source file: E84AA114 - Tales of Destiny - Director's Cut english translated v0.1.5 SLPS-25842.pnach
 [Cheats/Max Gald]
-patch=0,EE,202C3D10,extended,0098967F
+// patch=1,EE,202C3D10,extended,0098967F
 
-[Cheats/Max EX points 9999999] 
-patch=0,EE,202C403C,extended,0098967F
+[Cheats/Max EX points 9999999]
+// patch=1,EE,202C403C,extended,0098967F
 
-[Cheats/Infinite CC Leon In Battle] 
-patch=0,EE,204140D8,extended,00000063
-patch=0,EE,203DEA8C,extended,00000000
-patch=0,EE,203DEA34,extended,00000000
-patch=0,EE,203D9B00,extended,00000000
-patch=0,EE,203DEA88,extended,00000000
-patch=0,EE,203DEA9C,extended,00000000
-patch=0,EE,203DEA98,extended,00000000
-patch=0,EE,203DEA94,extended,00000000
-patch=0,EE,203DEA90,extended,00000000
+[Cheats/Infinite CC Leon In Battle]
+// patch=1,EE,204140D8,extended,00000063
+// patch=1,EE,203DEA8C,extended,00000000
+// patch=1,EE,203DEA34,extended,00000000
+// patch=1,EE,203D9B00,extended,00000000
+// patch=1,EE,203DEA88,extended,00000000
+// patch=1,EE,203DEA9C,extended,00000000
+// patch=1,EE,203DEA98,extended,00000000
+// patch=1,EE,203DEA94,extended,00000000
+// patch=1,EE,203DEA90,extended,00000000
 
-[Cheats/Stan Max Exp] 
-patch=0,EE,202C1E20,extended,3B9AC9FF
+[Cheats/Stan Max Exp]
+// patch=1,EE,202C1E20,extended,3B9AC9FF
 
-[Cheats/Rooty Max Exp]  
-patch=0,EE,202C1FC8,extended,3B9AC9FF 
+[Cheats/Rooty Max Exp]
+// patch=1,EE,202C1FC8,extended,3B9AC9FF
 
-[Cheats/Philia Max Exp]  
-patch=0,EE,202C2170,extended,3B9AC9FF 
+[Cheats/Philia Max Exp]
+// patch=1,EE,202C2170,extended,3B9AC9FF
 
-[Cheats/Woodrow Max Exp] 
-patch=0,EE,202C2318,extended,3B9AC9FF
+[Cheats/Woodrow Max Exp]
+// patch=1,EE,202C2318,extended,3B9AC9FF
 
-[Cheats/Lyon Max Exp] 
-patch=0,EE,202C24C0,extended,3B9AC9FF 
+[Cheats/Lyon Max Exp]
+// patch=1,EE,202C24C0,extended,3B9AC9FF
 
-[Cheats/Marie Max Exp] 
-patch=0,EE,202C2668,extended,3B9AC9FF 
+[Cheats/Marie Max Exp]
+// patch=1,EE,202C2668,extended,3B9AC9FF
 
-[Cheats/Chelsea Max Exp]  
-patch=0,EE,202C2810,extended,3B9AC9FF 
+[Cheats/Chelsea Max Exp]
+// patch=1,EE,202C2810,extended,3B9AC9FF
 
-[Cheats/Johnny Max Exp] 
-patch=0,EE,202C29B8,extended,3B9AC9FF
+[Cheats/Johnny Max Exp]
+// patch=1,EE,202C29B8,extended,3B9AC9FF
 
-[Cheats/Infinite CC In Battle] 
-patch=0,EE,D03D9AF8,extended,000002D8
-patch=0,EE,203D9AFC,extended,960202DE
+[Cheats/Infinite CC In Battle]
+// patch=1,EE,D03D9AF8,extended,000002D8
+// patch=1,EE,203D9AFC,extended,960202DE
 
-[Cheats/Dimlos 999 SD Points] 
-patch=0,EE,102C3768,extended,000003E7
-patch=0,EE,102C376A,extended,000003E7
+[Cheats/Dimlos 999 SD Points]
+// patch=1,EE,102C3768,extended,000003E7
+// patch=1,EE,102C376A,extended,000003E7
 
-[Cheats/Atwight 999 SD Points] 
-patch=0,EE,102C3802,extended,000003E7
-patch=0,EE,102C3804,extended,000003E7
+[Cheats/Atwight 999 SD Points]
+// patch=1,EE,102C3802,extended,000003E7
+// patch=1,EE,102C3804,extended,000003E7
 
-[Cheats/Clemente 999 SD Points] 
-patch=0,EE,102C389C,extended,000003E7
-patch=0,EE,102C389E,extended,000003E7
+[Cheats/Clemente 999 SD Points]
+// patch=1,EE,102C389C,extended,000003E7
+// patch=1,EE,102C389E,extended,000003E7
 
-[Cheats/Igtenos 999 SD Points] 
-patch=0,EE,102C3936,extended,000003E7
-patch=0,EE,102C3938,extended,000003E7
+[Cheats/Igtenos 999 SD Points]
+// patch=1,EE,102C3936,extended,000003E7
+// patch=1,EE,102C3938,extended,000003E7
 
-[Cheats/Chaltier 999 SD Points] 
-patch=0,EE,102C39D0,extended,000003E7
-patch=0,EE,102C39D2,extended,000003E7
+[Cheats/Chaltier 999 SD Points]
+// patch=1,EE,102C39D0,extended,000003E7
+// patch=1,EE,102C39D2,extended,000003E7
 
-[Cheats/Unlock All Titles] 
-patch=0,EE,002C34A5,extended,000000FF
-patch=0,EE,102C34A6,extended,0000FFFF
-patch=0,EE,202C34A8,extended,FFFFFFFF
-patch=0,EE,202C34AC,extended,FFFFFFFF
-patch=0,EE,202C34B0,extended,FFFFFFFF
-patch=0,EE,102C34B4,extended,0000FFFF
-patch=0,EE,002C34B6,extended,000000FF
-patch=0,EE,202C4288,extended,FFFFFFFF
-patch=0,EE,202C428C,extended,FFFFFFFF
-patch=0,EE,202C4290,extended,FFFFFFFF
-patch=0,EE,202C4294,extended,FFFFFFFF
-patch=0,EE,102C4298,extended,0000FFFF
+[Cheats/Unlock All Titles]
+// patch=1,EE,002C34A5,extended,000000FF
+// patch=1,EE,102C34A6,extended,0000FFFF
+// patch=1,EE,202C34A8,extended,FFFFFFFF
+// patch=1,EE,202C34AC,extended,FFFFFFFF
+// patch=1,EE,202C34B0,extended,FFFFFFFF
+// patch=1,EE,102C34B4,extended,0000FFFF
+// patch=1,EE,002C34B6,extended,000000FF
+// patch=1,EE,202C4288,extended,FFFFFFFF
+// patch=1,EE,202C428C,extended,FFFFFFFF
+// patch=1,EE,202C4290,extended,FFFFFFFF
+// patch=1,EE,202C4294,extended,FFFFFFFF
+// patch=1,EE,102C4298,extended,0000FFFF
 
-[Cheats/9990 Of All Lens] 
-patch=0,EE,102C3D1C,extended,00002706
-patch=0,EE,102C3D1E,extended,00002706
-patch=0,EE,102C3D20,extended,00002706
-patch=0,EE,102C3D22,extended,00002706
-patch=0,EE,102C3D24,extended,00002706
+[Cheats/9990 Of All Lens]
+// patch=1,EE,102C3D1C,extended,00002706
+// patch=1,EE,102C3D1E,extended,00002706
+// patch=1,EE,102C3D20,extended,00002706
+// patch=1,EE,102C3D22,extended,00002706
+// patch=1,EE,102C3D24,extended,00002706
 
-[Cheats/No Encounters Only Press L3] 
-patch=0,EE,20132E98,extended,24020000
-patch=0,EE,D02F6902,extended,0000FFFD
-patch=0,EE,20132E98,extended,0200102D
+[Cheats/No Encounters Only Press L3]
+// patch=1,EE,20132E98,extended,24020000
+// patch=1,EE,D02F6902,extended,0000FFFD
+// patch=1,EE,20132E98,extended,0200102D
 
-[Cheats/Unlock All Monster Book]  
-patch=0,EE,402C34F4,extended,007B0001
-patch=0,EE,FFFFFFFF,extended,00000000
+[Cheats/Unlock All Monster Book]
+// patch=1,EE,402C34F4,extended,007B0001
+// patch=1,EE,FFFFFFFF,extended,00000000
 
-[Cheats/Unlock All Food Book]  
-patch=0,EE,402C3DF0,extended,00190001
-patch=0,EE,03E703E7,extended,00000000
+[Cheats/Unlock All Food Book]
+// patch=1,EE,402C3DF0,extended,00190001
+// patch=1,EE,03E703E7,extended,00000000
 
-[Cheats/Unlock All Discovery Book]  
-patch=0,EE,202C3CEC,extended,FFFFFFFF
-patch=0,EE,202C3CF0,extended,0FFFFFFF
+[Cheats/Unlock All Discovery Book]
+// patch=1,EE,202C3CEC,extended,FFFFFFFF
+// patch=1,EE,202C3CF0,extended,0FFFFFFF
 
-[Cheats/Unlock All Collector Book]  
-patch=0,EE,002C343D,extended,000000FF
-patch=0,EE,102C343E,extended,0000FFFF
-patch=0,EE,402C3440,extended,00190001
-patch=0,EE,FFFFFFFF,extended,00000000
-patch=0,EE,002C3494,extended,00000007
+[Cheats/Unlock All Collector Book]
+// patch=1,EE,002C343D,extended,000000FF
+// patch=1,EE,102C343E,extended,0000FFFF
+// patch=1,EE,402C3440,extended,00190001
+// patch=1,EE,FFFFFFFF,extended,00000000
+// patch=1,EE,002C3494,extended,00000007
 

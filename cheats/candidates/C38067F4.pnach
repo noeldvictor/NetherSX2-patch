@@ -1,144 +1,144 @@
 // Candidate only: same serial SLUS-21788 retail PNACH; user CRC is Metalbat undub. Test in-game before moving to cheats/exact.
 // Source file: F95F37EE - Ar Tonelico II - Melody of Metafalica SLUS-21788.pnach
-[Cheats/Fixes For crashing bug When fighting Raki] 
-patch=0,EE,20744360,extended,009348A0
-patch=0,EE,20744364,extended,009348A0
-patch=0,EE,20744368,extended,00000000
-patch=0,EE,2074436C,extended,00370001
-patch=0,EE,20744370,extended,FFFF001F
-patch=0,EE,20744374,extended,00FFFF00
-patch=0,EE,20744378,extended,00000008
-patch=0,EE,2074437C,extended,009301C8
-patch=0,EE,20744380,extended,009301C8
-patch=0,EE,20744384,extended,009348c0
+[Cheats/Fixes For crashing bug When fighting Raki]
+// patch=1,EE,20744360,extended,009348A0
+// patch=1,EE,20744364,extended,009348A0
+// patch=1,EE,20744368,extended,00000000
+// patch=1,EE,2074436C,extended,00370001
+// patch=1,EE,20744370,extended,FFFF001F
+// patch=1,EE,20744374,extended,00FFFF00
+// patch=1,EE,20744378,extended,00000008
+// patch=1,EE,2074437C,extended,009301C8
+// patch=1,EE,20744380,extended,009301C8
+// patch=1,EE,20744384,extended,009348c0
 
-[Cheats/Max Money] 
-patch=0,EE,20A036E0,extended,0098967F
+[Cheats/Max Money]
+// patch=1,EE,20A036E0,extended,0098967F
 
-[Cheats/Infinite Turn Phase In Battle] 
-patch=0,EE,2022BD34,extended,01c07023
+[Cheats/Infinite Turn Phase In Battle]
+// patch=1,EE,2022BD34,extended,01c07023
 
-[Cheats/Max Infinite SP] 
-patch=0,EE,20C3A90C,extended,0001869F
+[Cheats/Max Infinite SP]
+// patch=1,EE,20C3A90C,extended,0001869F
 
-[Cheats/Activator In Battle Must Be On Infinite HP MP] 
-patch=0,EE,200A0034,extended,240E0003
-patch=0,EE,200A0038,extended,15D20005
-patch=0,EE,200A0050,extended,8DED0020
-patch=0,EE,200A0054,extended,0807AF8D
-patch=0,EE,201EBE30,extended,0802800D
+[Cheats/Activator In Battle Must Be On Infinite HP MP]
+// patch=1,EE,200A0034,extended,240E0003
+// patch=1,EE,200A0038,extended,15D20005
+// patch=1,EE,200A0050,extended,8DED0020
+// patch=1,EE,200A0054,extended,0807AF8D
+// patch=1,EE,201EBE30,extended,0802800D
 
-[Cheats/Infinite HP In Battle] 
-patch=0,EE,200A0040,extended,8DEE001C
-patch=0,EE,200A0044,extended,ADEE0014
+[Cheats/Infinite HP In Battle]
+// patch=1,EE,200A0040,extended,8DEE001C
+// patch=1,EE,200A0044,extended,ADEE0014
 
-[Cheats/Infinite MP In Battle] 
-patch=0,EE,200A0048,extended,8DEE0020
-patch=0,EE,200A004C,extended,ADEE0018
+[Cheats/Infinite MP In Battle]
+// patch=1,EE,200A0048,extended,8DEE0020
+// patch=1,EE,200A004C,extended,ADEE0018
 
-[Cheats/No Random Battles] 
-patch=0,EE,201D9C14,extended,E61F38C4
+[Cheats/No Random Battles]
+// patch=1,EE,201D9C14,extended,E61F38C4
 
-[Cheats/Enable Level Select press Triangle in-game to enter] 
-patch=0,EE,201CDCD0,extended,0C069F65
-patch=0,EE,201A86E4,extended,240F0001
-patch=0,EE,D0A7405C,extended,0000BFFF
-patch=0,EE,201A7E30,extended,00000000
-patch=0,EE,D0A7405C,extended,0000FFFF
-patch=0,EE,201A7E30,extended,144F0005
+[Cheats/Enable Level Select press Triangle in-game to enter]
+// patch=1,EE,201CDCD0,extended,0C069F65
+// patch=1,EE,201A86E4,extended,240F0001
+// patch=1,EE,D0A7405C,extended,0000BFFF
+// patch=1,EE,201A7E30,extended,00000000
+// patch=1,EE,D0A7405C,extended,0000FFFF
+// patch=1,EE,201A7E30,extended,144F0005
 
-[Cheats/Unlock Extra on Main Menu] 
-patch=0,EE,00B1722A,extended,00000003
+[Cheats/Unlock Extra on Main Menu]
+// patch=1,EE,00B1722A,extended,00000003
 
-[Cheats/Unlock All Costumes Collected in Extra]  
-patch=0,EE,20B17054,extended,FFFFFFFF
+[Cheats/Unlock All Costumes Collected in Extra]
+// patch=1,EE,20B17054,extended,FFFFFFFF
 
-[Cheats/Unlock All Hymn Crystal Songs Collected in Extra] 
-patch=0,EE,00B17059,extended,000000FF
-patch=0,EE,10B1705A,extended,0000FFFF
+[Cheats/Unlock All Hymn Crystal Songs Collected in Extra]
+// patch=1,EE,00B17059,extended,000000FF
+// patch=1,EE,10B1705A,extended,0000FFFF
 
-[Cheats/Unlock All Movies Collected in Extra]  
-patch=0,EE,10B1705E,extended,0000FFFF
-patch=0,EE,20B17060,extended,FFFFFFFF
-patch=0,EE,10B17064,extended,0000FFFF
+[Cheats/Unlock All Movies Collected in Extra]
+// patch=1,EE,10B1705E,extended,0000FFFF
+// patch=1,EE,20B17060,extended,FFFFFFFF
+// patch=1,EE,10B17064,extended,0000FFFF
 
-[Cheats/Unlock All Galleries Collected in Extra]  
-patch=0,EE,20B16FAC,extended,FFFFFFFF
-patch=0,EE,20B16FB0,extended,FFFFFFFF
-patch=0,EE,00B16FB4,extended,000000FF
+[Cheats/Unlock All Galleries Collected in Extra]
+// patch=1,EE,20B16FAC,extended,FFFFFFFF
+// patch=1,EE,20B16FB0,extended,FFFFFFFF
+// patch=1,EE,00B16FB4,extended,000000FF
 
-[Cheats/Unlock All BGM Collected in Extra]  
-patch=0,EE,10B16F9E,extended,0000FFFF
-patch=0,EE,20B16FA0,extended,FFFFFFFF
-patch=0,EE,20B16FA4,extended,FFFFFFFF
-patch=0,EE,00B16FA8,extended,000000FF
+[Cheats/Unlock All BGM Collected in Extra]
+// patch=1,EE,10B16F9E,extended,0000FFFF
+// patch=1,EE,20B16FA0,extended,FFFFFFFF
+// patch=1,EE,20B16FA4,extended,FFFFFFFF
+// patch=1,EE,00B16FA8,extended,000000FF
 
-[Cheats/Unlock All Song Magic Collected in Extra]  
-patch=0,EE,00B17004,extended,00000007
-patch=0,EE,10B16FBA,extended,00000707
-patch=0,EE,40B16FBC,extended,00120001
-patch=0,EE,07070707,extended,00000000
+[Cheats/Unlock All Song Magic Collected in Extra]
+// patch=1,EE,00B17004,extended,00000007
+// patch=1,EE,10B16FBA,extended,00000707
+// patch=1,EE,40B16FBC,extended,00120001
+// patch=1,EE,07070707,extended,00000000
 
-[Cheats/Unlock All Items Collected in Extra]  
-patch=0,EE,40B16F30,extended,00180001
-patch=0,EE,FFFFFFFF,extended,00000000
+[Cheats/Unlock All Items Collected in Extra]
+// patch=1,EE,40B16F30,extended,00180001
+// patch=1,EE,FFFFFFFF,extended,00000000
 
-[Cheats/Unlock All Monsters Collected in Extra]  
-patch=0,EE,20B16F90,extended,FFFFFFFF
-patch=0,EE,20B16F94,extended,FFFFFFFF
-patch=0,EE,20B16F98,extended,FFFFFFFF
-patch=0,EE,10B16F9C,extended,0000FFFF
+[Cheats/Unlock All Monsters Collected in Extra]
+// patch=1,EE,20B16F90,extended,FFFFFFFF
+// patch=1,EE,20B16F94,extended,FFFFFFFF
+// patch=1,EE,20B16F98,extended,FFFFFFFF
+// patch=1,EE,10B16F9C,extended,0000FFFF
 
-[Cheats/Unlock All Cosmosphere Clear Collected in Extra]  
-patch=0,EE,00B17005,extended,00000064
-patch=0,EE,10B17006,extended,00006464
+[Cheats/Unlock All Cosmosphere Clear Collected in Extra]
+// patch=1,EE,00B17005,extended,00000064
+// patch=1,EE,10B17006,extended,00006464
 
-[Cheats/Unlock All Replekia Collected in Extra]  
-patch=0,EE,10B170F0,extended,00000404
-patch=0,EE,40B1708C,extended,00190001
-patch=0,EE,04040404,extended,00000000
+[Cheats/Unlock All Replekia Collected in Extra]
+// patch=1,EE,10B170F0,extended,00000404
+// patch=1,EE,40B1708C,extended,00190001
+// patch=1,EE,04040404,extended,00000000
 
-[Cheats/Unlock All Conversations Collected in Extra]  
-patch=0,EE,40B17008,extended,00080001
-patch=0,EE,FFFFFFFF,extended,00000000
+[Cheats/Unlock All Conversations Collected in Extra]
+// patch=1,EE,40B17008,extended,00080001
+// patch=1,EE,FFFFFFFF,extended,00000000
 
 
-[Cheats/Unlock All Infelspherer And Cosmosphere Collected in Extra] 
-patch=0,EE,40B17028,extended,000B0001
-patch=0,EE,FFFFFFFF,extended,00000000
+[Cheats/Unlock All Infelspherer And Cosmosphere Collected in Extra]
+// patch=1,EE,40B17028,extended,000B0001
+// patch=1,EE,FFFFFFFF,extended,00000000
 
-[Cheats/Unlock All Talk Topics Collected in Extra] 
-patch=0,EE,00B1707B,extended,000000FF
-patch=0,EE,20B1707C,extended,FFFFFFFF
-patch=0,EE,20B17080,extended,FFFFFFFF
-patch=0,EE,10B17084,extended,000001FF
-patch=0,EE,00B17087,extended,000000FF
-patch=0,EE,20B17088,extended,FFFFFFFF
+[Cheats/Unlock All Talk Topics Collected in Extra]
+// patch=1,EE,00B1707B,extended,000000FF
+// patch=1,EE,20B1707C,extended,FFFFFFFF
+// patch=1,EE,20B17080,extended,FFFFFFFF
+// patch=1,EE,10B17084,extended,000001FF
+// patch=1,EE,00B17087,extended,000000FF
+// patch=1,EE,20B17088,extended,FFFFFFFF
 
-[Cheats/Unlock Best Cosmosphere Level] 
-patch=0,EE,00BE5EBC,extended,0000000A
-patch=0,EE,00BE5EC8,extended,0000000A
-patch=0,EE,00BE5ED4,extended,0000000A
-patch=0,EE,00B17078,extended,0000000A
-patch=0,EE,10B17079,extended,00000A0A
+[Cheats/Unlock Best Cosmosphere Level]
+// patch=1,EE,00BE5EBC,extended,0000000A
+// patch=1,EE,00BE5EC8,extended,0000000A
+// patch=1,EE,00BE5ED4,extended,0000000A
+// patch=1,EE,00B17078,extended,0000000A
+// patch=1,EE,10B17079,extended,00000A0A
 
-[Cheats/Unlock All Songs Collected in Game]  
-patch=0,EE,40BE6B50,extended,00120001
-patch=0,EE,07070707,extended,00000000
+[Cheats/Unlock All Songs Collected in Game]
+// patch=1,EE,40BE6B50,extended,00120001
+// patch=1,EE,07070707,extended,00000000
 
-[Cheats/Unlock All Monster Collected in Game]  
-patch=0,EE,00BE6A8B,extended,00000007
-patch=0,EE,40BE6A8C,extended,00130001
-patch=0,EE,07070707,extended,00000000
-patch=0,EE,00BE6AD8,extended,00000007
-patch=0,EE,10BE6ADA,extended,00000707
-patch=0,EE,20BE6ADC,extended,07070707
-patch=0,EE,10BE6AE0,extended,00000707
-patch=0,EE,10BE6AE6,extended,00000707
-patch=0,EE,10BE6AFA,extended,00000707
-patch=0,EE,00BE6AFC,extended,00000007
-patch=0,EE,00BE6B0C,extended,00000007
-patch=0,EE,00BE6B0E,extended,00000007
+[Cheats/Unlock All Monster Collected in Game]
+// patch=1,EE,00BE6A8B,extended,00000007
+// patch=1,EE,40BE6A8C,extended,00130001
+// patch=1,EE,07070707,extended,00000000
+// patch=1,EE,00BE6AD8,extended,00000007
+// patch=1,EE,10BE6ADA,extended,00000707
+// patch=1,EE,20BE6ADC,extended,07070707
+// patch=1,EE,10BE6AE0,extended,00000707
+// patch=1,EE,10BE6AE6,extended,00000707
+// patch=1,EE,10BE6AFA,extended,00000707
+// patch=1,EE,00BE6AFC,extended,00000007
+// patch=1,EE,00BE6B0C,extended,00000007
+// patch=1,EE,00BE6B0E,extended,00000007
 
-[Cheats/Set Save To Clear Save Extras Menu Enabled] 
-patch=0,EE,00A03700,extended,00000001
+[Cheats/Set Save To Clear Save Extras Menu Enabled]
+// patch=1,EE,00A03700,extended,00000001

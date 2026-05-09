@@ -1,69 +1,69 @@
 // Candidate only: same serial SLPS-25450 PNACH; user CRC is English v1.0. Test in-game before moving to cheats/exact.
 // Source file: B4EC196F - Tales of Rebirth SLPS-25450.pnach
-[Cheats/Infinite Gald Money 99999999] 
-patch=0,EE,20236088,extended,05F5E0FF
+[Cheats/Infinite Gald Money 99999999]
+// patch=1,EE,20236088,extended,05F5E0FF
 
-[Cheats/Infinite & Max HP Main Character] 
-patch=0,EE,20232DAA,extended,0000270F
-patch=0,EE,20232DBE,extended,0000270F
+[Cheats/Infinite & Max HP Main Character]
+// patch=1,EE,20232DAA,extended,0000270F
+// patch=1,EE,20232DBE,extended,0000270F
 
-[Cheats/Infinite HP In Battle Main Character] 
-patch=0,EE,2034BBE4,extended,0000270F
+[Cheats/Infinite HP In Battle Main Character]
+// patch=1,EE,2034BBE4,extended,0000270F
 
-[Cheats/Infinite & Max HP 2nd Character] 
-patch=0,EE,20232F56,extended,0000270F
-patch=0,EE,20232F42,extended,0000270F
+[Cheats/Infinite & Max HP 2nd Character]
+// patch=1,EE,20232F56,extended,0000270F
+// patch=1,EE,20232F42,extended,0000270F
 
 [Cheats/Infinite HP In Battle 2nd Character Deactivate 2nd & 3rd Character For Character 1 Only Battles]
-patch=0,EE,2034C4E4,extended,0000270F
+// patch=1,EE,2034C4E4,extended,0000270F
 
-[Cheats/Infinite & Max HP 3rd Character] 
-patch=0,EE,202330DA,extended,0000270F
-patch=0,EE,202330EE,extended,0000270F
+[Cheats/Infinite & Max HP 3rd Character]
+// patch=1,EE,202330DA,extended,0000270F
+// patch=1,EE,202330EE,extended,0000270F
 
-[Cheats/Infinite HP In Battle 3rd Character Deactivate 2nd & 3rd Character For Character 1 Only Battles] 
-patch=0,EE,2034CDE4,extended,0000270F
+[Cheats/Infinite HP In Battle 3rd Character Deactivate 2nd & 3rd Character For Character 1 Only Battles]
+// patch=1,EE,2034CDE4,extended,0000270F
 
-[Cheats/Open Menu HP Entire Reply] 
-patch=0,EE,20193068,extended,0C03C830
-patch=0,EE,200F20C0,extended,08065368
-patch=0,EE,200F20C4,extended,AE280108
+[Cheats/Open Menu HP Entire Reply]
+// patch=1,EE,20193068,extended,0C03C830
+// patch=1,EE,200F20C0,extended,08065368
+// patch=1,EE,200F20C4,extended,AE280108
 
-[Cheats/No Encounters Unless You Press SQUARE] 
-patch=0,EE,A012D29C,extended,001F200B
-patch=0,EE,A012D2A0,extended,3C020024
-patch=0,EE,A012D2A4,extended,944225C2
-patch=0,EE,A012D2A8,extended,30428000
+[Cheats/No Encounters Unless You Press SQUARE]
+// patch=1,EE,A012D29C,extended,001F200B
+// patch=1,EE,A012D2A0,extended,3C020024
+// patch=1,EE,A012D2A4,extended,944225C2
+// patch=1,EE,A012D2A8,extended,30428000
 
-[Cheats/Panic Dreamer 1P Health Max] 
-patch=0,EE,D03111B4,extended,00000001
-patch=0,EE,003111B4,extended,00000005
+[Cheats/Panic Dreamer 1P Health Max]
+// patch=1,EE,D03111B4,extended,00000001
+// patch=1,EE,003111B4,extended,00000005
 
-[Cheats/Max Experience Value Veigues] 
-patch=0,EE,20232DA0,extended,05F5E0FF
+[Cheats/Max Experience Value Veigues]
+// patch=1,EE,20232DA0,extended,05F5E0FF
 
-[Cheats/Max Experience Value Mao] 
-patch=0,EE,20232F38,extended,05F5E0FF
+[Cheats/Max Experience Value Mao]
+// patch=1,EE,20232F38,extended,05F5E0FF
 
-[Cheats/Max Experience Value Eugene] 
-patch=0,EE,202330D0,extended,05F5E0FF
+[Cheats/Max Experience Value Eugene]
+// patch=1,EE,202330D0,extended,05F5E0FF
 
 
-[Cheats/Unlock All Monster Encyclopedia]  
-patch=0,EE,40235B7C,extended,00770001
-patch=0,EE,FFFFFFFF,extended,00000000
+[Cheats/Unlock All Monster Encyclopedia]
+// patch=1,EE,40235B7C,extended,00770001
+// patch=1,EE,FFFFFFFF,extended,00000000
 
-[Cheats/Unlock All Collector's Picture Book]  
-patch=0,EE,40235A18,extended,00180001
-patch=0,EE,FFFFFFFF,extended,00000000
-patch=0,EE,402367C4,extended,00050001
-patch=0,EE,FFFFFFFF,extended,00000000
+[Cheats/Unlock All Collector's Picture Book]
+// patch=1,EE,40235A18,extended,00180001
+// patch=1,EE,FFFFFFFF,extended,00000000
+// patch=1,EE,402367C4,extended,00050001
+// patch=1,EE,FFFFFFFF,extended,00000000
 
-[Cheats/Unlock All Titles] 
-patch=0,EE,20236114,extended,FFFFFFFF
-patch=0,EE,20236118,extended,FFFFFFFF
-patch=0,EE,2023611C,extended,FFFFFFFF
-patch=0,EE,20236120,extended,FFFFFFFF
-patch=0,EE,10236124,extended,0000FFFF
+[Cheats/Unlock All Titles]
+// patch=1,EE,20236114,extended,FFFFFFFF
+// patch=1,EE,20236118,extended,FFFFFFFF
+// patch=1,EE,2023611C,extended,FFFFFFFF
+// patch=1,EE,20236120,extended,FFFFFFFF
+// patch=1,EE,10236124,extended,0000FFFF
 
 
