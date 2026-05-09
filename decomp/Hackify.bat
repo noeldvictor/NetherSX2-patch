@@ -25,6 +25,8 @@ lib\xml ed -L -u "manifest/application/activity[@android:label='AetherSX2']/@and
 :: --Cheats UI Cleanup--
 powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0ApplyCheatUiPatch.ps1" -ProjectPath "%apkdir%"
 if errorlevel 1 exit /b %errorlevel%
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0ApplyCheatBadgePatch.ps1" -ProjectPath "%apkdir%" -RepoRoot "%~dp0.."
+if errorlevel 1 exit /b %errorlevel%
 :: --End Cheats UI Cleanup--
 
 :: --Bundled Asset Updates--

@@ -7,6 +7,8 @@ This repository is an APK patching workspace for NetherSX2, not a normal Gradle 
 ## Cheat UI Work
 
 - The in-app cheat controls are grouped by `decomp/ApplyCheatUiPatch.ps1`.
+- The game list CHEATS badges are applied by `decomp/ApplyCheatBadgePatch.ps1`.
+- The badge script generates `smali/xyz/aethersx2/android/CheatSupport.smali` from CRCs in `assets/cheats_ws.zip` and `assets/cheats_ni.zip`, then patches the grid and list adapters to show a `cheat_badge` view on supported games.
 - It keeps the existing emulator config keys:
   - `EmuCore/EnableCheats`
   - `EmuCore/EnableWideScreenPatches`
@@ -36,7 +38,9 @@ adb devices -l
 
 Keep generated APKs, downloaded base APKs, portable JREs, and decoded APK folders out of commits. Commit source assets and patch scripts only.
 
-For the decompiled patch flow, run `decomp\Hackify.bat` after decoding the APK folder as either `4248` or `NetherSX2`; the script accepts both names. Rebuild and sign the APK after patching.
+For the decompiled patch flow, run `decomp\Hackify.bat` after decoding the APK folder as either `4248` or `NetherSX2`; the script accepts both names. It applies both the Cheats and Patches settings cleanup and the game-list CHEATS badges. Rebuild and sign the APK after patching.
+
+Before signing an APK for Android 11+ devices, run `zipalign -p -f 4` on the unsigned APK, then sign the aligned APK with `apksigner`. Otherwise Android can reject the install because `resources.arsc` is not 4-byte aligned.
 
 For the asset-only patch flow, make sure `assets/cheats_index.html` is present before running `old/scripts/patch-apk.cmd` or `old/scripts/patch-apk.sh`; both scripts add it to the APK.
 
