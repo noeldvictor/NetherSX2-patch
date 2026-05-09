@@ -191,6 +191,20 @@ On 2026-05-09, Thor savestate slot 9 was captured with the monster warning activ
 
 - Rejected: `0048A038 = 00` did not stop or calm encounters in live play.
 - Rejected: `004892FD`, `004892FF`, `0048966D`, and `0048966F` clamped to `04` caused camera issues, so this area is likely camera/dungeon-state adjacent rather than a safe encounter-rate control.
+- Rejected: `00489668 = 00` also caused camera/control issues. Treat the whole `004896xx` cluster as camera/dungeon-control adjacent and do not use it for encounter cheats.
+
+Ghidra/static notes from the same session:
+
+- Extracted `SLUS_202.59` from the user's CHD and imported it into Ghidra using local Ghidra 12.0.4 and JDK 17. The main load segment maps file offset `0x1000` to EE address `0x00100000`, so runtime address = file offset + `0xFF000`.
+- The global state byte at `005C1692` (`gp - 0x6B5E`) was `12` in Thor savestate slot 9 (red monster warning/imminent encounter) and `11` in slot 10 (post-battle/calm corridor). This is a better encounter-state signal than the rejected camera-adjacent `004896xx` values.
+- Function `0011E318` handles the state-`11` encounter progression. After calls through `001BB570`, `0011DE70`, and `0017AA08`, instruction `0011E41C` branches to `0011E534`, which stores state `12` and begins the battle/warning setup. Original instruction word at `0011E41C` is `14400045` (`bnez v0,0011E534`).
+- The tracked PNACH has a default-off test block named `No Random Encounters (Ghidra Test)`:
+
+```ini
+// patch=1,EE,2011E41C,extended,00000000
+```
+
+It NOPs only that encounter-success branch instead of freezing camera state. If it blocks scripted fights or does not affect an already-JIT-compiled in-game session, disable it and test again after a console reset or fresh area load before promoting it as a plain `No Random Encounters` block.
 
 Do not re-add the rejected candidates to `cheats/exact/DD11BEF7.pnach`. The next useful scan needs tighter control states, ideally same camera position and party state with only encounter pressure changed, plus an after-battle/reset state to identify values that reset cleanly without moving camera data.
 
