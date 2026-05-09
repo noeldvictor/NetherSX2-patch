@@ -447,11 +447,39 @@ function Write-OsdCheatMenuClasses {
 
     if-eqz v2, :cond_external
 
+    invoke-static {v1}, Lxyz/aethersx2/android/OsdCheatMenu;->parseCodes(Ljava/io/File;)Ljava/util/ArrayList;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/util/ArrayList;->isEmpty()Z
+
+    move-result v2
+
+    if-nez v2, :cond_external
+
     return-object v1
 
     :cond_external
+    iget-object v1, v0, Ll6/l4;->a:Ljava/lang/String;
+
+    if-eqz v1, :cond_game_info_crc
+
+    invoke-static {v1}, Lxyz/aethersx2/android/NativeLibrary;->getGameListEntry(Ljava/lang/String;)Lxyz/aethersx2/android/GameListEntry;
+
+    move-result-object v6
+
+    if-eqz v6, :cond_game_info_crc
+
+    invoke-virtual {v6}, Lxyz/aethersx2/android/GameListEntry;->getCRC()I
+
+    move-result v1
+
+    if-nez v1, :cond_have_crc
+
+    :cond_game_info_crc
     iget v1, v0, Ll6/l4;->e:I
 
+    :cond_have_crc
     if-eqz v1, :cond_no_path
 
     const/4 v2, 0x0
