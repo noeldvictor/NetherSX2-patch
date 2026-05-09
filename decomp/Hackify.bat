@@ -20,6 +20,8 @@ lib\xml ed -L -d "manifest/application/@android:extractNativeLibs" "%apkdir%\And
 
 powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0ApplyBrandingPatch.ps1" -ProjectPath "%apkdir%" -RepoRoot "%~dp0.."
 if errorlevel 1 exit /b %errorlevel%
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0ApplyThorHapticsPatch.ps1" -ProjectPath "%apkdir%"
+if errorlevel 1 exit /b %errorlevel%
 :: --End Manifest Cleanup--
 
 :: --Cheats UI Cleanup--

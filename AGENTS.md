@@ -72,6 +72,29 @@ For the decompiled patch flow, run `decomp\Hackify.bat` after decoding the APK f
 
 `decomp\Hackify.bat` also bundles the tracked PNACH packs into the APK via `assets/cheats_exact`; do not commit decoded APK folders just to capture those generated asset copies.
 
+## Thor Haptics Notes
+
+The AYN Thor exposes Android device haptics, not a normal dual-motor controller rumble device on the `Odin Controller` input device. `dumpsys input` shows the controller as gamepad/joystick only, while `dumpsys vibrator_manager` reports device vibrator id `0`.
+
+`decomp\ApplyThorHapticsPatch.ps1` generates `smali/xyz/aethersx2/android/ThorHaptics.smali` and patches both `MainActivity.onCreate` and `EmulationActivity.onCreate` before native initialization. It also routes `NativeLibrary` and vibrator-binding test pulses through `VibrationAttributes.USAGE_MEDIA` on Android 12/API 31+ so game rumble goes through the media/game vibration path instead of the plain touch-feedback path. It seeds missing default preferences only when Android reports a device vibrator:
+
+- `Pad1/Type = DualShock2`
+- `Pad1/LargeMotor = __DEVICE_VIBRATOR__/Vibrator0`
+- `Pad1/SmallMotor = __DEVICE_VIBRATOR__/Vibrator0`
+- `Pad1/LargeMotorScale = 1.0`
+- `Pad1/SmallMotorScale = 0.35`
+- `TouchscreenController/EnableVibration = true`
+- `AndroidInputSource/VibrationThrottle = 16`
+
+This is a one-motor haptic fallback, not true DualShock2 dual-motor rumble. The helper uses `contains()` checks so existing user bindings are preserved; set an explicit blank/alternate value in the app if you do not want the defaults reseeded.
+
+Thor can still ignore all vibration requests when Android's system vibration setting is off. During initial testing, `settings get system vibrate_on` returned `0`, and test pulses logged as `ignored_for_settings`; the installed test device was later set to `1`. Ensure it is enabled on the device UI or over ADB while testing:
+
+```powershell
+adb shell settings put system vibrate_on 1
+adb shell settings put system haptic_feedback_enabled 1
+```
+
 Before signing an APK for Android 11+ devices, run `zipalign -p -f 4` on the unsigned APK, then sign the aligned APK with `apksigner`. Otherwise Android can reject the install because `resources.arsc` is not 4-byte aligned.
 
 For the asset-only patch flow, make sure `assets/cheats_index.html` is present before running `old/scripts/patch-apk.cmd` or `old/scripts/patch-apk.sh`; both scripts add it to the APK.
