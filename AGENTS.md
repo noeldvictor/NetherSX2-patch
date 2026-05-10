@@ -152,6 +152,8 @@ The native side is built by `tools\BuildGpuDriverShim.ps1`, which clones pinned 
 adb shell cat /sdcard/Android/data/xyz.aethersx2.android/files/gpu_driver_shim.log
 ```
 
+Runtime performance audit note: keep `native/gpu-driver-shim/gpu_driver_shim.cpp` thin. It should load Vulkan once, cache exported Vulkan entry points once during initialization, and avoid `dlsym` discovery from wrapper calls after that. The shim must not intercept per-frame Vulkan commands such as queue submit/present unless there is a specific measured need.
+
 The generated native libs and libadrenotools checkout stay under `.tools/` and should not be committed. Commit the shim source, Java source, and patch scripts only.
 
 Because the generated APK statically links BSD-licensed libadrenotools/linkernsbypass code into `libvulkad.so`, keep `third_party_notices/libadrenotools-BSD-2-Clause.txt` in the repo. `ApplyCustomGpuDriverPatch.ps1` copies it into APK assets at `assets/licenses/libadrenotools-BSD-2-Clause.txt`.
@@ -171,6 +173,8 @@ The AYN Thor exposes Android device haptics, not a normal dual-motor controller 
 - `AndroidInputSource/VibrationThrottle = 16`
 
 This is a one-motor haptic fallback, not true DualShock2 dual-motor rumble. The helper uses `contains()` checks so existing user bindings are preserved; set an explicit blank/alternate value in the app if you do not want the defaults reseeded.
+
+Runtime performance audit note: `ThorHaptics.mediaAttributes()` caches the Android media/game `VibrationAttributes` object so rumble-heavy games do not rebuild the attributes object for every vibration event. Keep vibration routing as a thin wrapper around Android's normal vibrator calls.
 
 Thor can still ignore all vibration requests when Android's system vibration setting is off. During initial testing, `settings get system vibrate_on` returned `0`, and test pulses logged as `ignored_for_settings`; the installed test device was later set to `1`. Ensure it is enabled on the device UI or over ADB while testing:
 

@@ -29,6 +29,10 @@ $helperSmali = @'
 .source "ThorHaptics.java"
 
 
+# static fields
+.field private static sMediaAttributes:Landroid/os/VibrationAttributes;
+
+
 # direct methods
 .method public constructor <init>()V
     .locals 0
@@ -159,22 +163,29 @@ $helperSmali = @'
 .end method
 
 .method private static mediaAttributes()Landroid/os/VibrationAttributes;
-    .locals 2
+    .locals 3
 
-    new-instance v0, Landroid/os/VibrationAttributes$Builder;
+    sget-object v0, Lxyz/aethersx2/android/ThorHaptics;->sMediaAttributes:Landroid/os/VibrationAttributes;
 
-    invoke-direct {v0}, Landroid/os/VibrationAttributes$Builder;-><init>()V
+    if-nez v0, :return
 
-    const/16 v1, 0x13
+    new-instance v1, Landroid/os/VibrationAttributes$Builder;
 
-    invoke-virtual {v0, v1}, Landroid/os/VibrationAttributes$Builder;->setUsage(I)Landroid/os/VibrationAttributes$Builder;
+    invoke-direct {v1}, Landroid/os/VibrationAttributes$Builder;-><init>()V
+
+    const/16 v2, 0x13
+
+    invoke-virtual {v1, v2}, Landroid/os/VibrationAttributes$Builder;->setUsage(I)Landroid/os/VibrationAttributes$Builder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Landroid/os/VibrationAttributes$Builder;->build()Landroid/os/VibrationAttributes;
 
     move-result-object v0
 
-    invoke-virtual {v0}, Landroid/os/VibrationAttributes$Builder;->build()Landroid/os/VibrationAttributes;
+    sput-object v0, Lxyz/aethersx2/android/ThorHaptics;->sMediaAttributes:Landroid/os/VibrationAttributes;
 
-    move-result-object v0
-
+    :return
     return-object v0
 .end method
 

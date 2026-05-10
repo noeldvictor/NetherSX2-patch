@@ -24,6 +24,14 @@ static pthread_mutex_t g_lock = PTHREAD_MUTEX_INITIALIZER;
 static void *g_vulkan = nullptr;
 static bool g_initialized = false;
 static char g_hook_dir[512] = {0};
+static PFN_vkGetInstanceProcAddr g_vkGetInstanceProcAddr = nullptr;
+static PFN_vkGetDeviceProcAddr g_vkGetDeviceProcAddr = nullptr;
+static PFN_vkEnumerateInstanceVersion g_vkEnumerateInstanceVersion = nullptr;
+static PFN_vkEnumerateInstanceExtensionProperties g_vkEnumerateInstanceExtensionProperties = nullptr;
+static PFN_vkEnumerateInstanceLayerProperties g_vkEnumerateInstanceLayerProperties = nullptr;
+static PFN_vkCreateInstance g_vkCreateInstance = nullptr;
+static PFN_vkDestroyInstance g_vkDestroyInstance = nullptr;
+static PFN_vkEnumeratePhysicalDevices g_vkEnumeratePhysicalDevices = nullptr;
 
 static void log_line(const char *fmt, ...) {
     char msg[1024];
@@ -132,69 +140,72 @@ static void initialize_vulkan() {
         g_vulkan = load_system_vulkan();
     }
 
-    pthread_mutex_unlock(&g_lock);
-}
-
-static void *resolve_symbol(const char *name) {
-    initialize_vulkan();
-    if (!g_vulkan) {
-        return nullptr;
+    if (g_vulkan) {
+        g_vkGetInstanceProcAddr = reinterpret_cast<PFN_vkGetInstanceProcAddr>(dlsym(g_vulkan, "vkGetInstanceProcAddr"));
+        g_vkGetDeviceProcAddr = reinterpret_cast<PFN_vkGetDeviceProcAddr>(dlsym(g_vulkan, "vkGetDeviceProcAddr"));
+        g_vkEnumerateInstanceVersion = reinterpret_cast<PFN_vkEnumerateInstanceVersion>(dlsym(g_vulkan, "vkEnumerateInstanceVersion"));
+        g_vkEnumerateInstanceExtensionProperties = reinterpret_cast<PFN_vkEnumerateInstanceExtensionProperties>(dlsym(g_vulkan, "vkEnumerateInstanceExtensionProperties"));
+        g_vkEnumerateInstanceLayerProperties = reinterpret_cast<PFN_vkEnumerateInstanceLayerProperties>(dlsym(g_vulkan, "vkEnumerateInstanceLayerProperties"));
+        g_vkCreateInstance = reinterpret_cast<PFN_vkCreateInstance>(dlsym(g_vulkan, "vkCreateInstance"));
+        g_vkDestroyInstance = reinterpret_cast<PFN_vkDestroyInstance>(dlsym(g_vulkan, "vkDestroyInstance"));
+        g_vkEnumeratePhysicalDevices = reinterpret_cast<PFN_vkEnumeratePhysicalDevices>(dlsym(g_vulkan, "vkEnumeratePhysicalDevices"));
     }
-    return dlsym(g_vulkan, name);
+
+    pthread_mutex_unlock(&g_lock);
 }
 
 extern "C" __attribute__((visibility("default")))
 PFN_vkVoidFunction vkGetInstanceProcAddr(VkInstance instance, const char *name) {
-    auto fn = reinterpret_cast<PFN_vkGetInstanceProcAddr>(resolve_symbol("vkGetInstanceProcAddr"));
-    return fn ? fn(instance, name) : nullptr;
+    initialize_vulkan();
+    return g_vkGetInstanceProcAddr ? g_vkGetInstanceProcAddr(instance, name) : nullptr;
 }
 
 extern "C" __attribute__((visibility("default")))
 PFN_vkVoidFunction vkGetDeviceProcAddr(VkDevice device, const char *name) {
-    auto fn = reinterpret_cast<PFN_vkGetDeviceProcAddr>(resolve_symbol("vkGetDeviceProcAddr"));
-    return fn ? fn(device, name) : nullptr;
+    initialize_vulkan();
+    return g_vkGetDeviceProcAddr ? g_vkGetDeviceProcAddr(device, name) : nullptr;
 }
 
 extern "C" __attribute__((visibility("default")))
 VkResult vkEnumerateInstanceVersion(uint32_t *apiVersion) {
-    auto fn = reinterpret_cast<PFN_vkEnumerateInstanceVersion>(resolve_symbol("vkEnumerateInstanceVersion"));
-    if (!fn) {
+    initialize_vulkan();
+    if (!g_vkEnumerateInstanceVersion) {
         if (apiVersion) {
             *apiVersion = VK_API_VERSION_1_0;
         }
         return VK_SUCCESS;
     }
-    return fn(apiVersion);
+    return g_vkEnumerateInstanceVersion(apiVersion);
 }
 
 extern "C" __attribute__((visibility("default")))
 VkResult vkEnumerateInstanceExtensionProperties(const char *layerName, uint32_t *propertyCount, VkExtensionProperties *properties) {
-    auto fn = reinterpret_cast<PFN_vkEnumerateInstanceExtensionProperties>(resolve_symbol("vkEnumerateInstanceExtensionProperties"));
-    return fn ? fn(layerName, propertyCount, properties) : VK_ERROR_INITIALIZATION_FAILED;
+    initialize_vulkan();
+    return g_vkEnumerateInstanceExtensionProperties ? g_vkEnumerateInstanceExtensionProperties(layerName, propertyCount, properties) : VK_ERROR_INITIALIZATION_FAILED;
 }
 
 extern "C" __attribute__((visibility("default")))
 VkResult vkEnumerateInstanceLayerProperties(uint32_t *propertyCount, VkLayerProperties *properties) {
-    auto fn = reinterpret_cast<PFN_vkEnumerateInstanceLayerProperties>(resolve_symbol("vkEnumerateInstanceLayerProperties"));
-    return fn ? fn(propertyCount, properties) : VK_ERROR_INITIALIZATION_FAILED;
+    initialize_vulkan();
+    return g_vkEnumerateInstanceLayerProperties ? g_vkEnumerateInstanceLayerProperties(propertyCount, properties) : VK_ERROR_INITIALIZATION_FAILED;
 }
 
 extern "C" __attribute__((visibility("default")))
 VkResult vkCreateInstance(const VkInstanceCreateInfo *createInfo, const VkAllocationCallbacks *allocator, VkInstance *instance) {
-    auto fn = reinterpret_cast<PFN_vkCreateInstance>(resolve_symbol("vkCreateInstance"));
-    return fn ? fn(createInfo, allocator, instance) : VK_ERROR_INITIALIZATION_FAILED;
+    initialize_vulkan();
+    return g_vkCreateInstance ? g_vkCreateInstance(createInfo, allocator, instance) : VK_ERROR_INITIALIZATION_FAILED;
 }
 
 extern "C" __attribute__((visibility("default")))
 void vkDestroyInstance(VkInstance instance, const VkAllocationCallbacks *allocator) {
-    auto fn = reinterpret_cast<PFN_vkDestroyInstance>(resolve_symbol("vkDestroyInstance"));
-    if (fn) {
-        fn(instance, allocator);
+    initialize_vulkan();
+    if (g_vkDestroyInstance) {
+        g_vkDestroyInstance(instance, allocator);
     }
 }
 
 extern "C" __attribute__((visibility("default")))
 VkResult vkEnumeratePhysicalDevices(VkInstance instance, uint32_t *deviceCount, VkPhysicalDevice *devices) {
-    auto fn = reinterpret_cast<PFN_vkEnumeratePhysicalDevices>(resolve_symbol("vkEnumeratePhysicalDevices"));
-    return fn ? fn(instance, deviceCount, devices) : VK_ERROR_INITIALIZATION_FAILED;
+    initialize_vulkan();
+    return g_vkEnumeratePhysicalDevices ? g_vkEnumeratePhysicalDevices(instance, deviceCount, devices) : VK_ERROR_INITIALIZATION_FAILED;
 }
