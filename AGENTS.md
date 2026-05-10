@@ -90,7 +90,7 @@ The checked target handheld reports `ro.product.model = AYN Thor`, `ro.board.pla
 
 On 2026-05-10 the checked Thor had `performance_mode=0`, `fan_mode=4`, `peak_refresh_rate=60.0`, `min_refresh_rate=60.0`, and `Thermal Status: 0`. If performance is bad while `performance_mode=0`, first use the Thor quick settings/performance UI; plain ADB/app code should not blindly write unknown vendor performance values.
 
-Good future app work is a Thor preset page or OSD quick-performance menu, not native thread surgery. Candidate Base/Pro/Max preset keys:
+Good future gameplay-performance work is preset/UI wiring around existing settings, not native thread surgery. Candidate Base/Pro/Max preset keys:
 
 - `EmuCore/GS/Renderer = 14` for Vulkan
 - `EmuCore/AffinityControlMode = 7` for Performance Cores
@@ -109,6 +109,15 @@ Preset shape:
 - `Lite Conservative`: same menu idea, but default to native or 1.5x, avoid Adreno 740-only driver assumptions, and expect more per-game fallbacks.
 
 Avoid making global defaults out of 60 FPS patches, widescreen patches, EE cycle skip, or aggressive blending/readback hacks. They are per-game choices and can break timing or rendering.
+
+`decomp\ApplyThorPerformancePatch.ps1` adds a global `Thor Performance Presets` row under `Settings > System`, backed by `android-src/xyz/aethersx2/android/ThorPerformanceActivity.java` in `classes3.dex`. It writes existing emulator preference keys only; it does not patch native emulation code. Presets are intentionally explicit buttons so risky settings are not silently changed during install.
+
+- `Balanced`: Vulkan, Performance Cores, MTVU, Fastmem, Instant VU1, 1.5x, basic blending, fast readbacks, duplicate-frame skip off.
+- `Fast`: Vulkan, Performance Cores, MTVU, Fastmem, Instant VU1, native res, minimum blending, fast readbacks, duplicate-frame skip on.
+- `Accurate`: Vulkan, Performance Cores, MTVU, Fastmem, Instant VU1, native res, basic blending, accurate readbacks, duplicate-frame skip off.
+- `Lite Conservative`: Vulkan, no affinity pinning, MTVU off, Fastmem/Instant VU1 on, native res, accurate readbacks.
+
+Tell users to restart the running game after applying a preset. A later OSD quick-performance menu could write the same keys in-game, but some settings still need a full game restart to be reliable.
 
 ## Custom GPU Driver Notes
 

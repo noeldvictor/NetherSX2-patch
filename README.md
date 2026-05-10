@@ -37,6 +37,7 @@ Do not open issues asking for support, compatibility, builds, game fixes, or fea
 - Adds cover install tooling that defaults to xlenore PS2 covers and supports custom URL templates.
 - Adds AYN Thor haptic fallback through Android media/game vibration paths.
 - Adds a custom GPU driver manager using `libadrenotools`, a Vulkan shim, a known-good Turnip download, custom URLs, and a live Turnip driver browser.
+- Adds gameplay-focused Thor performance presets for Balanced, Fast, Accurate, and Lite Conservative settings.
 - Adds ADB helper scripts for pushing cheats/covers and fixing Android file permissions on Thor.
 
 ## Thor Performance Notes
@@ -53,11 +54,13 @@ Good default direction for Thor Base / Pro / Max:
 - Try `Disable Readbacks (Synchronize GS Thread)` for speed, but fall back to Accurate if a game has broken effects, videos, or missing UI.
 - Avoid global 60 FPS or widescreen patches as a performance default; they are per-game compatibility choices.
 
-Useful app/UI work still left here is a Thor presets page or OSD quick-performance menu:
+The current build exposes global Thor presets at `Settings > System > Thor Performance Presets`:
 
 - `Balanced`: Vulkan, Performance Cores, Fastmem, Instant VU1, MTVU, 1.5x/2x, balanced blending, fast readbacks with per-game fallback.
 - `Fast`: Vulkan, Performance Cores, 1x/1.5x, lower blending, fast readbacks, no global 60 FPS or widescreen.
 - `Accurate`: Vulkan or OpenGL per game, accurate readbacks, safer blending, lower resolution before risky cycle hacks.
+
+Apply a preset, then restart the running game. This is meant to improve gameplay speed without silently enabling unsafe global cycle skip or random game patches. Remaining useful UI work is an OSD quick-performance menu for the same keys.
 
 Thor itself still needs its device performance mode/fan set outside the app. If Android reports Thor `performance_mode=0`, the emulator can be perfectly tuned and still leave speed on the table.
 
