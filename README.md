@@ -39,6 +39,22 @@ Do not open issues asking for support, compatibility, builds, game fixes, or fea
 - Adds a custom GPU driver manager using `libadrenotools`, a Vulkan shim, a known-good Turnip download, custom URLs, and a live Turnip driver browser.
 - Adds ADB helper scripts for pushing cheats/covers and fixing Android file permissions on Thor.
 
+## Thor Performance Notes
+
+The current target device is an AYN Thor reporting Qualcomm `kalama` / `QCS8550` / Adreno Vulkan. The useful optimization work is mostly handheld-specific presets and per-game overrides, not random core hacks.
+
+Good default direction for Thor:
+
+- Use Vulkan with the custom Turnip driver browser when a game likes it.
+- Use `Performance Cores` affinity so hot EE/GS/VU threads stay on the big/prime cluster.
+- Keep Fastmem and Instant VU1 enabled.
+- Enable MTVU for most 3D games, but keep it per-game because a few games can regress.
+- Use 1.5x or 2x internal resolution as the practical baseline, then lower heavy games before touching unsafe EE cycle skip.
+- Try `Disable Readbacks (Synchronize GS Thread)` for speed, but fall back to Accurate if a game has broken effects, videos, or missing UI.
+- Avoid global 60 FPS or widescreen patches as a performance default; they are per-game compatibility choices.
+
+Thor itself still needs its device performance mode/fan set outside the app. If Android reports Thor `performance_mode=0`, the emulator can be perfectly tuned and still leave speed on the table.
+
 ## Screenshots
 
 <p align="center">

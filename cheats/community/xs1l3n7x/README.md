@@ -5,7 +5,7 @@ Source commit: 6cb57b5
 
 Imported with tools\ImportPcsx2CheatsCollection.ps1.
 
-The source files are normalized for NetherSX2 Cheat Helper:
+The source files are normalized for NetherSX2 Thor Experiment:
 
 - patch=0, and patch=1, lines become commented // patch=1, lines.
 - Repeated named blocks are merged into one [Cheats/<name>] block.

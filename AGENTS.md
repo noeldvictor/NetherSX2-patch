@@ -61,7 +61,7 @@ Keep generated APKs, downloaded base APKs, portable JREs, and decoded APK folder
 
 ## Branding Notes
 
-The APK is branded as `NetherSX2 Thor Experiment`. Regenerate the launcher icons, setup-wizard logo, README banner, big README buttons, and README wordmarks with:
+The APK is branded as `NetherSX2 Thor Experiment`. Regenerate the launcher icons, setup-wizard logo, README banner, README fork button, and README wordmarks with:
 
 ```powershell
 python tools\generate_brand_assets.py
@@ -72,6 +72,29 @@ The generated Android resources live under `branding/android/res`, README images
 For the decompiled patch flow, run `decomp\Hackify.bat` after decoding the APK folder as either `4248` or `NetherSX2`; the script accepts both names. It applies the Cheats and Patches settings cleanup, game-list CHEATS badges, and OSD per-code cheat toggles. Rebuild and sign the APK after patching.
 
 `decomp\Hackify.bat` also bundles the tracked PNACH packs into the APK via `assets/cheats_exact`; do not commit decoded APK folders just to capture those generated asset copies.
+
+## Thor CPU/GPU Optimization Notes
+
+The target handheld currently reports `ro.product.model = AYN Thor`, `ro.board.platform = kalama`, `ro.soc.model = QCS8550`, `ro.hardware = qcom`, and Adreno EGL/Vulkan. It exposes three CPU clusters through cpufreq:
+
+- policy0: little cores `0 1 2`
+- policy3: big cores `3 4 5 6`
+- policy7: prime core `7`
+
+On 2026-05-10 the checked Thor had `performance_mode=0`, `fan_mode=4`, `peak_refresh_rate=60.0`, `min_refresh_rate=60.0`, and `Thermal Status: 0`. If performance is bad while `performance_mode=0`, first use the Thor quick settings/performance UI; plain ADB/app code should not blindly write unknown vendor performance values.
+
+Good future app work is a Thor preset page or OSD quick-performance menu, not native thread surgery. Candidate preset keys:
+
+- `EmuCore/GS/Renderer = 14` for Vulkan
+- `EmuCore/AffinityControlMode = 7` for Performance Cores
+- `EmuCore/Speedhacks/vuThread = true` for MTVU on most 3D games
+- `EmuCore/Speedhacks/vu1Instant = true`
+- `EmuCore/CPU/Recompiler/EnableFastmem = true`
+- `EmuCore/GS/HWDownloadMode = 1` for fast readbacks, with per-game fallback to `0` Accurate when effects/video/UI break
+- `EmuCore/GS/accurate_blending_unit = 1` as the balanced default; use `0` only for a Fast preset
+- `EmuCore/GS/upscale_multiplier = 1.500000` or `2.000000` as a sane Thor baseline, with per-game lowering before unsafe cycle skip
+
+Avoid making global defaults out of 60 FPS patches, widescreen patches, EE cycle skip, or aggressive blending/readback hacks. They are per-game choices and can break timing or rendering.
 
 ## Custom GPU Driver Notes
 
