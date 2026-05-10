@@ -189,6 +189,8 @@ For the asset-only patch flow, make sure `assets/cheats_index.html` is present b
 
 ## ADB Install To AYN Thor
 
+Always push applicable work to the attached AYN Thor as part of delivery, not just to GitHub. If the change affects APK behavior, Android resources, native libs, settings UI, cheats, covers, PNACH files, or other device-visible assets, verify `adb devices -l` sees `model:AYN_Thor`, then install or push the updated artifact before final response whenever a build/push artifact exists. If the change is docs-only or no signed APK/artifact was produced, say clearly that there was nothing device-visible to push.
+
 After building and signing an APK:
 
 ```powershell
