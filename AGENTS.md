@@ -59,6 +59,8 @@ adb devices -l
 
 Keep generated APKs, downloaded base APKs, portable JREs, and decoded APK folders out of commits. Commit source assets and patch scripts only.
 
+Tracked Markdown audit on 2026-05-10 covered `AGENTS.md`, `README.md`, `branding/README.md`, `cheats/README.md`, `cheats/candidates/README.md`, and `cheats/community/xs1l3n7x/README.md`. Ignore generated or scratch Markdown under `.tools`, `.tmp_*`, decoded APK folders, and temp directories unless the user explicitly asks to refresh generated docs.
+
 ## Branding Notes
 
 The APK is branded as `NetherSX2 Thor Experiment`. Regenerate the launcher icons, setup-wizard logo, README banner, README fork button, and README wordmarks with:
@@ -75,7 +77,12 @@ For the decompiled patch flow, run `decomp\Hackify.bat` after decoding the APK f
 
 ## Thor CPU/GPU Optimization Notes
 
-The target handheld currently reports `ro.product.model = AYN Thor`, `ro.board.platform = kalama`, `ro.soc.model = QCS8550`, `ro.hardware = qcom`, and Adreno EGL/Vulkan. It exposes three CPU clusters through cpufreq:
+Hardware assumptions checked on 2026-05-10:
+
+- Thor Lite: Snapdragon 865 / Adreno 650. Do not assume Base/Pro/Max headroom; use native or 1.5x first, keep Turnip driver candidates A6xx-compatible, and be more willing to fall back to accurate rendering settings.
+- Thor Base / Pro / Max / Max512: Snapdragon 8 Gen 2 / Adreno 740. Treat these as one CPU/GPU tuning bucket for NetherSX2. RAM/storage changes mostly affect multitasking, cache pressure, and how much media/library data fits locally rather than the emulator's raw EE/GS/VU throughput.
+
+The checked target handheld reports `ro.product.model = AYN Thor`, `ro.board.platform = kalama`, `ro.soc.model = QCS8550`, `ro.hardware = qcom`, and Adreno EGL/Vulkan. This matches the Base/Pro/Max class, not Lite. It exposes three CPU clusters through cpufreq:
 
 - policy0: little cores `0 1 2`
 - policy3: big cores `3 4 5 6`
@@ -83,7 +90,7 @@ The target handheld currently reports `ro.product.model = AYN Thor`, `ro.board.p
 
 On 2026-05-10 the checked Thor had `performance_mode=0`, `fan_mode=4`, `peak_refresh_rate=60.0`, `min_refresh_rate=60.0`, and `Thermal Status: 0`. If performance is bad while `performance_mode=0`, first use the Thor quick settings/performance UI; plain ADB/app code should not blindly write unknown vendor performance values.
 
-Good future app work is a Thor preset page or OSD quick-performance menu, not native thread surgery. Candidate preset keys:
+Good future app work is a Thor preset page or OSD quick-performance menu, not native thread surgery. Candidate Base/Pro/Max preset keys:
 
 - `EmuCore/GS/Renderer = 14` for Vulkan
 - `EmuCore/AffinityControlMode = 7` for Performance Cores
@@ -93,6 +100,13 @@ Good future app work is a Thor preset page or OSD quick-performance menu, not na
 - `EmuCore/GS/HWDownloadMode = 1` for fast readbacks, with per-game fallback to `0` Accurate when effects/video/UI break
 - `EmuCore/GS/accurate_blending_unit = 1` as the balanced default; use `0` only for a Fast preset
 - `EmuCore/GS/upscale_multiplier = 1.500000` or `2.000000` as a sane Thor baseline, with per-game lowering before unsafe cycle skip
+
+Preset shape:
+
+- `Balanced`: Vulkan, Performance Cores, Fastmem, Instant VU1, MTVU, 1.5x or 2x, balanced blending, fast readbacks with per-game fallback to Accurate.
+- `Fast`: Vulkan, Performance Cores, 1x or 1.5x, minimum/basic blending, fast readbacks, and no global 60 FPS or widescreen patches.
+- `Accurate`: Vulkan or OpenGL per game, accurate readbacks, safer blending, and resolution reduction before EE cycle skip.
+- `Lite Conservative`: same menu idea, but default to native or 1.5x, avoid Adreno 740-only driver assumptions, and expect more per-game fallbacks.
 
 Avoid making global defaults out of 60 FPS patches, widescreen patches, EE cycle skip, or aggressive blending/readback hacks. They are per-game choices and can break timing or rendering.
 
@@ -109,7 +123,7 @@ The `Browse Turnip drivers` button fetches release assets directly from GitHub a
 - `The412Banner/Banners-Turnip`
 - `v3kt0r-87/Mesa-Turnip-Builder`
 
-The catalog filters for Turnip/Mesa `.zip` or `.adpkg` packages and skips obvious Magisk/KSU modules, Android-version-incompatible releases, plus A8xx/Gen8/A710/A720-only packages for the Thor's Android 13 / Adreno 740 setup. Each source is capped so one repo cannot crowd out the others. Keep the custom URL path available because driver recommendations move quickly and users may need a specific build before the curated list changes.
+The catalog filters for Turnip/Mesa `.zip` or `.adpkg` packages and skips obvious Magisk/KSU modules, Android-version-incompatible releases, plus A8xx/Gen8/A710/A720-only packages for the checked Thor Base/Pro/Max Android 13 / Adreno 740 setup. If Lite support becomes an explicit target, keep regular A6xx-compatible candidates visible and do not filter purely around Adreno 740 assumptions. Each source is capped so one repo cannot crowd out the others. Keep the custom URL path available because driver recommendations move quickly and users may need a specific build before the curated list changes.
 
 New installs also write an ADB-readable breadcrumb at:
 

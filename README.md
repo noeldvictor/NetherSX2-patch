@@ -41,9 +41,9 @@ Do not open issues asking for support, compatibility, builds, game fixes, or fea
 
 ## Thor Performance Notes
 
-The current target device is an AYN Thor reporting Qualcomm `kalama` / `QCS8550` / Adreno Vulkan. The useful optimization work is mostly handheld-specific presets and per-game overrides, not random core hacks.
+The main optimization target is Thor Base / Pro / Max / Max512: Snapdragon 8 Gen 2 with Adreno 740. Treat those variants as the same CPU/GPU tuning bucket; RAM and storage differences matter more for multitasking, cached assets, and giant libraries than for raw PS2 emulation speed. Thor Lite is a separate Snapdragon 865 / Adreno 650 target and should use more conservative defaults.
 
-Good default direction for Thor:
+Good default direction for Thor Base / Pro / Max:
 
 - Use Vulkan with the custom Turnip driver browser when a game likes it.
 - Use `Performance Cores` affinity so hot EE/GS/VU threads stay on the big/prime cluster.
@@ -52,6 +52,12 @@ Good default direction for Thor:
 - Use 1.5x or 2x internal resolution as the practical baseline, then lower heavy games before touching unsafe EE cycle skip.
 - Try `Disable Readbacks (Synchronize GS Thread)` for speed, but fall back to Accurate if a game has broken effects, videos, or missing UI.
 - Avoid global 60 FPS or widescreen patches as a performance default; they are per-game compatibility choices.
+
+Useful app/UI work still left here is a Thor presets page or OSD quick-performance menu:
+
+- `Balanced`: Vulkan, Performance Cores, Fastmem, Instant VU1, MTVU, 1.5x/2x, balanced blending, fast readbacks with per-game fallback.
+- `Fast`: Vulkan, Performance Cores, 1x/1.5x, lower blending, fast readbacks, no global 60 FPS or widescreen.
+- `Accurate`: Vulkan or OpenGL per game, accurate readbacks, safer blending, lower resolution before risky cycle hacks.
 
 Thor itself still needs its device performance mode/fan set outside the app. If Android reports Thor `performance_mode=0`, the emulator can be perfectly tuned and still leave speed on the table.
 
