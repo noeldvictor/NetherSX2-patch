@@ -1,9 +1,10 @@
 {
-  "appLabel": "NetherSX2 Cheat Helper",
-  "displayName": "NetherSX2 Patch Cheat Helper",
-  "shortName": "NetherSX2 Helper",
-  "primary": "#0B141C",
-  "accent": "#1FD2C6",
-  "cheatAccent": "#BEF552",
-  "warningAccent": "#FFB84C"
+  "appLabel": "NetherSX2 Thor Experiment",
+  "displayName": "NetherSX2 Thor Experiment",
+  "shortName": "Thor Experiment",
+  "primary": "#080B12",
+  "accent": "#3ADCE2",
+  "cheatAccent": "#BFFF65",
+  "warningAccent": "#FFB549",
+  "experimentAccent": "#FF4D6D"
 }

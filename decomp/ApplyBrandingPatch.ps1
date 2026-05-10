@@ -1,7 +1,7 @@
 param(
     [string]$ProjectPath = "",
     [string]$RepoRoot = "",
-    [string]$AppLabel = "NetherSX2 Cheat Helper"
+    [string]$AppLabel = "NetherSX2 Thor Experiment"
 )
 
 Set-StrictMode -Version Latest

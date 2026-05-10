@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: No support here
+    url: https://github.com/noeldvictor/NetherSX2-patch-thor-experiment/fork
+    about: This is a personal experiment fork. Please fork it instead of opening support issues.
