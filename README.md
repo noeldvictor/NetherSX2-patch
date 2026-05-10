@@ -3,9 +3,6 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/noeldvictor/NetherSX2-patch-thor-experiment/releases/latest">
-    <img width="360" src="docs/assets/download-apk-button.png" alt="Download APK">
-  </a>
   <a href="https://github.com/noeldvictor/NetherSX2-patch-thor-experiment/fork">
     <img width="290" src="docs/assets/fork-it-button.png" alt="Fork it">
   </a>

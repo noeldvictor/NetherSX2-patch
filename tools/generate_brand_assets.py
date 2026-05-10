@@ -291,7 +291,6 @@ def main() -> None:
     wordmark(True).save(GITHUB_ASSETS_DIR / "wordmark_dark.png")
     hero().save(GITHUB_ASSETS_DIR / "hero.png")
     hero().save(DOCS_ASSETS_DIR / "nethersx2-thor-experiment-banner.png")
-    action_button("DOWNLOAD APK", "latest release, when one exists", COLORS["amber"]).save(DOCS_ASSETS_DIR / "download-apk-button.png")
     action_button("FORK IT", "no issue tracker support here", COLORS["cyan"], width=420).save(DOCS_ASSETS_DIR / "fork-it-button.png")
     composite_icon(1024).save(PREVIEW_DIR / "icon-1024.png")
     wordmark(False).save(PREVIEW_DIR / "wordmark-light.png")
